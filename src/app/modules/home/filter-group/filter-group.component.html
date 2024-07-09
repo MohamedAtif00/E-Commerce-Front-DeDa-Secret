@@ -1,0 +1,113 @@
+
+<div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white h-fit dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+    <h2 id="accordion-flush-heading-1">
+      <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3 " data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
+        <span>What is Flowbite?</span>
+        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+        </svg>
+      </button>
+    </h2>
+    <div id="accordion-flush-body-1" class="hidden transition-all duration-100" aria-labelledby="accordion-flush-heading-1">
+      <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+        <div id="snize_filters_block_discount_relative" class="p-4 bg-white shadow-md rounded-md">
+            <div class="snize-product-filters-title flex justify-between items-center cursor-pointer">
+              <span class="text-lg font-semibold">Discount</span>
+              <div>
+                <i class="snize-product-filters-close"></i>
+                <i class="snize-product-filters-open"></i>
+              </div>
+            </div>
+            <ul class="snize-product-filters-list mt-2">
+              <li *ngFor="let option of filterOptions" class="mb-2">
+                <label class="flex items-center cursor-pointer">
+                  <input class="form-checkbox h-4 w-4 text-blue-600" type="checkbox" name="discount_relative" [value]="option.value">
+                  <span class="ml-2 text-gray-700">{{ option.label }} <span class="text-gray-500">({{ option.count }})</span></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+    <h2 id="accordion-flush-heading-2">
+      <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+        <span>Is there a Figma file available?</span>
+        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+        </svg>
+      </button>
+    </h2>
+    <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+      <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+        <div id="snize_filters_block_discount_relative" class="p-4 bg-white shadow-md rounded-md">
+            <div class="snize-product-filters-title flex justify-between items-center cursor-pointer">
+              <span class="text-lg font-semibold">Discount</span>
+              <div>
+                <i class="snize-product-filters-close"></i>
+                <i class="snize-product-filters-open"></i>
+              </div>
+            </div>
+            <ul class="snize-product-filters-list mt-2">
+              <li *ngFor="let option of filterOptions" class="mb-2">
+                <label class="flex items-center cursor-pointer">
+                  <input class="form-checkbox h-4 w-4 text-blue-600" type="checkbox" name="discount_relative" [value]="option.value">
+                  <span class="ml-2 text-gray-700">{{ option.label }} <span class="text-gray-500">({{ option.count }})</span></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+    <h2 id="accordion-flush-heading-3">
+      <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+        <span>What are the differences between Flowbite and Tailwind UI?</span>
+        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+        </svg>
+      </button>
+    </h2>
+    <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+        <div id="snize_filters_block_discount_relative" class="p-4 bg-white shadow-md rounded-md">
+            <div class="snize-product-filters-title flex justify-between items-center cursor-pointer">
+              <span class="text-lg font-semibold">Discount</span>
+              <div>
+                <i class="snize-product-filters-close"></i>
+                <i class="snize-product-filters-open"></i>
+              </div>
+            </div>
+            <ul class="snize-product-filters-list mt-2">
+              <li *ngFor="let option of filterOptions" class="mb-2">
+                <label class="flex items-center cursor-pointer">
+                  <input class="form-checkbox h-4 w-4 text-blue-600" type="checkbox" name="discount_relative" [value]="option.value">
+                  <span class="ml-2 text-gray-700">{{ option.label }} <span class="text-gray-500">({{ option.count }})</span></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+<div id="snize_filters_block_discount_relative" class="p-4 bg-white shadow-md rounded-md">
+    <div class="snize-product-filters-title flex justify-between items-center cursor-pointer">
+      <span class="text-lg font-semibold">Discount</span>
+      <div>
+        <i class="snize-product-filters-close"></i>
+        <i class="snize-product-filters-open"></i>
+      </div>
+    </div>
+    <ul class="snize-product-filters-list mt-2">
+      <li *ngFor="let option of filterOptions" class="mb-2">
+        <label class="flex items-center cursor-pointer">
+          <input class="form-checkbox h-4 w-4 text-blue-600" type="checkbox" name="discount_relative" [value]="option.value">
+          <span class="ml-2 text-gray-700">{{ option.label }} <span class="text-gray-500">({{ option.count }})</span></span>
+        </label>
+      </li>
+    </ul>
+  </div>
+  

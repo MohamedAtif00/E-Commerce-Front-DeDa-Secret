@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 
 @Component({
@@ -6,10 +6,10 @@ import { initFlowbite } from 'flowbite';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements AfterViewInit{
   title = 'E-Commerce';
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     initFlowbite();
   }
   
