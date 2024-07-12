@@ -7,4 +7,32 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+
+
+
+  megashow()
+  {
+    var element = document.getElementById('mega-menu-full-image-dropdown');
+    element.classList.remove('hidden');
+  }
+
+  bundleMegaShow()
+  {
+    var element = document.getElementById('mega-menu-full-image-dropdown-bundle');
+    element.classList.remove('hidden');
+  }
+
+  megahide()
+  {
+    var element = document.getElementById('mega-menu-full-image-dropdown');
+    element.classList.add('hidden');
+  }
+
+  BundleMegaHide()
+  {
+    var element = document.getElementById('mega-menu-full-image-dropdown-bundle');
+    element.classList.add('hidden');
+  }
+
+
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductCarouselComponent } from './shared/components/product-carousel/product-carousel.component';
+import { AdminHeaderComponent } from './layout/admin-header/admin-header.component';
 
 
 @NgModule({
@@ -14,6 +14,7 @@ import { ProductCarouselComponent } from './shared/components/product-carousel/p
     BrowserModule,
     AppRoutingModule
   ],
+  exports:[],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode:'class',
   content: [
     "./src/**/*.{html,ts}",
     "./node_modules/flowbite/**/*.js"
@@ -20,7 +21,9 @@ module.exports = {
     },
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin')({
+      charts:true
+    })
   ],
 }
 
