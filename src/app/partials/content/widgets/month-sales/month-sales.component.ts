@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
+import ApexCharts from 'apexcharts';
+
 
 @Component({
   selector: 'app-month-sales',
@@ -20,8 +22,8 @@ export class MonthSalesComponent implements OnInit{
     
       const options = {
       chart: {
-        height: "100%",
-        maxWidth: "100%",
+        height: "273rem",
+        maxWidth: "100rem",
         type: "area",
         fontFamily: "Inter, sans-serif",
         dropShadow: {
@@ -65,7 +67,7 @@ export class MonthSalesComponent implements OnInit{
         {
           name: "New users",
           data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: "#1A56DB",
+          color: "green",
         },
       ],
       xaxis: {

@@ -1,0 +1,50 @@
+<div
+  class="bg-gray-100 w-[20rem] h-fit flex flex-col gap-5 items-center align-middle p-10 border rounded-xl"
+>
+  <p class="text-lg font-bold">Thumbnail</p>
+
+  <div class="flex items-center justify-center w-full">
+    <label
+      for="dropzone-file"
+      class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+    >
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <img
+          [src]="
+            imageUrl ??
+            '../../../../../assets/img/dashboard/product/blank-image.svg'
+          "
+          alt=""
+          class="h-full"
+        />
+      </div>
+      <input
+        id="dropzone-file"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </label>
+  </div>
+
+  <!-- <div class="w-full h-[16rem] relative">
+    <div
+      class="h-full w-full bg-cover bg-no-repeat bg-center border border-spacing-4 rounded-lg shadow-md shadow-gray-500"
+      style="
+        background-image: url(../../../../../assets/img/dashboard/product/blank-image.svg);
+      "
+    ></div>
+    <input
+      for=""
+      type="file"
+      style="
+        background-image: url(../../../../../assets/img/dashboard/product/edit-svgrepo-com.svg);
+      "
+      class="border border-gray-200 text-lg h-6 w-6 rounded-full absolute top-6 right-6 bg-white bg-cover bg-center"
+    />
+  </div> -->
+  <p class="text-gray-400">
+    Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files
+    are accepted
+  </p>
+</div>

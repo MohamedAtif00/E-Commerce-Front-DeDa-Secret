@@ -1,0 +1,46 @@
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { initFlowbite } from 'flowbite';
+
+@Component({
+  selector: 'app-select-image',
+  templateUrl: './select-image.component.html',
+  styleUrl: './select-image.component.scss'
+})
+export class SelectImageComponent implements OnInit{
+
+  
+  backgroundImage: SafeStyle | null = null;
+  base64String: string | null = null;
+  imageUrl: string | null = null;
+
+  constructor(private _sanitizer: DomSanitizer) { }
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const result = e.target?.result;
+        if (typeof result === 'string') {
+          this.base64String = result;
+          this.imageUrl = result; // Directly use the Base64 string as the image URL
+          this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(`url(${result})`);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+
+
+
+}
