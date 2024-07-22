@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductCarouselComponent } from '../../shared/components/product-carousel/product-carousel.component';
+import { BasketService } from '../../shared/services/basket.service';
 
 
 @Component({
@@ -10,7 +10,16 @@ import { ProductCarouselComponent } from '../../shared/components/product-carous
 export class HomeComponent implements OnInit {
 
 
+
+
+  constructor(private basketService:BasketService) { }
+
   ngOnInit(): void {
-      
+    this.basketService.cart$.subscribe(data =>
+    { 
+      console.log('Basket',data);
+            
+    })
+    
   }
 }

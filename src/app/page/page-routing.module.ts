@@ -4,7 +4,8 @@ import { PageComponent } from './page.component';
 
 const routes:Routes = [
   {path:'',component:PageComponent,children:[
-    {path:'',loadChildren:()=>import('./../modules/home/home.module').then(x =>x.HomeModule)},
+    { path: '', loadChildren: () => import('./../modules/home/home.module').then(x => x.HomeModule) },
+    {path:'cart',loadChildren:()=>import('./../modules/cart/cart.module').then(x =>x.CartModule)}
     // {path:'admin',loadChildren:()=>import('./../modules/admin/admin.module').then(x =>x.AdminModule)}
   ]}
 ];

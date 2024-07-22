@@ -146,12 +146,15 @@
     </svg>
   </button>
 </nav>
-
+<!-- <img src="../../../assets/img/dashboard/header/aside.svg" alt="" /> -->
 <!-- drawer component -->
 <div
   id="drawer-navigation"
-  class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-gray-800 dark:bg-gray-800"
+  class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-no-repeat bg-cover bg-center bg-gray-800 dark:bg-gray-800"
   tabindex="-1"
+  style="
+    background-image: url('../../../assets/img/dashboard/header/aside.svg');
+  "
   aria-labelledby="drawer-navigation-label"
 >
   <h5
@@ -195,6 +198,13 @@
           href="#"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
           >Categories</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['add-category']"
+          class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
+          >Add Categories</a
         >
       </li>
       <li>

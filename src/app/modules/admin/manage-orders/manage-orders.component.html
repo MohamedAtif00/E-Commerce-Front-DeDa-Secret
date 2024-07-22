@@ -131,8 +131,8 @@
     </form>
     <div class="">
       <button
-        id="dropdownDefaultButton"
-        data-dropdown-toggle="dropdown"
+        id="dropdownButton"
+        data-dropdown-toggle="dropdownMenu"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
       >
@@ -156,12 +156,12 @@
 
       <!-- Dropdown menu -->
       <div
-        id="dropdown"
+        id="dropdownMenu"
         class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
       >
         <ul
           class="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownDefaultButton"
+          aria-labelledby="dropdownButton"
         >
           <li>
             <a
@@ -214,18 +214,18 @@
             <label for="checkbox-all-search" class="sr-only">checkbox</label>
           </div>
         </th>
-        <th scope="col-2" class="px-6 py-3">Order Id</th>
-        <th scope="col" class="px-6 py-3">Customer</th>
-        <th scope="col" class="px-6 py-3">Status</th>
+        <!-- <th scope="col-2" class="px-6 py-3">Order Id</th> -->
+        <th scope="col" class="px-6 py-3">Customer Name</th>
+        <th scope="col" class="px-6 py-3">phone Number</th>
         <th scope="col" class="px-6 py-3">Total</th>
         <th scope="col" class="px-6 py-3">Date Added</th>
-        <th scope="col" class="px-6 py-3">Date Modified</th>
+        <th scope="col" class="px-6 py-3">State</th>
         <th scope="col" class="px-6 py-3">Actions</th>
       </tr>
     </thead>
     <tbody>
       <!-- Repeat this row for each product -->
-      <tr>
+      <tr *ngFor="let order of orders" class="cursor-pointer hover:bg-gray-50">
         <td class="w-4 p-4">
           <div class="flex items-center">
             <input
@@ -239,9 +239,11 @@
           </div>
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-          <div class="text-sm font-bold leading-5 text-gray-900">1326</div>
+          <div class="text-sm font-bold leading-5 text-gray-900">
+            {{ order.customerName }}
+          </div>
         </td>
-        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+        <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div class="flex items-center">
             <div class="flex-shrink-0 h-10 w-10">
               <img
@@ -256,64 +258,50 @@
               </div>
             </div>
           </div>
-        </td>
+        </td> -->
         <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div class="text-sm leading-5 text-gray-900">03760003</div>
         </td> -->
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-          <div class="text-sm leading-5 text-gray-900">16</div>
+          <div class="text-sm leading-5 text-gray-900">
+            {{ order.phoneNumber }}
+          </div>
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-          <div class="text-sm leading-5 text-gray-900">$132.00</div>
+          <div class="text-sm leading-5 text-gray-900">
+            ${{ order.totalPrice }}
+          </div>
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-          <div class="flex items-center">
-            <svg
-              class="text-yellow-400 h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
-            <svg
-              class="text-yellow-400 h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
-            <svg
-              class="text-yellow-400 h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
-            <svg
-              class="text-yellow-400 h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
-            <svg
-              class="text-yellow-400 h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
+          <div class="text-sm leading-5 text-gray-900">
+            {{ order.createdDate }}
           </div>
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <span
-            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-            >Scheduled</span
+            [ngClass]="{
+              'bg-blue-100 text-blue-800 border-blue-400 px-2.5 py-0.5':
+                order.state === 'Pending',
+              'bg-gray-100 text-gray-800 border-gray-400 px-2.5 py-0.5':
+                order.state === 'Expired',
+              'bg-red-100 text-red-800 border-red-400 px-2.5 py-0.5':
+                order.state === 'Failed',
+              'bg-yellow-100 text-yellow-800 border-yellow-400 px-2.5 py-0.5':
+                order.state === 'Cancelled',
+              'bg-green-100 text-green-800 border-green-400 px-2.5 py-0.5':
+                order.state === 'Completed',
+              'bg-purple-100 text-purple-800 border-purple-400 px-2.5 py-0.5':
+                order.state === 'Denied',
+              'bg-orange-100 text-orange-800 border-orange-400 px-2.5 py-0.5':
+                order.state === 'Processing',
+              'bg-teal-100 text-teal-800 border-teal-400 px-2.5 py-0.5':
+                order.state === 'Refunded',
+              'bg-blue-200 text-blue-900 border-blue-500 px-2.5 py-0.5':
+                order.state === 'Delivered',
+              'bg-indigo-100 text-indigo-800 border-indigo-400 px-2.5 py-0.5':
+                order.state === 'Delivering'
+            }"
+            >{{ order.state }}</span
           >
         </td>
         <td
@@ -331,27 +319,44 @@
     <span
       class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto"
       >Showing
-      <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of
+      <span class="font-semibold text-gray-900 dark:text-white"
+        >{{ page.items.length }}-10</span
+      >
+      of
       <span class="font-semibold text-gray-900 dark:text-white"
         >1000</span
       ></span
     >
     <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-      <li>
+      <li *ngIf="page.hasPreviousPage">
         <a
-          href="#"
+          (click)="GoToPage(page.page - 1)"
           class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >Previous</a
         >
       </li>
-      <li>
+      <li *ngFor="let pageNumber of page.lastPages">
         <a
-          href="#"
+          (click)="GoToPage(pageNumber)"
           class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >1</a
+          >{{ pageNumber }}</a
         >
       </li>
       <li>
+        <a
+          (click)="GoToPage(page.page)"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >{{ page.page }}</a
+        >
+      </li>
+      <li *ngFor="let pageNumber of page.nextPages">
+        <a
+          (click)="GoToPage(pageNumber)"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >{{ pageNumber }}</a
+        >
+      </li>
+      <!-- <li>
         <a
           href="#"
           class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -379,10 +384,10 @@
           class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >5</a
         >
-      </li>
-      <li>
+      </li> -->
+      <li *ngIf="page.hasNextPage">
         <a
-          href="#"
+          (click)="GoToPage(page.page + 1)"
           class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >Next</a
         >

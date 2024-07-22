@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { initFlowbite } from 'flowbite';
+import { ProductService } from '../../../../shared/services/product.service';
 
 @Component({
   selector: 'app-select-image',
@@ -14,7 +15,7 @@ export class SelectImageComponent implements OnInit{
   base64String: string | null = null;
   imageUrl: string | null = null;
 
-  constructor(private _sanitizer: DomSanitizer) { }
+  constructor(private _sanitizer: DomSanitizer,private productService:ProductService) { }
 
   ngOnInit(): void {
     initFlowbite();
@@ -25,6 +26,7 @@ export class SelectImageComponent implements OnInit{
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      this.productService.file = file;
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {

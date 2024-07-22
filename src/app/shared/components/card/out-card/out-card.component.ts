@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InnerCardComponent } from '../inner-card/inner-card.component';
-import { Product } from '../../../model/product.model';
+import { GetAllProducts, Product } from '../../../model/product.model';
 
 @Component({
   selector: 'app-out-card',
@@ -11,7 +11,7 @@ import { Product } from '../../../model/product.model';
 })
 export class OutCardComponent {
 
-  @Input() Proudct:Product;
+  @Input() product:GetAllProducts;
 
 
 }

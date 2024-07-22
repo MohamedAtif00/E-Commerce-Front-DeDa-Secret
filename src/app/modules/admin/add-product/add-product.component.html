@@ -92,9 +92,27 @@
 </div>
 
 <div class="w-full px-12 py-5 flex justify-center">
-  <app-select-image class="w-1/4"></app-select-image>
+  <div class="w-1/4 flex flex-col gap-5">
+    <app-select-image class="w-full"></app-select-image>
+    <app-select-category></app-select-category>
+  </div>
   <div class="flex flex-col items-start gap-5 ms-7 w-full">
     <app-navigation></app-navigation>
     <router-outlet class="w-full"></router-outlet>
+    <div class="flex justify-end self-end">
+      <button
+        type="button"
+        class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        (click)="Create()"
+        class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        Create
+      </button>
+    </div>
   </div>
 </div>

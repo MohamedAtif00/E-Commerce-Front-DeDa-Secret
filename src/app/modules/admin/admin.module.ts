@@ -16,6 +16,10 @@ import { NavigationComponent } from './add-product/navigation/navigation.compone
 import { FormsModule } from '@angular/forms';
 import { ImageUploaderDirectiveDirective } from './add-product/image-uploader-directive.directive';
 import { AddImagesComponent } from './add-product/general-info/add-images/add-images.component';
+import { SelectCategoryComponent } from './add-product/select-category/select-category.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { ToastrModule } from 'ngx-toastr';
+import { AppModule } from '../../app.module';
 
 
 @NgModule({
@@ -31,13 +35,15 @@ import { AddImagesComponent } from './add-product/general-info/add-images/add-im
     NavigationComponent,
     ImageUploaderDirectiveDirective,
     AddImagesComponent,
+    SelectCategoryComponent,
+    AddCategoryComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     AdminRoutingModule,
     WidgetsModule,
-    TablesModule
+    TablesModule,
 ],exports:[
  
   ]

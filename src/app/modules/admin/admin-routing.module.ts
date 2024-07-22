@@ -6,6 +6,7 @@ import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { GeneralInfoComponent } from './add-product/general-info/general-info.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 const routes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -15,7 +16,9 @@ const routes: Routes = [
   {
     path: 'add-product', component: AddProductComponent, children: [
       {path:'',component:GeneralInfoComponent}
-  ]}
+    ]
+  },
+  {path:'add-category',component:AddCategoryComponent}
 ];
 
 @NgModule({

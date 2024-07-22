@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BasketService } from '../../shared/services/basket.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
 
+
+  constructor(public basketService:BasketService) { }
+
+
+  ngOnInit(): void {
+      
+  }
 
 
   megashow()

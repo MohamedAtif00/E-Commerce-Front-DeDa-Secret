@@ -1,31 +1,19 @@
 <div class="card h-[400px] w-[250px] flex flex-col gap-10" (click)="clicked()">
-    <div class="z-10 bg-[url(https://cdn.shopify.com/s/files/1/0684/4923/9327/files/Body-Cravings-Lip-_-Cheek-Tint-Strawberry-2-Source-Beauty-Egypt_large.png?v=1718112601)] bg-center bg-cover">
-        <img  src="" alt="">
-    </div>
+  <div
+    [ngStyle]="{ 'background-image': 'url(' + productImage + ')' }"
+    class="z-10 bg-[url(https://cdn.shopify.com/s/files/1/0684/4923/9327/files/Body-Cravings-Lip-_-Cheek-Tint-Strawberry-2-Source-Beauty-Egypt_large.png?v=1718112601)] bg-center bg-cover"
+  >
+    <img [src]="" alt="" />
+  </div>
 </div>
 
-<h2 class="text-lg font-inter mt-5 mb-5">{{productName}}</h2>
-<h4 class="mb-5">EGP {{productPrice}}</h4>
+<h2 class="text-lg font-inter mt-5 mb-5">{{ productName }}</h2>
+<h4 class="mb-5">EGP {{ productPrice }}</h4>
 
-<button type="button" 
-        class="text-gray-900
-               bg-white border-2 
-               border-gray-300 
-               focus:outline-none 
-               hover:bg-[#FDEDE1] 
-               hover:border-[#FDEDE1]
-               focus:ring-4 
-               focus:ring-gray-100 
-               font-medium 
-               rounded-full 
-               text-sm 
-               w-full
-               px-5 
-               py-2.5 
-               me-2 
-               mb-2 
-               dark:bg-gray-800 
-               dark:text-white 
-               dark:border-gray-600 
-               dark:hover:bg-gray-700 
-               dark:hover:border-gray-600 dark:focus:ring-gray-700">Add To Cart</button>
+<button
+  type="button"
+  (click)="AddToCart()"
+  class="text-gray-900 bg-white border-2 border-gray-300 focus:outline-none hover:bg-[#FDEDE1] hover:border-[#FDEDE1] focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm w-full px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+>
+  Add To Cart
+</button>

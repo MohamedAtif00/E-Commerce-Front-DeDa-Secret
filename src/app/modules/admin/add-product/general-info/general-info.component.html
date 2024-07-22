@@ -10,8 +10,9 @@
       <input
         type="email"
         id="email"
+        (change)="SetName($event)"
         aria-describedby="helper-text-explanation"
-        class="bg-white border border-gray-300 text-gray-200 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-white border border-gray-300 text-gray-600 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Product Name"
       />
 
@@ -29,6 +30,7 @@
       <textarea
         id="message"
         rows="4"
+        (change)="SetDescription($event)"
         class="block p-2.5 w-full h-[15rem] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Write description here..."
       ></textarea>
@@ -42,6 +44,8 @@
   </div>
 </div>
 
+<app-add-images></app-add-images>
+
 <div class="w-[70rem] h-fit bg-white p-5 py-10 mt-6 rounded-xl">
   <p class="text-2xl font-bold mb-5">Price</p>
   <div class="w-full">
@@ -54,8 +58,9 @@
       <input
         type="email"
         id="email"
+        (change)="SetPrice($event)"
         aria-describedby="helper-text-explanation"
-        class="bg-white border border-gray-300 text-gray-200 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-white border border-gray-300 text-gray-600 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Product Price"
       />
 
@@ -127,6 +132,25 @@
         </div>
         <div
           class="flex flex-col my-5 items-center"
+          *ngIf="selectOption == 'fixd'"
+        >
+          <p class="self-start mb-4 text-lg">Fixed Discounted Price</p>
+
+          <input
+            id="medium-range"
+            type="number"
+            class="w-full h-10 mb-6 bg-gray-200 rounded-lg appearance-none dark:bg-gray-700"
+          />
+          <p
+            id="helper-text-explanation"
+            class="mt-2 text-sm self-start text-gray-500 dark:text-gray-400"
+          >
+            Set the discounted product price. The product will be reduced at the
+            determined fixed price
+          </p>
+        </div>
+        <div
+          class="flex flex-col my-5 items-center"
           *ngIf="selectOption == 'per'"
         >
           <p class="self-start mb-4">Set Discount Percentage</p>
@@ -151,5 +175,24 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="bg-white p-7 mt-10 rounded-lg">
+  <p class="text-2xl mb-5">Inventory</p>
+  <div>
+    <label
+      for="first_name"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Quantity</label
+    >
+    <input
+      type="text"
+      id="first_name"
+      (change)="SetQuantity($event)"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="Add Quiantity"
+      required
+    />
   </div>
 </div>

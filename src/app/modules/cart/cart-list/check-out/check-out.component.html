@@ -1,0 +1,199 @@
+<!-- drawer init and toggle -->
+<!-- <div class="text-center">
+  <button
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    type="button"
+    data-drawer-target="drawer-right-example"
+    data-drawer-show="drawer-right-example"
+    data-drawer-placement="right"
+    aria-controls="drawer-right-example"
+  >
+    Show right drawer
+  </button>
+</div> -->
+
+<!-- drawer component -->
+<div
+  id="drawer-right-example"
+  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-4/12 dark:bg-gray-800"
+  tabindex="-1"
+  aria-labelledby="drawer-right-label"
+>
+  <h5
+    id="drawer-right-label"
+    class="inline-flex items-center mb-4 text-lg text-black font-semibold dark:text-gray-400"
+  >
+    Complete Order
+  </h5>
+  <button
+    type="button"
+    data-drawer-hide="drawer-right-example"
+    aria-controls="drawer-right-example"
+    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+  >
+    <svg
+      class="w-3 h-3"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 14 14"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+      />
+    </svg>
+    <span class="sr-only">Close menu</span>
+  </button>
+  <div class="max-w-md mx-auto mt-10">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="fullName" class="block text-sm font-medium text-gray-700"
+          >Full Name</label
+        >
+        <input
+          id="fullName"
+          type="text"
+          formControlName="fullName"
+          class="mt-1 block w-full px-3 py-2 border-0 border-b-2 appearance-none border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        <div
+          *ngIf="
+            contactForm.get('fullName')?.invalid &&
+            contactForm.get('fullName')?.touched
+          "
+          class="text-red-600 text-sm"
+        >
+          Full Name is required.
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="phoneNumber"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Phone number:</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 19 18"
+            >
+              <path
+                d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            aria-describedby="helper-text-explanation"
+            class="bg-white border-0 border-b-2 appearance-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 focus:border-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="123-456-7890"
+          />
+        </div>
+        <div
+          *ngIf="
+            (phoneNumber?.invalid && phoneNumber?.touched) ||
+            (phoneNumber?.invalid && submitted)
+          "
+          class="text-red-600 text-sm"
+        >
+          <div *ngIf="phoneNumber?.errors?.['required']">
+            Phone Number is required.
+          </div>
+          <!-- <div *ngIf="phoneNumber?.errors?.['pattern']">
+            Phone Number must be 10 digits.
+          </div> -->
+        </div>
+        <div
+          *ngIf="
+            contactForm.get('phoneNumber')?.invalid &&
+            contactForm.get('phoneNumber')?.touched
+          "
+          class="text-red-600 text-sm"
+        >
+          Valid Phone Number is required.
+        </div>
+      </div>
+
+      <div formGroupName="address">
+        <label for="streetName" class="block text-sm font-medium text-gray-700"
+          >Street Name</label
+        >
+        <input
+          id="streetName"
+          type="text"
+          formControlName="streetName"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        <div
+          *ngIf="
+            contactForm.get('address.streetName')?.invalid &&
+            contactForm.get('address.streetName')?.touched
+          "
+          class="text-red-600 text-sm"
+        >
+          Street Name is required.
+        </div>
+
+        <label for="state" class="block text-sm font-medium text-gray-700 mt-4"
+          >State</label
+        >
+        <input
+          id="state"
+          type="text"
+          formControlName="state"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        <div
+          *ngIf="
+            contactForm.get('address.state')?.invalid &&
+            contactForm.get('address.state')?.touched
+          "
+          class="text-red-600 text-sm"
+        >
+          State is required.
+        </div>
+
+        <label for="city" class="block text-sm font-medium text-gray-700 mt-4"
+          >City</label
+        >
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        <div
+          *ngIf="
+            contactForm.get('address.city')?.invalid &&
+            contactForm.get('address.city')?.touched
+          "
+          class="text-red-600 text-sm"
+        >
+          City is required.
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
