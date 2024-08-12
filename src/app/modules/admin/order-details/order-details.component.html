@@ -43,7 +43,7 @@
               />
             </svg>
             <a
-              href="#"
+              [routerLink]="['../../']"
               class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
               >Orders List</a
             >
@@ -122,7 +122,7 @@
 <div class="flex flex-col m-10 gap-10">
   <div class="flex gap-10">
     <div class="w-1/2 bg-white p-5 border-0 rounded-lg">
-      <h3 class="text-xl font-bold m-3 mb-7">Order Details (#14534)</h3>
+      <h3 class="text-xl font-bold m-3 mb-7">Order Details</h3>
       <div class="flex justify-between text-gray-400">
         <p class="flex">
           <span class="svg-icon svg-icon-2 me-2">
@@ -146,7 +146,7 @@
           </span>
           Date Added
         </p>
-        <p>30/03/2022</p>
+        <p>{{ formatDate(Order.createdDate) }}</p>
       </div>
       <hr class="my-3" />
       <div class="flex text-gray-400 h-[30px] justify-between">
@@ -212,7 +212,7 @@
           </span>
           Customer
         </p>
-        <p>Dan Walson</p>
+        <p>{{ Order.customerName }}</p>
       </div>
       <hr class="my-3" />
       <div class="flex text-gray-400 h-[30px] justify-between">
@@ -267,7 +267,7 @@
           >Phone
         </p>
         <p class="flex gap-5 font-bold">
-          {{ "+6141 234 567" }}
+          {{ Order.phoneNumber }}
         </p>
       </div>
     </div>
@@ -279,10 +279,10 @@
     <div class="flex flex-col w-1/2">
       <div class="text-lg font-bold self-center">Shipping Address</div>
       <p>
-        Unit 1/23 Hastings Road,<br />
-        Melbourne 3000,<br />
-        Victorias,<br />
-        Australia.
+        <span class="font-bold"> State </span>: {{ Order.address.state }},<br />
+        <span class="font-bold"> City</span> : {{ Order.address.city }},<br />
+        <span class="font-bold"> Street</span> :
+        {{ Order.address.street }},<br />
       </p>
     </div>
     <div class="w-full h-[10rem]">
@@ -302,50 +302,27 @@
       <thead>
         <tr class="w-full border-b">
           <th class="py-2 text-left">PRODUCT</th>
-          <th class="py-2 text-left">SKU</th>
           <th class="py-2 text-left">QTY</th>
           <th class="py-2 text-left">UNIT PRICE</th>
           <th class="py-2 text-left">TOTAL</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="border-b">
+        <tr *ngFor="let product of Order.products" class="border-b">
           <td class="flex items-center py-2">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="Product 1"
-              class="w-12 h-12 mr-2"
-            />
+            <img [src]="product.url" alt="Product 1" class="w-12 h-12 mr-2" />
             <div>
-              <p class="font-medium">Product 1</p>
+              <p class="font-medium">{{ product.productName }}</p>
               <p class="text-sm text-gray-500">Delivery Date: 30/03/2022</p>
             </div>
           </td>
-          <td class="py-2">04307006</td>
-          <td class="py-2">2</td>
-          <td class="py-2">$120.00</td>
-          <td class="py-2">$240.00</td>
-        </tr>
-        <tr class="border-b">
-          <td class="flex items-center py-2">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="Footwear"
-              class="w-12 h-12 mr-2"
-            />
-            <div>
-              <p class="font-medium">Footwear</p>
-              <p class="text-sm text-gray-500">Delivery Date: 30/03/2022</p>
-            </div>
-          </td>
-          <td class="py-2">03248002</td>
-          <td class="py-2">1</td>
-          <td class="py-2">$24.00</td>
-          <td class="py-2">$24.00</td>
+          <td class="py-2">{{ product.quantity }}</td>
+          <td class="py-2">EGP{{ product.priceForUnit }}.00</td>
+          <td class="py-2">EGP{{ product.total }}.00</td>
         </tr>
       </tbody>
       <tfoot class="">
-        <tr>
+        <!-- <tr>
           <td colspan="4" class="text-right py-2 col-11">Subtotal</td>
           <td class="py-2">$264.00</td>
         </tr>
@@ -356,10 +333,10 @@
         <tr>
           <td colspan="4" class="text-right py-2">Shipping Rate</td>
           <td class="py-2 w-1/12">$5.00</td>
-        </tr>
+        </tr> -->
         <tr>
           <td colspan="4" class="text-right py-2 font-bold">Grand Total</td>
-          <td class="py-2 font-bold">$269.00</td>
+          <td class="py-2 font-bold">${{ Order.total }}.00</td>
         </tr>
       </tfoot>
     </table>

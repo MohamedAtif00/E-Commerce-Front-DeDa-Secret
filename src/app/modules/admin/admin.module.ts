@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { ManageProductsComponent } from './manage-products/manage-products.component';
@@ -20,6 +20,8 @@ import { SelectCategoryComponent } from './add-product/select-category/select-ca
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AppModule } from '../../app.module';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { AppModule } from '../../app.module';
     AddImagesComponent,
     SelectCategoryComponent,
     AddCategoryComponent,
+    ProductDetailsComponent,
+    AdministrationComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +48,11 @@ import { AppModule } from '../../app.module';
     AdminRoutingModule,
     WidgetsModule,
     TablesModule,
-],exports:[
+  ],
+  providers: [DatePipe
+    
+  ],
+  exports: [
  
   ]
 })

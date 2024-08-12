@@ -6,6 +6,7 @@ import type { InstanceOptions } from 'flowbite';
 import { development } from '../../../../environments/environment';
 import { GetAllOrders } from '../../../shared/model/order.model';
 import { PageList } from '../../../core/model/general-response.model';
+import { Router } from '@angular/router';
 
 
 class orders
@@ -24,8 +25,11 @@ export class ManageOrdersComponent implements OnInit{
 
   orders: GetAllOrders[];
   page: PageList<GetAllOrders[]>;
+  search: string;
+  sort: string;
+  sortDescending: boolean = false; // Added property for sort direction
 
-  constructor(private orderService:OrderService) { }
+  constructor(private orderService:OrderService,private router:Router) { }
 
 
   ngOnInit(): void {
@@ -33,9 +37,9 @@ export class ManageOrdersComponent implements OnInit{
     this.GetAllOrders(1);
   }
 
-  GetAllOrders(id:number)
+  GetAllOrders(page:number,sortColumn?:string,search?:string,des:boolean = false)
   { 
-    this.orderService.GetAllOrders(id).subscribe(data =>
+    this.orderService.GetAllOrders(page,sortColumn,search,des).subscribe(data =>
     { 
       console.log(data);
       this.orders = data.value.items
@@ -45,11 +49,24 @@ export class ManageOrdersComponent implements OnInit{
 
   GoToPage(page:number)
   { 
-    this.GetAllOrders(page);
+    this.GetAllOrders(page,this.sort,this.search);
   }
 
+  Search()
+  {
+    this.GetAllOrders(1,this.sort,this.search)
+  }
 
-
+  Sort(sortTerm: string) {
+    // Toggle sort direction if clicking the same term
+    if (sortTerm === this.sort) {
+      this.sortDescending = !this.sortDescending;
+    } else {
+      this.sortDescending = false; // Default to ascending for new sort terms
+      this.sort = sortTerm;
+    }
+    this.GetAllOrders(1, this.sort, this.search, this.sortDescending);
+  }
 
 
   DropDownMenuConfiguration()
@@ -88,4 +105,6 @@ export class ManageOrdersComponent implements OnInit{
         instanceOptions
     );
   }
+
+
 }

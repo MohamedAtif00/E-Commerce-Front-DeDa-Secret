@@ -1,29 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { initDropdowns, initFlowbite } from 'flowbite';
+ import type { DropdownOptions, DropdownInterface } from 'flowbite';
 import ApexCharts from 'apexcharts';
+import { CategoryProfits } from '../../../../modules/admin/model/categoriesProfits.model';
+import { AdministrationService } from '../../../../modules/admin/administration.service';
+import { FlowbiteService } from '../../../../core/services/flowbite.service';
 
 @Component({
   selector: 'app-earning-chart',
   templateUrl: './earning-chart.component.html',
-  styleUrl: './earning-chart.component.scss'
+  styleUrls: ['./earning-chart.component.scss']
 })
-export class EarningChartComponent implements OnInit{
+export class EarningChartComponent implements OnInit, OnDestroy {
+  categoriesProfits: CategoryProfits[];
+  chart: ApexCharts;
+  options: DropdownOptions;
+  daysDropdown: DropdownInterface;
 
 
 
-  ngOnInit(): void {
-      initFlowbite()
-
-      this.StartChart()
+  constructor(private adminService: AdministrationService,private fow:FlowbiteService) { 
   }
 
-  StartChart()
-  {
+  ngOnInit(): void {
+    initFlowbite();
 
+    this.GetCategoriesProfits()
+  }
+
+  GetCategoriesProfits()
+  { 
+    this.adminService.categoryProfits.subscribe(data => { 
+      this.categoriesProfits = data;
+      console.log('chart', this.categoriesProfits);
+      if(this.categoriesProfits.length != 0)
+      this.startChart();
+    });
+  }
+
+  ngOnDestroy(): void {
+   this.ClearCharts()
+  }
+
+  startChart(): void {
+    this.ClearCharts()
     const getChartOptions = () => {
       return {
-        series: [35.1, 23.5, 100.4, 5.4],
-        colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694"],
+        series: this.categoriesProfits.map(x => x.total),
+        colors: this.categoriesProfits.map(() => this.generateHeavyColor()),
         chart: {
           height: 320,
           width: "100%",
@@ -31,7 +55,6 @@ export class EarningChartComponent implements OnInit{
         },
         stroke: {
           colors: ["transparent"],
-          lineCap: "",
         },
         plotOptions: {
           pie: {
@@ -46,21 +69,20 @@ export class EarningChartComponent implements OnInit{
                 total: {
                   showAlways: true,
                   show: true,
-                  label: "Unique visitors",
+                  label: "Total Earnings",
                   fontFamily: "Inter, sans-serif",
                   formatter: function (w) {
-                    const sum = w.globals.seriesTotals.reduce((a, b) => {
-                      return a + b
-                    }, 0)
-                    return 'EGP' + sum + 'k'
-                  },
+                      const sum = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      return 'EGP'+ (sum >= 1000 ? (Math.round(sum / 1000) + 'k') : '');
+                  }
+                  ,
                 },
                 value: {
                   show: true,
                   fontFamily: "Inter, sans-serif",
                   offsetY: -20,
                   formatter: function (value) {
-                    return value + "k"
+                    return value + "k";
                   },
                 },
               },
@@ -73,25 +95,26 @@ export class EarningChartComponent implements OnInit{
             top: -2,
           },
         },
-        labels: ["Direct", "Sponsor", "Affiliate", "Email marketing"],
+        labels: this.categoriesProfits.map(x => x.categoryName),
         dataLabels: {
           enabled: false,
         },
         legend: {
           position: "bottom",
           fontFamily: "Inter, sans-serif",
+          fontSize:13
         },
         yaxis: {
           labels: {
             formatter: function (value) {
-              return value + "k"
+              return value + "k";
             },
           },
         },
         xaxis: {
           labels: {
             formatter: function (value) {
-              return value  + "k"
+              return value + "k";
             },
           },
           axisTicks: {
@@ -101,45 +124,106 @@ export class EarningChartComponent implements OnInit{
             show: false,
           },
         },
-      }
-    }
-    
-    if (document.getElementById("donut-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("donut-chart"), getChartOptions());
-      chart.render();
-    
-      // Get all the checkboxes by their class name
-      const checkboxes = document.querySelectorAll('#devices input[type="checkbox"]');
-    
-      // Function to handle the checkbox change event
-      function handleCheckboxChange(event, chart) {
-          const checkbox = event.target;
-          if (checkbox.checked) {
-              switch(checkbox.value) {
-                case 'desktop':
-                  chart.updateSeries([15.1, 22.5, 4.4, 8.4]);
-                  break;
-                case 'tablet':
-                  chart.updateSeries([25.1, 26.5, 1.4, 3.4]);
-                  break;
-                case 'mobile':
-                  chart.updateSeries([45.1, 27.5, 8.4, 2.4]);
-                  break;
-                default:
-                  chart.updateSeries([55.1, 28.5, 1.4, 5.4]);
-              }
-    
-          } else {
-              chart.updateSeries([35.1, 23.5, 2.4, 5.4]);
-          }
-      }
-    
-      // Attach the event listener to each checkbox
-      checkboxes.forEach((checkbox) => {
-          checkbox.addEventListener('change', (event) => handleCheckboxChange(event, chart));
-      });
+      };
+    };
+
+    const chartElement = document.getElementById("donut-chart");
+    if (chartElement && typeof ApexCharts !== 'undefined') {
+      this.chart = new ApexCharts(chartElement, getChartOptions());
+      this.chart.render();
+
+      this.setupCheckboxListeners();
     }
   }
+
+  private setupCheckboxListeners(): void {
+    const checkboxes = document.querySelectorAll('#devices input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', (event) => this.handleCheckboxChange(event));
+    });
+  }
+
+  private handleCheckboxChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (this.chart) {
+      if (checkbox.checked) {
+        this.updateChartSeries(checkbox.value);
+      } else {
+        // Reset to default values if needed
+        this.chart.updateSeries([35.1, 23.5, 2.4, 5.4]); // Example values
+      }
+    }
+  }
+
+  private updateChartSeries(value: string): void {
+  // Find the matching category based on 'categoyId'
+  const matchingCategory = this.categoriesProfits.find(category => category.categoyId === value);
+
+  if (matchingCategory) {
+    // Assuming 'total' is the data you want to update the chart with
+    // Create a series data array from the matching category
+    const seriesData = this.categoriesProfits.map(category => category.total);
+    
+    if (this.chart) {
+      console.log('Updating chart with series data:', seriesData);
+      this.chart.updateSeries(seriesData);
+    }
+  } else {
+    console.log('No matching category found for value:', value);
+    // Optionally handle the case where no matching data is found
+  }
+}
+
+
+
+  SetCategoryProfitsDays(days:number)
+  { 
+    this.ClearCharts()
+    this.adminService.categoriesProfitsDays.next(days)
+    this.GetCategoriesProfits()
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ClearCharts()
+  { 
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
+  // Method to generate a random hex color with heavy saturation
+  private generateHeavyColor(): string {
+     // Helper function to generate a random number between min and max
+    const getRandomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Generate a random hue between 0 and 360 degrees
+    const hue = getRandomInt(0, 360);
+
+    // Saturation is set to 100% to ensure vibrant colors
+    const saturation = 100;
+
+    // Lightness is set to between 70% and 90% to ensure lighter colors
+    const lightness = getRandomInt(70, 90);
+
+    // Return the HSL color formatted as a string
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;  
+  }
+
+
+  
+
 
 
 }

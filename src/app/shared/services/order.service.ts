@@ -5,6 +5,7 @@ import { CreateOrder, GetAllOrders } from "../model/order.model";
 import { HttpClient } from "@angular/common/http";
 import { GeneralResponse, PageList } from "../../core/model/general-response.model";
 import { GetAllProducts } from "../model/product.model";
+import { Order } from "../../modules/admin/model/order.model";
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class OrderService
 
     private _addOrder = development.localhosts.order.createOrder
     private _getAllOrders = development.localhosts.order.getAllOrders
+    private _getSingleOrder = development.localhosts.order.getSingleOrder
 
     constructor(private _http:GenericCRUDService) { }
 
@@ -25,9 +27,17 @@ export class OrderService
         return this._http.genericPostAPIData<GeneralResponse<any>>(this._addOrder,order);
     }
 
-    GetAllOrders(id:number)
+    GetAllOrders(page:number,sortTerm?:string,search?:string,des:boolean = false)
     { 
-        return this._http.genericGetAPIData<GeneralResponse<PageList<GetAllOrders[]>>>(this._getAllOrders+id);
+        let query = this._getAllOrders + page + (search ? `&searchTerm=${search}` : '') + (sortTerm ? `&sortColumn=${sortTerm}` : '') + (`&des=${des}`)
+        console.log(query);
+        
+        return this._http.genericGetAPIData<GeneralResponse<PageList<GetAllOrders[]>>>(query);
+    }
+
+    GetSingleOrder(id:string)
+    { 
+        return this._http.genericGetAPIData<GeneralResponse<Order>>(this._getSingleOrder+id)
     }
 
 }

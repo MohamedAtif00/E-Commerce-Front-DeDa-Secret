@@ -33,3 +33,32 @@
    .card:hover div {
     transform: translateY(-40px);
    }
+
+
+
+   /* Custom styles for success toast */
+   .custom-toast-success .toast-title {
+       color: #28a745;
+       background-color: black;
+       /* Change the title color */
+       font-weight: bold;
+       /* Make the title bold */
+   }
+
+   .custom-toast-success .toast-message {
+       color: #155724;
+       /* Change the message color */
+   }
+
+   /* Custom styles for error toast */
+   .custom-toast-error .toast-title {
+       color: #dc3545;
+       /* Change the title color */
+       font-weight: bold;
+       /* Make the title bold */
+   }
+
+   .custom-toast-error .toast-message {
+       color: #721c24;
+       /* Change the message color */
+   }

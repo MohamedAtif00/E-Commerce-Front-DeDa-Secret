@@ -1,11 +1,19 @@
 <div class="w-full bg-white rounded-lg shadow-md p-4">
-    <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
-    <div class="flex space-x-4 mb-4">
-      <button class="flex-1 p-2 rounded-md bg-blue-100 text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <img src="../../../../../assets/img/dashboard/ordre-table/hair-cream-cream-svgrepo-com.svg" alt="T-shirt" class="mx-auto h-6 w-6 mb-1">
-       Hair 
-      </button>
-      <button class="flex-1 p-2 rounded-md bg-gray-100 text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+  <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
+  <div class="flex space-x-4 mb-4">
+    <button
+      *ngFor="let category of categories"
+      (click)="GetProductsForCategory(category.id)"
+      class="flex-1 p-2 rounded-md bg-blue-100 text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <!-- <img
+        src="../../../../../assets/img/dashboard/ordre-table/hair-cream-cream-svgrepo-com.svg"
+        alt="T-shirt"
+        class="mx-auto h-6 w-6 mb-1"
+      /> -->
+      {{ category.name }}
+    </button>
+    <!-- <button class="flex-1 p-2 rounded-md bg-gray-100 text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <img src="../../../../../assets/img/dashboard/ordre-table/face-mask-mask-svgrepo-com.svg" alt="Gaming" class="mx-auto h-6 w-6 mb-1">
         Face
       </button>
@@ -20,54 +28,58 @@
       <button class="flex-1 p-2 rounded-md bg-gray-100 text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <img src="../../../../../assets/img/dashboard/ordre-table/skincare-svgrepo-com.svg" alt="Shoes" class="mx-auto h-6 w-6 mb-1">
         Skincare 
-      </button>
-    </div>
-    <table class="w-full text-left">
-      <thead>
-        <tr>
-          <th class="p-2">ITEM</th>
-          <th class="p-2">QTY</th>
-          <th class="p-2">PRICE</th>
-          <th class="p-2">TOTAL PRICE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-b">
-          <td class="p-2 flex items-center">
-            <img src="path/to/elephant-1802.png" alt="Elephant 1802" class="h-12 w-12 mr-2">
-            <div>
-              <div class="font-medium">Elephant 1802</div>
-              <div class="text-gray-500 text-sm">Item: #XDG-2347</div>
-            </div>
-          </td>
-          <td class="p-2">x1</td>
-          <td class="p-2">$72.00</td>
-          <td class="p-2">$126.00</td>
-        </tr>
-        <tr class="border-b">
-          <td class="p-2 flex items-center">
-            <img src="path/to/red-laga.png" alt="Red Laga" class="h-12 w-12 mr-2">
-            <div>
-              <div class="font-medium">Red Laga</div>
-              <div class="text-gray-500 text-sm">Item: #XDG-1321</div>
-            </div>
-          </td>
-          <td class="p-2">x2</td>
-          <td class="p-2">$45.00</td>
-          <td class="p-2">$76.00</td>
-        </tr>
-        <tr class="border-b">
-          <td class="p-2 flex items-center">
-            <img src="path/to/riseup.png" alt="RiseUP" class="h-12 w-12 mr-2">
-            <div>
-              <div class="font-medium">RiseUP</div>
-              <div class="text-gray-500 text-sm">Item: #XDG-4312</div>
-            </div>
-          </td>
-          <td class="p-2">x3</td>
-          <td class="p-2">$84.00</td>
-          <td class="p-2">$168.00</td>
-        </tr>
-      </tbody>
-    </table>
+      </button> -->
   </div>
+  <table class="w-full text-left">
+    <thead>
+      <tr>
+        <th class="p-2">ITEM</th>
+        <th class="p-2">QTY</th>
+        <th class="p-2">PRICE</th>
+        <th class="p-2">TOTAL PRICE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of recentOrders" class="border-b">
+        <td class="p-2 flex items-center">
+          <img [src]="order.url" alt="Elephant 1802" class="h-12 w-12 mr-2" />
+          <div>
+            <div class="font-medium">{{ order.itemName }}</div>
+            <div class="text-gray-500 text-sm">Item: #XDG-2347</div>
+          </div>
+        </td>
+        <td class="p-2">x{{ order.quantity }}</td>
+        <td class="p-2">EGP{{ order.priceForUnit }}.00</td>
+        <td class="p-2">EGP{{ order.totalPrice }}.00</td>
+      </tr>
+      <!-- <tr class="border-b">
+        <td class="p-2 flex items-center">
+          <img
+            src="path/to/red-laga.png"
+            alt="Red Laga"
+            class="h-12 w-12 mr-2"
+          />
+          <div>
+            <div class="font-medium">Red Laga</div>
+            <div class="text-gray-500 text-sm">Item: #XDG-1321</div>
+          </div>
+        </td>
+        <td class="p-2">x2</td>
+        <td class="p-2">$45.00</td>
+        <td class="p-2">$76.00</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-2 flex items-center">
+          <img src="path/to/riseup.png" alt="RiseUP" class="h-12 w-12 mr-2" />
+          <div>
+            <div class="font-medium">RiseUP</div>
+            <div class="text-gray-500 text-sm">Item: #XDG-4312</div>
+          </div>
+        </td>
+        <td class="p-2">x3</td>
+        <td class="p-2">$84.00</td>
+        <td class="p-2">$168.00</td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>

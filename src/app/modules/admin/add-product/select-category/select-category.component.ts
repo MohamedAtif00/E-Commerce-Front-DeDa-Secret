@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, output } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { Category } from '../../../../shared/model/category.model';
 import { Subject } from 'rxjs';
@@ -13,23 +13,26 @@ export class SelectCategoryComponent implements OnInit{
 
 
   categories: Category[];
+  @Input() selectedCategory: Category;
 
 
   constructor(private categoryService:CategoryService,public productService:ProductService) { }
 
   ngOnInit(): void {
     this.categoryService.GetAllCategories().subscribe(data => { 
-      console.log(data.result.value);
+      console.log('All Categoreis',data.value);
       
-      this.categories = data.result.value
+      this.categories = data.value
     })
+
+    let selector = document.getElementById('category');
   }
 
   selected(e:Event)
   {
     let value = (e.target as HTMLInputElement).value
-    this.productService.Product.categoryId = {value:value}
+    this.productService.Product.categoryId = value
     
-   }
+  }
 
 }

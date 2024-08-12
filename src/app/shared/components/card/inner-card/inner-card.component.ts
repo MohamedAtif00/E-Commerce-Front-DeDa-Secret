@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { BasketService } from '../../../services/basket.service';
 import { BasketItem } from '../../../model/basket.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-inner-card',
@@ -17,7 +18,7 @@ export class InnerCardComponent {
   @Input() productImage: string;
   @Input() productId: string;
 
-  constructor(private basketService:BasketService) { }
+  constructor(private basketService:BasketService,private toastrService:ToastrService) { }
 
 
   clicked()
@@ -27,15 +28,28 @@ export class InnerCardComponent {
   }
 
   AddToCart()
-  { 
-    let item: BasketItem = {ProductId:this.productId,Quantity:1,UnitPrice:this.productPrice,Total:this.productPrice} 
-    this.basketService.addItem(item);
+  {
+    try {
+      let item: BasketItem = { ProductId: this.productId, Quantity: 1, UnitPrice: this.productPrice, Total: this.productPrice }
+      this.basketService.addItem(item);
+      
+      this.toastrService.success(
+        'product added',
+        `${this.productName} Added successfully`,
+        {
+          enableHtml: true,
+        }
+      );
 
-    this.basketService.cart$.subscribe(data =>
+      this.basketService.cart$.subscribe(data => {
+        console.log('basket info', data);
+  
+      })
+    } catch (e)
     { 
-      console.log('basket info',data);
 
-    })
+    }
+      
 
     
     

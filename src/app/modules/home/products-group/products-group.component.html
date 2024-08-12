@@ -1,9 +1,13 @@
-<div class="mx-auto flex-col justify-between h-[1300px] align-middle">
-  <div
-    class="flex flex-row flex-wrap gap-5 gap-y-80 justify-start align-middle h-fit"
-  >
-    <div class="h-fit w-fit" *ngFor="let product of Products">
-      <app-card [product]="product"></app-card>
+<div class="">
+  <div class="h-fit pb-28">
+    <div
+      class="h-fit w-full flex flex-col xl:flex-row xl:gap-5 xl:justify-start xl:items-start xl:align-top xl:pt-0 xl:flex-wrap"
+    >
+      <app-card
+        [product]="product"
+        *ngFor="let product of Products"
+        class="h-[37rem] w-fit block"
+      ></app-card>
     </div>
     <!-- <div class="h-fit w-fit">
       <app-card [product]="product"></app-card>
@@ -23,7 +27,7 @@
   </div>
 </div>
 <app-pagination
-  class="mb-3.5"
+  class="mb-3.5 h-fit"
   [page]="page"
   (goToPage)="GoToPage($event)"
 ></app-pagination>

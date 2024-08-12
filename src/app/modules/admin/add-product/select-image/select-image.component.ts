@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { initFlowbite } from 'flowbite';
 import { ProductService } from '../../../../shared/services/product.service';
@@ -13,12 +13,15 @@ export class SelectImageComponent implements OnInit{
   
   backgroundImage: SafeStyle | null = null;
   base64String: string | null = null;
-  imageUrl: string | null = null;
+  @Input() imageUrl: string | null = null;
+  file = signal<File>(null)
 
   constructor(private _sanitizer: DomSanitizer,private productService:ProductService) { }
 
   ngOnInit(): void {
     initFlowbite();
+
+    
   }
 
   onFileSelected(event: Event): void {
@@ -26,7 +29,7 @@ export class SelectImageComponent implements OnInit{
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.productService.file = file;
+      this.productService.file.set(file);
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -43,6 +46,22 @@ export class SelectImageComponent implements OnInit{
   }
 
 
+
+  private convertBlobToImageUrl(blob: Blob | File): void {
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const result = e.target?.result;
+      if (typeof result === 'string') {
+        this.base64String = result;
+        this.imageUrl = result; // Directly use the Base64 string as the image URL
+        this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(`url(${result})`);
+      }
+    };
+    reader.readAsDataURL(blob);
+  }
+  
+
+  
 
 
 }

@@ -1,5 +1,6 @@
 
 
+
 class Product{
     id:string
     name: string
@@ -15,11 +16,9 @@ class CreateProduct
     name: string
     description: string
     discount: number
-    categoryId:
-        {
-            value:string
-        }
+    categoryId:string
     price: number
+    hasPercentage:boolean | null
     stockQuantity:number
 }
 
@@ -29,10 +28,7 @@ class GetAllProducts
     _name: string
     _description: string
     _discount: number
-    categoryId:
-        {
-            value:string
-        }
+    categoryId:string
     _price: {_discount:number,_price:number,_total:number}
     _stockQuantity: number
     masterImage:string |null
@@ -45,13 +41,22 @@ class GetSingleProduct
     _name: string
     _description: string
     _discount: number
-    categoryId:
-        {
-            value:string
-        }
+    categoryId:string
     _price: {_discount:number,_price:number,_total:number}
     _stockQuantity: number
-
- }
+    masterImage: Image;
+    images: Image[]
+}
+ 
+class Image
+{
+    name: string
+    isMaster: boolean
+    path: string
+    created: string
+    productId: string
+    id: string
+    url?:string
+}
  
 export { Product,CreateProduct,GetAllProducts,GetSingleProduct}

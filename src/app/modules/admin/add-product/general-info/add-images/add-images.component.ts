@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../../../shared/services/product.service';
 
-interface UploadedFile {
+export class UploadedFile {
   file: File;
   name: string;
   size: string;
   uploadResult: string;
   uploadStatus: number | undefined;
+  url?: string; // Store the URL here
 }
 
 @Component({
@@ -14,30 +15,48 @@ interface UploadedFile {
   templateUrl: './add-images.component.html',
   styleUrls: ['./add-images.component.scss']
 })
-export class AddImagesComponent {
+export class AddImagesComponent implements OnInit {
 
-  outputBoxVisible = false;
   files: UploadedFile[] = [];
 
   constructor(private productService: ProductService) {}
 
+  async ngOnInit(): Promise<void> {
+  this.productService.files.subscribe(async data => {
+    this.files = await Promise.all(data.map(async (file) => {
+      // Generate URL for each file
+      file.url = await this.createObjectURL(file.file);
+      console.log('image added',this.productService.files.value.length);
+      
+      return file;
+    }));
+
+    console.log('init file', this.files);
+  });
+}
+
   onFilesSelected(event: any) {
-    this.outputBoxVisible = true;
-
     const selectedFiles: FileList = event.target.files;
-
-    Array.from(selectedFiles).forEach(file => {
+    
+    Array.from(selectedFiles).forEach(async file => {
+      const url = await this.createObjectURL(file);
       const uploadedFile: UploadedFile = {
         file,
         name: file.name,
         size: `${(file.size / 1024).toFixed(2)} KB`,
         uploadResult: 'Ready to upload',
-        uploadStatus: undefined
+        uploadStatus: undefined,
+        url // Set the URL here
       };
 
-      this.files.push(uploadedFile);
-      this.productService.files.push(uploadedFile.file);
+      this.AddFiles(uploadedFile);
     });
+  }
+
+  AddFiles(uploadedFile: UploadedFile) {
+    this.files.push(uploadedFile);
+    this.productService.files.next(this.files);
+    this.productService.uploudfiles.push(uploadedFile);
   }
 
   handleDragOver(event: DragEvent) {
@@ -54,13 +73,46 @@ export class AddImagesComponent {
 
   removeFile(index: number) {
     this.files.splice(index, 1);
+    this.productService.files.next([])
+    this.productService.files.next(this.files)
     if (this.files.length === 0) {
-      this.outputBoxVisible = false;
+      
+      // this.outputBoxVisible = false;
     }
   }
 
   SendToService() {
     // Implement your logic to handle the files stored in `this.files` array.
-    // This could be some local processing or further actions based on your requirements.
+  }
+
+  public async setFiles(fileList: File[]) {
+    this.files = await Promise.all(fileList.map(async file => {
+      const url = await this.createObjectURL(file);
+      return {
+        file,
+        name: file.name,
+        size: `${(file.size / 1024).toFixed(2)} KB`,
+        uploadResult: 'Ready to upload',
+        uploadStatus: undefined,
+        url // Set the URL here
+      };
+    }));
+    this.productService.files.next(this.files);
+  }
+
+   createObjectURL(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        resolve(event.target.result); // Resolve the promise with the data URL
+      };
+
+      reader.onerror = (event: any) => {
+        reject(new Error("File could not be read: " + event.target.error.code));
+      };
+
+      reader.readAsDataURL(file); // Read the file as a data URL
+    });
   }
 }

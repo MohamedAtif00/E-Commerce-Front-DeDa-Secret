@@ -52,26 +52,14 @@
       </ol>
     </nav>
   </div>
-  <div class="">
-    <button
-      type="button"
-      class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-    >
-      Alternative
-    </button>
-    <button
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Default
-    </button>
-  </div>
 </div>
 <div
   class="relative overflow-x-auto p-10 flex-col gap-10 justify-between justify-items-start shadow-md bg-white border rounded-2xl m-5 border-white"
 >
-  <div class="flex justify-between align-middle bg-white">
-    <form class="w-[20rem] h-fit">
+  <div
+    class="flex-col justify-center align-middle bg-white 2xl:flex-row 2xl:justify-between 2xl:align-middle 2xl:items-center"
+  >
+    <form class="w-[20rem] h-fit inline-block">
       <label
         for="default-search"
         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -100,13 +88,37 @@
         <input
           type="search"
           id="default-search"
-          class="block w-full p-4 mb-5 ps-10 text-sm text-gray-900 border-0 border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          (input)="Search($event)"
+          class="block w-full p-4 mb-5 ps-10 text-sm text-gray-900 border-2 ring-blue-100 border-red-200 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Mockups, Logos..."
           required
         />
       </div>
     </form>
-    <div class="flex justify-end gap-10 h-fit pe-10">
+    <div class="flex justify-end gap-10 h-fit pe-10 w-2/3 float-end">
+      <button
+        id="sortButtonId"
+        data-dropdown-toggle="sort"
+        class="text-gray-400 bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex justify-between gap-10 items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button"
+      >
+        {{ sortColumn }}
+        <svg
+          class="w-2.5 h-2.5 ms-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
@@ -166,6 +178,88 @@
           </li>
         </ul>
       </div>
+      <div
+        id="sort"
+        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+      >
+        <ul
+          class="py-2 text-sm text-gray-700 dark:text-gray-200"
+          aria-labelledby="sortButtonId"
+        >
+          <li (click)="Sort(sort)" *ngFor="let sort of sorts">
+            <a
+              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
+              >{{ sort }}</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <button
+        id="dropdownDefaultButton"
+        data-dropdown-toggle="dropdown"
+        *ngIf="actionChecked"
+        class="text-white bg-blue-700 hover:bg-blue-800 w-fit focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button"
+      >
+        Action
+        <svg
+          class="w-2.5 h-2.5 ms-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+
+      <!-- Dropdown menu -->
+      <div
+        id="dropdown"
+        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+      >
+        <ul
+          class="py-2 text-sm text-gray-700 dark:text-gray-200"
+          aria-labelledby="dropdownDefaultButton"
+        >
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Settings</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Earnings</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Sign out</a
+            >
+          </li>
+        </ul>
+      </div>
+
       <button
         type="button"
         routerLink="../add-product"
@@ -188,15 +282,34 @@
           <div class="flex items-center">
             <input
               id="checkbox-all-search"
+              (change)="toggleAllCheckboxes($event)"
               type="checkbox"
               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label for="checkbox-all-search" class="sr-only">checkbox</label>
           </div>
         </th>
-        <th scope="col-2" class="px-6 py-3">Product</th>
-        <th scope="col" class="px-6 py-3">Qty</th>
-        <th scope="col" class="px-6 py-3">Price</th>
+        <th
+          scope="col-2"
+          (click)="Sort('name')"
+          class="px-6 py-3 cursor-pointer"
+        >
+          Product
+        </th>
+        <th
+          scope="col"
+          (click)="Sort('stockquantity')"
+          class="px-6 py-3 cursor-pointer"
+        >
+          Qty
+        </th>
+        <th
+          scope="col"
+          (click)="Sort('price')"
+          class="px-6 py-3 cursor-pointer"
+        >
+          Price
+        </th>
         <th scope="col" class="px-6 py-3">Rating</th>
         <th scope="col" class="px-6 py-3">Status</th>
         <th scope="col" class="px-6 py-3">Actions</th>
@@ -204,13 +317,19 @@
     </thead>
     <tbody>
       <!-- Repeat this row for each product -->
-      <tr *ngFor="let product of Products">
+      <tr
+        *ngFor="let product of Products; let i = index"
+        style="max-height: 10px"
+        class="cursor-pointer max-h-5 hover:bg-gray-200"
+        [routerLink]="['../product-details', product.id]"
+      >
         <td class="w-4 p-4">
           <div class="flex items-center">
             <input
-              id="checkbox-table-search-1"
+              id="product-checkbox"
               type="checkbox"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              class="product-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              (click)="$event.stopPropagation(); CheckProduct(product.id)"
             />
             <label for="checkbox-table-search-1" class="sr-only"
               >checkbox</label
@@ -233,24 +352,23 @@
             </div>
           </div>
         </td>
-        <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-          <div class="text-sm leading-5 text-gray-900">03760003</div>
-        </td> -->
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div class="text-sm leading-5 text-gray-900">
             {{ product._stockQuantity }}
           </div>
         </td>
-        <td class="px-6 py-4 whitespace-no-wrap border-b bordr-gray-200">
+        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div class="text-sm leading-5 text-gray-900">
             ${{ product._price._total }}
           </div>
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div class="flex items-center">
+            <!-- Rating SVGs -->
             <svg
               class="text-yellow-400 h-5 w-5 fill-current"
               viewBox="0 0 24 24"
+              (click)="$event.stopPropagation()"
             >
               <path
                 d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
@@ -259,6 +377,7 @@
             <svg
               class="text-yellow-400 h-5 w-5 fill-current"
               viewBox="0 0 24 24"
+              (click)="$event.stopPropagation()"
             >
               <path
                 d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
@@ -267,17 +386,17 @@
             <svg
               class="text-yellow-400 h-5 w-5 fill-current"
               viewBox="0 0 24 24"
+              (click)="$event.stopPropagation()"
             >
               <path
                 d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
               ></path>
             </svg>
-            <svg class="text-gray-400 h-5 w-5 fill-current" viewBox="0 0 24 24">
-              <path
-                d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
-              ></path>
-            </svg>
-            <svg class="text-gray-400 h-5 w-5 fill-current" viewBox="0 0 24 24">
+            <svg
+              class="text-gray-400 h-5 w-5 fill-current"
+              viewBox="0 0 24 24"
+              (click)="$event.stopPropagation()"
+            >
               <path
                 d="M12 2c-.588 0-1.126.264-1.47.691L7.41 7.214 1.75 8.342a1.504 1.504 0 0 0-.86 2.559l4.207 4.194-1 5.917c-.096.562.145 1.13.623 1.455.477.324 1.113.324 1.59 0l5.318-2.795 5.317 2.795c.478.324 1.114.324 1.59 0 .478-.325.72-.893.623-1.455l-1-5.917 4.207-4.194a1.504 1.504 0 0 0-.86-2.559l-5.661-.728L13.47 2.69A1.501 1.501 0 0 0 12 2z"
               ></path>
@@ -287,13 +406,73 @@
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <span
             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-            >Scheduled</span
           >
+            Scheduled
+          </span>
         </td>
+        <!-- Dropdown Trigger -->
         <td
+          (click)="$event.stopPropagation()"
           class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium"
         >
-          <button class="text-indigo-600 hover:text-indigo-900">Actions</button>
+          <button
+            [id]="'buttonAction' + i"
+            data-dropdown-toggle="dropdown"
+            class="text-white bg-green-400 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+          >
+            <svg
+              width="25px"
+              height="25px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.99996 2C9.44768 2 8.99996 2.44772 8.99996 3V4.58178C8.30471 4.86318 7.65844 5.23923 7.07704 5.69365L5.70573 4.90193C5.47605 4.76932 5.20309 4.73338 4.94691 4.80202C4.69073 4.87067 4.47232 5.03827 4.33971 5.26795L2.33971 8.73205C2.06357 9.21034 2.22744 9.82193 2.70573 10.0981L4.07654 10.8895C4.02603 11.2528 3.99997 11.6236 3.99997 12C3.99997 12.3764 4.02603 12.7471 4.07654 13.1105L2.70574 13.9019C2.47605 14.0345 2.30846 14.2529 2.23981 14.5091C2.17117 14.7653 2.2071 15.0382 2.33971 15.2679L4.33971 18.732C4.47232 18.9617 4.69074 19.1293 4.94692 19.198C5.2031 19.2666 5.47605 19.2307 5.70574 19.0981L7.07706 18.3063C7.65846 18.7607 8.30472 19.1368 8.99996 19.4182V21C8.99996 21.5523 9.44768 22 9.99996 22H14C14.5522 22 15 21.5523 15 21V19.4182C15.6952 19.1368 16.3415 18.7607 16.9229 18.3063L18.2942 19.0981C18.5239 19.2307 18.7968 19.2666 19.053 19.198C19.3092 19.1293 19.5276 18.9617 19.6602 18.7321L21.6602 15.268C21.7928 15.0383 21.8288 14.7653 21.7601 14.5091C21.6915 14.253 21.5239 14.0345 21.2942 13.9019L19.9234 13.1105C19.9739 12.7472 20 12.3764 20 12C20 11.6236 19.9739 11.2528 19.9234 10.8895L21.2942 10.0981C21.7725 9.82191 21.9364 9.21032 21.6602 8.73203L19.6602 5.26793C19.5276 5.03824 19.3092 4.87065 19.053 4.802C18.7968 4.73336 18.5239 4.76929 18.2942 4.9019L16.9229 5.69364C16.3415 5.23922 15.6952 4.86318 15 4.58178V3C15 2.44772 14.5522 2 14 2H9.99996ZM11 5.28986V4H13V5.28986C13 5.73228 13.2907 6.12211 13.7147 6.24831C14.6258 6.51947 15.4475 7.00198 16.1223 7.64029C16.4436 7.94424 16.9264 8.00099 17.3095 7.77984L18.4282 7.13395L19.4282 8.866L18.3109 9.51107C17.9281 9.73205 17.7358 10.1781 17.8379 10.6081C17.9437 11.0538 18 11.5197 18 12C18 12.4803 17.9437 12.9462 17.8379 13.3919C17.7358 13.8219 17.9281 14.2679 18.3109 14.4889L19.4282 15.134L18.4282 16.866L17.3094 16.2201C16.9264 15.999 16.4436 16.0557 16.1222 16.3597C15.4475 16.998 14.6258 17.4805 13.7147 17.7516C13.2907 17.8778 13 18.2677 13 18.7101V20H11V18.7101C11 18.2677 10.7092 17.8778 10.2852 17.7516C9.37409 17.4805 8.55246 16.998 7.87767 16.3597C7.55635 16.0557 7.07352 15.999 6.69048 16.2201L5.57176 16.866L4.57176 15.134L5.68905 14.4889C6.0718 14.2679 6.26409 13.8219 6.16201 13.3919C6.05621 12.9462 5.99997 12.4803 5.99997 12C5.99997 11.5197 6.0562 11.0538 6.16201 10.6081C6.26409 10.1781 6.07179 9.73207 5.68905 9.51109L4.57176 8.86603L5.57176 7.13398L6.69046 7.77986C7.07351 8.00101 7.55633 7.94425 7.87766 7.6403C8.55245 7.00199 9.37409 6.51948 10.2852 6.24831C10.7092 6.12211 11 5.73228 11 5.28986ZM9.99998 12C9.99998 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99998 13.1046 9.99998 12ZM12 8C9.79084 8 7.99998 9.79086 7.99998 12C7.99998 14.2091 9.79084 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z"
+                fill="#000000"
+              />
+            </svg>
+            <span class="px-5 flex align-middle items-center">
+              Action
+              <svg
+                class="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </span>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            [id]="'action' + i"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownDefaultButton"
+            >
+              <li>
+                <a
+                  (click)="DeleteProduct(product.id)"
+                  class="block text-red-600 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >Delete</a
+                >
+              </li>
+            </ul>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -305,19 +484,22 @@
     <span
       class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto"
       >Showing
-      <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of
       <span class="font-semibold text-gray-900 dark:text-white"
-        >1000</span
-      ></span
+        >1-{{ pagelist().pageSize }}</span
+      >
+      of
+      <span class="font-semibold text-gray-900 dark:text-white">{{
+        pagelist().totalCount
+      }}</span></span
     >
     <ul
       class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8"
       *ngIf="pagelist()"
     >
-      <li>
+      <li *ngIf="pagelist().hasPreviousPage">
         <a
-          href="#"
-          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          (click)="GetProductPage(pagelist().page - 1)"
+          class="flex items-center cursor-pointer justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >Previous</a
         >
       </li>

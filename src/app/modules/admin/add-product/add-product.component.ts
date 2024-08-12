@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { CreateProduct, Product } from '../../../shared/model/product.model';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
+  templateUrl:'./add-product.component.html',
   styleUrl: './add-product.component.scss'
 })
 export class AddProductComponent implements OnInit, OnDestroy {
@@ -13,30 +14,70 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   product: CreateProduct;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,private router:Router) { }
 
 
   ngOnInit(): void {
-      
+      this.productService.files.next([])
   }
 
 
-  Create()
-  {
-    this.productService.CreateProduct().subscribe(product =>
-    {
-      console.log(product);
-      let id = product.value.id;
 
-      forkJoin([this.productService.AddMatserImage(id), this.productService.AddProductImages(id)]).subscribe(data =>
-      { 
-        console.log(data);
-                
-      })
-     });
-   }
+
+  Create() {
+    console.log('add product component start adding product');
     
+  this.productService.CreateNewProduct().pipe(
+    switchMap(product => {
+      console.log(product);
+      const id = product.value.id;
+      console.log(this.productService.files.value);
+      console.log('master image ', this.productService.file);
+      
+      return this.productService.files$.pipe(
+        switchMap(files => {
+          // Prepare an array of observables for each file upload
+          const uploadObservables = files.map(file => {
+            const formData = new FormData();
+            formData.append('file', file.file); // Append single file
+            formData.append('name', file.name); // Append name of the file
+            
+            // Return observable for single file upload with error handling
+            return this.productService.AddProductImages(formData, id).pipe(
+              catchError(error => {
+                console.error(`Error uploading file ${file.name}:`, error);
+                // Return a default value or empty observable in case of an error
+                return of(null);
+              })
+            );
+          });
 
+          // Wait for all file uploads to complete
+          return forkJoin(uploadObservables);
+        }),
+        switchMap(() => {
+          console.log('start master');
+          
+          // After all files have been uploaded, send a request to add master image
+          return this.productService.AddMatserImage(id);
+        }),
+        catchError(err => {
+          console.error('Error occurred while uploading files', err);
+          // Handle any errors that occur in the whole operation here
+          return of(null); // Return a default value or empty observable
+        })
+      );
+    })
+  ).subscribe({
+    next: (data) => {
+      console.log('Upload successful:', data);
+      this.router.navigate(['admin','products']);
+    },
+    error: (err) => {
+      console.error('Error occurred while processing', err);
+    }
+  });
+}
 
 
 
@@ -44,6 +85,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.productService.Product = new CreateProduct();
     this.productService.file = null
-    this.productService.files = []
+    this.productService.files.next([])
   }
 }
