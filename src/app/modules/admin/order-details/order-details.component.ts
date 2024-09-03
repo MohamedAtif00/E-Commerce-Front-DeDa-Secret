@@ -25,7 +25,6 @@ export class OrderDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    console.log(this.id);
     this.GetSingleOrder(this.id)
   }
 
@@ -35,9 +34,7 @@ export class OrderDetailsComponent implements OnInit{
     this.orderService.GetSingleOrder(id).subscribe(data =>
     { 
       this.Order = data.value
-      console.log(this.Order);
       
-      console.log('the Date', this.Order.createdDate);
       
       this.Order.products.map(e =>
       { 

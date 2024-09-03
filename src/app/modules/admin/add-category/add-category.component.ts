@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ToastrComponent } from '../../../shared/components/toastr/toastr.component';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-add-category',
@@ -15,7 +16,11 @@ export class AddCategoryComponent {
 
   name: string;
 
-  constructor(private categoryService: CategoryService,private toastrService:ToastrService,private router:Router) { }
+  constructor(
+    private categoryService: CategoryService,
+    private toastrService: ToastrService,
+    public translate:TranslationService,
+    private router: Router) { }
   
 
   CreateCategory()

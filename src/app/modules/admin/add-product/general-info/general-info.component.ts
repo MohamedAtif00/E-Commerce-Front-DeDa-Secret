@@ -2,6 +2,7 @@ import { Component, Input, OnInit, signal } from '@angular/core';
 import { ImageFile } from '../image-uploader-directive.directive';
 import { ProductService } from '../../../../shared/services/product.service';
 import { UploadedFile } from './add-images/add-images.component';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-general-info',
@@ -22,14 +23,13 @@ export class GeneralInfoComponent implements OnInit{
   @Input() files = signal<UploadedFile[]>([]); // Receive files from parent
 
 
-  constructor(private productService: ProductService) { 
+  constructor(private productService: ProductService,public translate:TranslationService) { 
      // Example file initialization
     
   } 
 
 
   ngOnInit(): void {
-      console.log('recieved images',this.files);
       
   }
 
@@ -44,7 +44,6 @@ export class GeneralInfoComponent implements OnInit{
     const value = this.GetValue(e)
     this.productService.Product.discount = parseInt(value) 
     this.productService.Product.hasPercentage = false;
-    console.log(this.productService.Product.discount);
     
   }
 
@@ -85,7 +84,6 @@ export class GeneralInfoComponent implements OnInit{
   SetQuantity(e:Event) { 
     let value = this.GetValue(e)
     this.productService.Product.stockQuantity = parseInt(value)
-    console.log(this.productService.Product);
     
   }
 

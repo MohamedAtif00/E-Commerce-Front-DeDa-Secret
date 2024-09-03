@@ -3,6 +3,7 @@ import { initFlowbite } from 'flowbite';
 import ApexCharts from 'apexcharts';
 import { AdministrationService } from '../../../../core/services/administration.service';
 import { DailyEarningProfits } from '../../../../core/model/administration.model';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-daily-sales-chart',
@@ -14,7 +15,7 @@ export class DailySalesChartComponent implements OnInit{
 
   dailyProfits: DailyEarningProfits[] = []
 
-  constructor(private administrationService:AdministrationService) { }
+  constructor(private administrationService:AdministrationService,private translate:TranslationService) { }
 
   ngOnInit(): void {
     initFlowbite()
@@ -27,7 +28,6 @@ export class DailySalesChartComponent implements OnInit{
   {
     return this.administrationService.GetDailyEarningProfits().subscribe(data =>
     { 
-      console.log('daily profits',data);
       this.dailyProfits = data.value
       this.StartChart(this.dailyProfits);
     })
@@ -41,7 +41,7 @@ export class DailySalesChartComponent implements OnInit{
       colors: ["#1A56DB", "#FDBA8C"],
       series: [
         {
-          name: "Organic",
+          name: "Total",
           color: "#1A56DB",
           data: data.map(e => { return { x: e.day.substring(0,3), y: e.total } })
             //[

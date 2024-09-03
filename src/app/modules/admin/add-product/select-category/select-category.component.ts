@@ -3,6 +3,7 @@ import { CategoryService } from '../../../../shared/services/category.service';
 import { Category } from '../../../../shared/model/category.model';
 import { Subject } from 'rxjs';
 import { ProductService } from '../../../../shared/services/product.service';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-select-category',
@@ -16,11 +17,13 @@ export class SelectCategoryComponent implements OnInit{
   @Input() selectedCategory: Category;
 
 
-  constructor(private categoryService:CategoryService,public productService:ProductService) { }
+  constructor(private categoryService: CategoryService,
+    public productService: ProductService,
+    public translate:TranslationService
+  ) { }
 
   ngOnInit(): void {
     this.categoryService.GetAllCategories().subscribe(data => { 
-      console.log('All Categoreis',data.value);
       
       this.categories = data.value
     })

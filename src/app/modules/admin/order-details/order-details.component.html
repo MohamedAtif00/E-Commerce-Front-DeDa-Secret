@@ -1,6 +1,8 @@
 <div class="h-fit flex justify-between px-5 py-2 bg-white border-t-2">
   <div class="flex justify-start gap-10 w-1/2 ps-10">
-    <h3 class="text-xl font-bold ms-10 my-auto">Orders Details</h3>
+    <h3 class="text-xl font-bold ms-10 my-auto">
+      {{ "ODRERDETAILS.ORDERDETIALS" | translate }}
+    </h3>
 
     <nav class="flex" aria-label="Breadcrumb">
       <ol
@@ -22,7 +24,7 @@
                 d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
               />
             </svg>
-            Dashboard
+            {{ "ODRERDETAILS.DASHBOARD" | translate }}
           </a>
         </li>
         <li>
@@ -45,7 +47,7 @@
             <a
               [routerLink]="['../../']"
               class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-              >Orders List</a
+              >{{ "ODRERDETAILS.ORDERLIST" | translate }}</a
             >
           </div>
         </li>
@@ -69,26 +71,12 @@
             <a
               href="#"
               class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-              >Orders Details</a
+              >{{ "ODRERDETAILS.ORDERDETIALS" | translate }}</a
             >
           </div>
         </li>
       </ol>
     </nav>
-  </div>
-  <div class="">
-    <button
-      type="button"
-      class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-    >
-      Alternative
-    </button>
-    <button
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Default
-    </button>
   </div>
 </div>
 
@@ -102,7 +90,7 @@
       <li class="me-2">
         <a
           class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"
-          >Order Summary</a
+          >{{ "ODRERDETAILS.ORDERSUMMARY" | translate }}</a
         >
       </li>
       <!-- <li class="me-2">
@@ -122,7 +110,9 @@
 <div class="flex flex-col m-10 gap-10">
   <div class="flex gap-10">
     <div class="w-1/2 bg-white p-5 border-0 rounded-lg">
-      <h3 class="text-xl font-bold m-3 mb-7">Order Details</h3>
+      <h3 class="text-xl font-bold m-3 mb-7">
+        {{ "ODRERDETAILS.ORDERDETIALS" | translate }}
+      </h3>
       <div class="flex justify-between text-gray-400">
         <p class="flex">
           <span class="svg-icon svg-icon-2 me-2">
@@ -144,7 +134,7 @@
               ></path>
             </svg>
           </span>
-          Date Added
+          {{ "ODRERDETAILS.DATEADDED" | translate }}
         </p>
         <p>{{ formatDate(Order.createdDate) }}</p>
       </div>
@@ -174,10 +164,10 @@
                 fill="currentColor"
               ></path>
             </svg> </span
-          >Payment Method
+          >{{ "ODRERDETAILS.PAYMENTMETHOD" | translate }}
         </p>
         <p class="flex gap-5 font-bold">
-          Cash
+          {{ "ODRERDETAILS.CASH" | translate }}
           <img
             class="h-full"
             src="../../../../assets/img/dashboard/order-details/cash-svgrepo-com.svg"
@@ -188,7 +178,9 @@
     </div>
 
     <div class="w-1/2 bg-white p-5 border-0 rounded-lg">
-      <h3 class="text-xl font-bold m-3 mb-7">Customer Details</h3>
+      <h3 class="text-xl font-bold m-3 mb-7">
+        {{ "ODRERDETAILS.CUSTOMERDETAILS" | translate }}
+      </h3>
       <div class="flex justify-between text-gray-400">
         <p class="flex">
           <span class="svg-icon svg-icon-2 me-2">
@@ -210,7 +202,7 @@
               ></path>
             </svg>
           </span>
-          Customer
+          {{ "ODRERDETAILS.CUSTOMER" | translate }}
         </p>
         <p>{{ Order.customerName }}</p>
       </div>
@@ -236,7 +228,7 @@
               ></path>
             </svg>
           </span>
-          >Email
+          >{{ "ODRERDETAILS.EMAIL" | translate }}
         </p>
         <p class="flex gap-5 font-bold">
           {{ "dam@consilting.com" }}
@@ -264,7 +256,7 @@
               ></path>
             </svg>
           </span>
-          >Phone
+          >{{ "ODRERDETAILS.PHONE" | translate }}
         </p>
         <p class="flex gap-5 font-bold">
           {{ Order.phoneNumber }}
@@ -277,12 +269,16 @@
 
   <div class="flex bg-white p-5 border rounded-lg">
     <div class="flex flex-col w-1/2">
-      <div class="text-lg font-bold self-center">Shipping Address</div>
+      <div class="text-lg font-bold self-center">
+        {{ "ODRERDETAILS.SHIPPINGADDRESS" | translate }}
+      </div>
       <p>
-        <span class="font-bold"> State </span>: {{ Order.address.state }},<br />
-        <span class="font-bold"> City</span> : {{ Order.address.city }},<br />
-        <span class="font-bold"> Street</span> :
-        {{ Order.address.street }},<br />
+        <span class="font-bold"> {{ "ODRERDETAILS.STATE" | translate }} </span>:
+        {{ Order.address.state }},<br />
+        <span class="font-bold"> {{ "ODRERDETAILS.CITY" | translate }} </span> :
+        {{ Order.address.city }},<br />
+        <span class="font-bold"> {{ "ODRERDETAILS.STREET" | translate }} </span>
+        : {{ Order.address.street }},<br />
       </p>
     </div>
     <div class="w-full h-[10rem]">
@@ -297,14 +293,22 @@
   <!--  Order Table -->
 
   <div class="container m-5 my-8 p-4 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Order #14534</h2>
+    <h2 class="text-2xl font-bold mb-4">
+      {{ "ODRERDETAILS.ORDER" | translate }}
+    </h2>
     <table class="min-w-full bg-white">
       <thead>
         <tr class="w-full border-b">
-          <th class="py-2 text-left">PRODUCT</th>
-          <th class="py-2 text-left">QTY</th>
-          <th class="py-2 text-left">UNIT PRICE</th>
-          <th class="py-2 text-left">TOTAL</th>
+          <th class="py-2 text-left">
+            {{ "ODRERDETAILS.PRODUCT" | translate }}
+          </th>
+          <th class="py-2 text-left">
+            {{ "ODRERDETAILS.QUANTITY" | translate }}
+          </th>
+          <th class="py-2 text-left">
+            {{ "ODRERDETAILS.UNITPRICE" | translate }}
+          </th>
+          <th class="py-2 text-left">{{ "ODRERDETAILS.TOTAL" | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -313,7 +317,9 @@
             <img [src]="product.url" alt="Product 1" class="w-12 h-12 mr-2" />
             <div>
               <p class="font-medium">{{ product.productName }}</p>
-              <p class="text-sm text-gray-500">Delivery Date: 30/03/2022</p>
+              <p class="text-sm text-gray-500">
+                {{ "ODRERDETAILS.DELIVERYDATE" | translate }}: 30/03/2022
+              </p>
             </div>
           </td>
           <td class="py-2">{{ product.quantity }}</td>
@@ -335,8 +341,10 @@
           <td class="py-2 w-1/12">$5.00</td>
         </tr> -->
         <tr>
-          <td colspan="4" class="text-right py-2 font-bold">Grand Total</td>
-          <td class="py-2 font-bold">${{ Order.total }}.00</td>
+          <td colspan="4" class="text-right py-2 font-bold">
+            {{ "ODRERDETAILS.GRANDTOTAL" | translate }}
+          </td>
+          <td class="py-2 font-bold">EGP{{ Order.total }}.00</td>
         </tr>
       </tfoot>
     </table>

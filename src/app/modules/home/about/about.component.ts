@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { GetDescription } from '../../../core/model/administration.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-about',
@@ -19,14 +20,13 @@ export class AboutComponent implements OnInit{
     }
 
 
-  constructor(private adminService:AdministrationService) { }
+  constructor(private adminService:AdministrationService,public translate:TranslateService) { }
 
 
   ngOnInit(): void {
     this.adminService.GetDescription().subscribe(data =>
     { 
       this.description = data.value
-      console.log('About',this.description);
     })
   }
 

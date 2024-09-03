@@ -18,7 +18,6 @@ export class FooterComponent implements OnInit{
 
   ngOnInit(): void {
     this.websiteColor.set(this.adminService.websiteColor);
-    console.log('end-color',this.endColor);
     
   }
 

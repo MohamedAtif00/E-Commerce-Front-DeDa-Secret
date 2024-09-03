@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { AppModule } from '../app.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminHeaderComponent } from '../layout/admin-header/admin-header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 const routes:Routes = [
@@ -20,6 +21,7 @@ const routes:Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    TranslateModule.forChild(),
     // AppModule
 ]
 })

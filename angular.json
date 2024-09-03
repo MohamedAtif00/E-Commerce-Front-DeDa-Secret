@@ -40,14 +40,12 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/owl.carousel/dist/assets/owl.carousel.css",
-              "node_modules/owl.carousel/dist/assets/owl.theme.default.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/swiper/swiper-bundle.min.css",
+              "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/owl.carousel/dist/owl.carousel.min.js"
+
             ]
           },
           "configurations": {
@@ -106,6 +104,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.scss"
             ],
             "scripts": []

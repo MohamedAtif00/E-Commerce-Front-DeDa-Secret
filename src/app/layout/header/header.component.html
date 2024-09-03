@@ -14,6 +14,23 @@
       <!-- <span class="self-center text-2xl text-red-300  font-semibold whitespace-nowrap dark:text-white">DeDa Secret</span> -->
     </a>
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <button
+        type="button"
+        [routerLink]="['cart']"
+        class="relative inline-flex items-center w-9 h-17 text-sm font-medium text-center text-white bg-transparent rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        <img
+          src="../../../assets/img/dashboard/header/handbag-svgrepo-com.svg"
+          class="w-6 h-full"
+          alt=""
+        />
+
+        <div
+          class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900"
+        >
+          {{ basketService.getBasketItems().length }}
+        </div>
+      </button>
       <!-- <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button> -->
       <button
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -48,21 +65,21 @@
       id="navbar-sticky"
     >
       <ul
-        class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+        class="flex flex-col justify-center align-middle items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
       >
         <li>
           <a
             href="#"
             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
             aria-current="page"
-            >Home</a
+            >{{ "HEADER.HOME" | translate }}</a
           >
         </li>
         <li>
           <a
             href="#"
             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >About</a
+            >{{ "HEADER.ABOUT" | translate }}</a
           >
         </li>
         <li>
@@ -73,7 +90,7 @@
             data-collapse-toggle="mega-menu-full-image-dropdown"
             class="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
-            Offer
+            {{ "HEADER.OFFER" | translate }}
             <svg
               class="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -99,7 +116,7 @@
             data-collapse-toggle="mega-menu-full-image-dropdown-bundle"
             class="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
-            Bundle
+            {{ "HEADER.BUNDLE" | translate }}
             <svg
               class="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -125,7 +142,7 @@
             data-collapse-toggle="mega-menu-full-image-dropdown-bundle"
             class="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
-            Hair
+            {{ "HEADER.HAIR" | translate }}
             <svg
               class="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -145,13 +162,12 @@
         </li>
         <li>
           <button
-            id="mega-menu-full-cta-image-button-bundle"
-            (mouseenter)="bundleMegaShow()"
-            (mouseleave)="BundleMegaHide()"
-            data-collapse-toggle="mega-menu-full-image-dropdown-bundle"
+            id="mega-menu-full-cta-image-button-skinecare"
+            (mouseenter)="SkineCareMegaShow()"
+            data-collapse-toggle="mega-menu-full-image-dropdown-skinecare"
             class="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
-            SkinCare
+            {{ "HEADER.SKINCARE" | translate }}
             <svg
               class="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -173,17 +189,17 @@
           <a
             href="#"
             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >Services</a
+            >{{ "HEADER.SERVICES" | translate }}</a
           >
         </li>
         <li>
           <a
-            href="#"
+            [routerLink]="['contact-us']"
             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >Contact</a
+            >{{ "HEADER.CONTACT" | translate }}</a
           >
         </li>
-        <li>
+        <!-- <li>
           <button
             type="button"
             [routerLink]="['cart']"
@@ -196,14 +212,73 @@
             />
             <span class="sr-only">Notifications</span>
             <div
+              *ngIf="basketService.getBasketItems().length != 0"
               class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900"
             >
               {{ basketService.getBasketItems().length }}
             </div>
           </button>
+        </li> -->
+        <li>
+          <button
+            id="dropdownMenuIconButton"
+            data-dropdown-toggle="dropdownDots"
+            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-transparent rounded-lg dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            type="button"
+          >
+            <svg
+              width="30px"
+              height="30px"
+              viewBox="0 0 24 24"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-labelledby="languageIconTitle"
+              stroke="#000000"
+              stroke-width="1"
+              stroke-linecap="square"
+              stroke-linejoin="miter"
+              fill="none"
+              color="#000000"
+            >
+              <title id="languageIconTitle">Language</title>
+              <circle cx="12" cy="12" r="10" />
+              <path
+                stroke-linecap="round"
+                d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z"
+              />
+              <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdownDots"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownMenuIconButton"
+            >
+              <li>
+                <a
+                  (click)="SetLnaguage('en')"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >English</a
+                >
+              </li>
+              <li>
+                <a
+                  (click)="SetLnaguage('ar')"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >عربي
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
+
     <!-- Close Nav bar sticky -->
   </div>
 
@@ -334,7 +409,8 @@
 
   <!--  Mega-bundle Menu -->
   <div
-    id="mega-menu-full-image-dropdown-bundle"
+    (mouseleave)="SkineCareMegaHide()"
+    id="mega-menu-full-image-dropdown-skinecare"
     class="mt-1 bg-white border-gray-200 shadow-sm border-y dark:bg-gray-800 dark:border-gray-600 hidden"
   >
     <div
@@ -342,7 +418,7 @@
     >
       <ul
         class="hidden mb-4 space-y-2 md:mb-0 md:block"
-        aria-labelledby="mega-menu-full-image-button-bundle"
+        aria-labelledby="mega-menu-full-image-button-skinecare"
       >
         <li>
           <a
@@ -515,7 +591,7 @@
         >
       </li>
       <li>
-        <button
+        <!-- <button
           type="button"
           [routerLink]="['cart']"
           class="relative inline-flex items-center w-9 h-17 text-sm font-medium text-center text-white bg-transparent rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -531,7 +607,7 @@
           >
             {{ basketService.getBasketItems().length }}
           </div>
-        </button>
+        </button> -->
       </li>
     </ul>
   </div>

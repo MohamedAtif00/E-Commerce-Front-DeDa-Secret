@@ -1,37 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// swiper bundle styles
+@import 'swiper/css/bundle';
+
+// swiper core styles
+@import 'swiper/css';
+
+// modules styles
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
 @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 
 
- /* Custom styles for success toast */
- .custom-toast-success .toast-title {
-     color: #28a745;
-     /* Change the title color */
-     font-weight: bold;
-     /* Make the title bold */
- }
-
- 
-
- .custom-toast-success .toast-message {
-     color: #155724;
-     /* Change the message color */
- }
-
- /* Custom styles for error toast */
- .custom-toast-error .toast-title {
-     color: #dc3545;
-     /* Change the title color */
-     font-weight: bold;
-     /* Make the title bold */
- }
-
- .custom-toast-error .toast-message {
-     color: #721c24;
-     /* Change the message color */
- }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

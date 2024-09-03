@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { AdministrationModel, GetDescription, WelcomeMessage } from '../../../core/model/administration.model';
 import { ToastrService } from 'ngx-toastr';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-administration',
@@ -33,6 +34,7 @@ export class AdministrationComponent implements OnInit {
 
   constructor(
     private adminService: AdministrationService,
+    public translation:TranslationService,
     private toastrService: ToastrService
   ) { }
 
@@ -112,11 +114,8 @@ export class AdministrationComponent implements OnInit {
     this.adminService.GetAdministration().subscribe(data => {
       try {
         let welcome = data.value
-        console.log(welcome);
         
         this.selectedColor = data.value.websiteColor;
-
-        console.log('welcome',this.selectedColor);
         this.welcomeMessage =
         {
           title_Eng: welcome.title_Eng,
@@ -125,9 +124,6 @@ export class AdministrationComponent implements OnInit {
           desc_Arb:welcome.desc_Arb
         }
 
-        
-        
-        console.log('Administration data:', this.welcomeMessage);
   
         // this.selectedColor = this.Administration.websiteColor || '#FBD5D5'; // Default to a color if undefined
   
@@ -136,7 +132,6 @@ export class AdministrationComponent implements OnInit {
         
       } catch (e)
       { 
-        console.log(e);
         
       }
       // console.log('After assignment:', this.Administration.welcomeMessage);
@@ -156,7 +151,6 @@ export class AdministrationComponent implements OnInit {
   { 
     this.adminService.GetDescription().subscribe(data =>
     { 
-      console.log('description',data);
       this.descriptionMessage = data.value
     })
   }
@@ -172,7 +166,6 @@ export class AdministrationComponent implements OnInit {
     }
     this.adminService.SetDescription(description).subscribe(data =>
     { 
-      console.log(data);
       
     })
   }
@@ -196,7 +189,6 @@ export class AdministrationComponent implements OnInit {
 
       this.adminService.ChangeHero(formData).subscribe(data =>
       { 
-        console.log(data);
         
       })
     } else {

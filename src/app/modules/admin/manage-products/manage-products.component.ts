@@ -1,29 +1,46 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, signal } from '@angular/core';
-import { Dropdown } from 'flowbite';
-import type { DropdownOptions, DropdownInterface } from 'flowbite';
-import { initFlowbite } from 'flowbite';
-import { GetAllProducts } from '../../../shared/model/product.model';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  inject,
+  signal,
+} from '@angular/core';
+import { Dropdown, initFlowbite } from 'flowbite';
+import {
+  DropdownOptions,
+  DropdownInterface,
+  InstanceOptions,
+  ModalInterface,
+  Modal,
+  ModalOptions,
+} from 'flowbite';
+
+import { GetAllProducts, Product } from '../../../shared/model/product.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { PageList } from '../../../core/model/general-response.model';
-import { map } from 'rxjs';
 import { AdministrationService } from '../../../core/services/administration.service';
+import { ModalService } from '../../../shared/services/modal.service';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import { TranslationService } from '../../../core/services/translation.service';
 
-interface Products extends GetAllProducts
-{ 
-  checked:boolean
+interface Products extends GetAllProducts {
+  checked: boolean;
 }
-
 
 @Component({
   selector: 'app-manage-products',
   templateUrl: './manage-products.component.html',
-  styleUrls: ['./manage-products.component.scss']
+  styleUrls: ['./manage-products.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageProductsComponent implements OnInit{
-
+export class ManageProductsComponent implements OnInit, AfterViewInit {
   Status: string = 'Status';
 
   options: DropdownOptions;
+  mainActionOption: DropdownOptions;
   sortOption: DropdownOptions;
   actionOption: DropdownOptions;
 
@@ -31,8 +48,7 @@ export class ManageProductsComponent implements OnInit{
   sortDropdown: DropdownInterface;
   actionInterface: DropdownInterface;
 
-
-  actionChecked = false
+  actionChecked = false;
 
   search: string = '';
   sortColumn: string = 'default';
@@ -48,24 +64,27 @@ export class ManageProductsComponent implements OnInit{
     hasNextPage: false,
     hasPreviousPage: false,
     nextPages: [],
-    lastPages: []
+    lastPages: [],
   };
 
   sorts: string[] = ['name', 'price', 'stockQuantity', 'default'];
   sortSelect: string = 'default';
   pagelist = signal<PageList<any>>(this._pageList);
 
-  constructor(private productService: ProductService,private adminService:AdministrationService) { }
+  constructor(
+    private productService: ProductService,
+    private adminService: AdministrationService,
+    private modalService: ModalService,
+    public translation: TranslationService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-    
-    this.GetProductPage(1);
-    
+  async ngOnInit() {
+    await this.GetProductPage(1);
+    this.modalService.InitModal('#popup-modal');
   }
 
-  
-
-  
+  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     // Cleanup any resources if needed
@@ -84,13 +103,21 @@ export class ManageProductsComponent implements OnInit{
 
   DropdownListConfiguration() {
     this.initializeDropdown('dropdown', 'dropdownDefaultButton', this.options);
+    this.initializeDropdown(
+      'mainActionDropdown',
+      'mainActionButton',
+      this.mainActionOption
+    );
 
     let buttonList = document.querySelectorAll('[id^=buttonAction]');
     let actionlist = document.querySelectorAll('[id^=action]');
-    let object = { buttonList, actionlist }
-    
+    let object = { buttonList, actionlist };
+
     // Determine the minimum length to avoid out-of-bounds errors
-    const minLength = Math.min(object.buttonList.length, object.actionlist.length);
+    const minLength = Math.min(
+      object.buttonList.length,
+      object.actionlist.length
+    );
 
     // Create an array to store the pairs
     let pairs = [];
@@ -98,61 +125,49 @@ export class ManageProductsComponent implements OnInit{
     for (let i = 0; i < minLength; i++) {
       pairs.push({
         button: object.buttonList[i],
-        action: object.actionlist[i]
+        action: object.actionlist[i],
       });
     }
-    pairs.forEach(e =>
-    { 
+    pairs.forEach((e) => {
       this.initializeDropdown(e.action.id, e.button.id, this.actionOption);
-      console.log(e.action.id);
-      console.log(e.button.id);
-      
-    })
-    
+    });
 
     //this.initializeDropdown('action', 'actionButton', this.actionOption);
     this.initializeDropdown('sort', 'sortButtonId', this.sortOption);
   }
 
-  private initializeDropdown(targetId: string, triggerId: string, options: DropdownOptions) {
-  let $targetEl: HTMLElement | null;
-  let $triggerEl: HTMLElement | null;
+  private initializeDropdown(
+    targetId: string,
+    triggerId: string,
+    options: DropdownOptions
+  ) {
+    let $targetEl: HTMLElement | null;
+    let $triggerEl: HTMLElement | null;
 
-  if (targetId === 'action') {
-    // Use querySelector for the 'action' dropdown
-    $targetEl = document.querySelector(`.${targetId}`) as HTMLElement;
-    $triggerEl = document.querySelector(`.${triggerId}`) as HTMLElement;
-  } else {
-    // Use getElementById for other dropdowns
     $targetEl = document.getElementById(targetId);
     $triggerEl = document.getElementById(triggerId);
+
+    if ($targetEl && $triggerEl) {
+      // Initialize dropdown with provided options
+      return new Dropdown($targetEl, $triggerEl, {
+        triggerType: 'click',
+        delay: 300,
+        ...options, // Merge with provided options
+        onHide: () => {},
+        onShow: () => {},
+        onToggle: () => {},
+      });
+    }
+
+    return null;
   }
 
-  if (targetId === 'action') {
-    console.log('trigger', $triggerEl);
-    console.log('button', $targetEl);
-  }
-
-  if ($targetEl && $triggerEl) {
-    // Initialize dropdown with provided options
-    new Dropdown($targetEl, $triggerEl, {
-      triggerType: 'click',
-      delay: 300,
-      ...options, // Merge with provided options
-      onHide: () => console.log(`${targetId} has been hidden`),
-      onShow: () => console.log(`${targetId} has been shown`),
-      onToggle: () => console.log(`${targetId} has been toggled`),
-    });
-  }
-}
-
-
-
-  private createImageFromBlob(image: Blob): Promise<string> {
+  private async createImageFromBlob(image: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => reject(new Error('Failed to read the Blob as a Data URL.'));
+      reader.onerror = () =>
+        reject(new Error('Failed to read the Blob as a Data URL.'));
       reader.readAsDataURL(image);
     });
   }
@@ -171,31 +186,48 @@ export class ManageProductsComponent implements OnInit{
 
   OpenAction(e: Event): void {
     //this.DropdownListConfiguration()
-  } 
+  }
 
+  async GetProductPage(page: number): Promise<void> {
+    try {
+      // Fetching products data
+      const data = await this.productService
+        .GetAllProducts(page, this.search, this.sortSelect)
+        .toPromise();
+      this.Products = data.value.items.map((e: GetAllProducts) => ({
+        ...e,
+        checked: false,
+        obsMasterImage: signal<string>(''),
+      }));
+      this.pagelist.set(data.value);
 
-  GetProductPage(page: number) {
-    this.productService.GetAllProducts(page, this.search, this.sortSelect).subscribe({
-      next: data => {
-        this.Products = data.value.items.map((e:GetAllProducts) => ({...e,checked:false }));
-        this.pagelist.set(data.value);
+      // Fetching and processing master images for each product
+      for (let e of this.Products) {
+        try {
+          const blob = await this.productService
+            .GetProductMasterImage(e.id)
+            .toPromise(); // Use toPromise or firstValueFrom
+          const imageData = await this.createImageFromBlob(blob); // Await the promise from createImageFromBlob
+          e.masterImage = imageData;
+          // Check if obsMasterImage is defined before calling update
+          if (e.obsMasterImage) {
+            e.obsMasterImage.update((i) => imageData);
+          } else {
+            //console.warn(`obsMasterImage is not defined for product ${e.id}`);
+          }
 
-        this.Products.forEach(e => {
-          this.productService.GetProductMasterImage(e.id).subscribe({
-            next: blob => {
-              this.createImageFromBlob(blob).then(imageData => {
-                e.masterImage = imageData; // Assuming your product model has an imageData property
-                this.DropdownListConfiguration();
-              }).catch(error => {
-                console.error('Error converting image blob to base64', error);
-              });
-            },
-            error: err => console.error('Error fetching master image:', err)
-          });
-        });
-      },
-      error: err => console.error('Error fetching products:', err)
-    });
+          this.DropdownListConfiguration();
+        } catch (err) {
+          // Log the error and continue with the next product
+          console.error(
+            `Error fetching or converting master image for product ${e.id}:`,
+            err
+          );
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching products:', err);
+    }
   }
 
   isDropdownOpen: number | null = null;
@@ -204,41 +236,67 @@ export class ManageProductsComponent implements OnInit{
     this.isDropdownOpen = this.isDropdownOpen === productId ? null : productId;
   }
 
-
   getDropdownClass(index: number): string {
     return `actionButton${index}`;
   }
 
-
   toggleAllCheckboxes(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
     // Select or deselect all checkboxes
-    const checkboxes = document.querySelectorAll('.product-checkbox') as NodeListOf<HTMLInputElement>;
-    this.Products.map(e=> e.checked = true)
-    checkboxes.forEach(checkbox => checkbox.checked = isChecked);
-    if (this.Products.some(e => e.checked === true)) this.actionChecked = !this.actionChecked
-    console.log(this.actionChecked);
-    console.log(this.Products);
-    
-    
+    const checkboxes = document.querySelectorAll(
+      '.product-checkbox'
+    ) as NodeListOf<HTMLInputElement>;
+    if (this.Products.some((e) => !e.checked)) {
+      this.Products.map((e) => (e.checked = true));
+      checkboxes.forEach((checkbox) => (checkbox.checked = isChecked));
+      if (this.Products.some((e) => e.checked === true))
+        this.actionChecked = true;
+      else this.actionChecked = false;
+    } else {
+      this.Products.map((e) => (e.checked = false));
+      checkboxes.forEach((checkbox) => (checkbox.checked = isChecked));
+      if (this.Products.some((e) => e.checked === true))
+        this.actionChecked = true;
+      else this.actionChecked = false;
+    }
+
+    this.DropdownListConfiguration();
+    //this.DropdownListConfiguration();
   }
 
-  CheckProduct(id:number)
-  { 
-    this.Products.map(e => { if (e.id == id) e.checked = true })
-    if (this.Products.some(e => e.checked === true)) this.actionChecked = !this.actionChecked
+  CheckProduct(id: number) {
+    // Mark the product as checked
+    this.Products.forEach((e) => {
+      if (e.id === id) {
+        e.checked = !e.checked;
+      }
+    });
+
+    // Update the actionChecked flag
+    this.actionChecked = this.Products.some((e) => e.checked === true);
+    this.DropdownListConfiguration();
   }
 
-
-
-  DeleteProduct(id:string)
-  { 
-    this.adminService.DeleteProduct(id).subscribe(data =>
-    { 
-      console.log(data);
+  DeleteProduct() {
+    this.adminService.DeleteProduct(this.product.id).subscribe((data) => {
       this.GetProductPage(this._pageList.page);
-    })
+    });
   }
 
+  AddSpecialProduct(id: string) {
+    this.adminService.AddSpecialProduct(id).subscribe((data) => {});
+  }
 
+  product: Products;
+  title: string;
+
+  ShowModal(id: string) {
+    this.product = this.Products.find((e) => e.id == id);
+    this.title = 'Are you sure Delete this product?';
+    this.modalService.open.next(this.product);
+  }
+
+  CloseModal() {
+    this.modalService.CloseModal();
+  }
 }

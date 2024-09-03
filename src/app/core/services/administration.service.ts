@@ -22,12 +22,14 @@ export class AdministrationService
     private _getRecentOrder = development.localhosts.administration.getRecentOrder
     private _getDescription = development.localhosts.administration.getDescription
     private _getHero = development.localhosts.administration.getHero
+    private _getSpecialProducts = development.localhosts.administration.getSpecialProducts
 
     private _changeWebsiteColor = development.localhosts.administration.changeWebsiteColor
     private _changeWebsiteLogo = development.localhosts.administration.changeWebsiteLogo
     private _changeWelcomeMessage = development.localhosts.administration.changeWelcomeMessage
     private _changeDescription = development.localhosts.administration.changeDescription
     private _changeHero = development.localhosts.administration.changeHeroImage
+    private _addSpecialProduct = development.localhosts.administration.addSpecialProduct
     private _deleteProduct = development.localhosts.administration.deleteProduct
     
 
@@ -67,6 +69,11 @@ export class AdministrationService
         return this._http.get(this._getHero, {responseType:'blob'});
     }
 
+    GetSpecialProducts()
+    { 
+        return this._http.get<GeneralResponse<SpecialProduct[]>>(this._getSpecialProducts);
+     }
+
 
 
     // Commands
@@ -98,10 +105,21 @@ export class AdministrationService
         return this._http.post(this._changeHero,data);
     }
 
+    AddSpecialProduct(id:string)
+    { 
+        return this._http.get(this._addSpecialProduct+id);
+    }
+
     // DeleteProduct method
     DeleteProduct(id: string): Observable<void> {
         return this._http.delete<void>(`${this._deleteProduct}${id}`);
     }
 
 
+}
+
+
+interface SpecialProduct
+{ 
+    productId:string
 }

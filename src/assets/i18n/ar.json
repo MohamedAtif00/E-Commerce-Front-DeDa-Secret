@@ -1,0 +1,158 @@
+{
+    "HEADER":{
+        "HOME":"الرئيسية",
+        "ABOUT":"من نحن",
+        "OFFER":"العروض",
+        "BUNDLE":"الحزم",
+        "HAIR":"الشعر",
+        "SKINCARE":"العناية بالبشرة",
+        "SERVICES":"خدمات",
+        "CONTACT":"اتصل بنا"
+    },
+    "FOOTER":{
+
+    },
+    "CART":{
+        "SHOPPINGCART":"عربة التسوق",
+        "ORDERSUMMARY":"اجمالي الطلب",
+        "ORIGINALPRICE":"الحساب الاصلي",
+        "SAVING":"الخصم",
+        "TOTAL":"اجمالي",
+        "PROCESS":"استمرار للدفع",
+        "CONTINUE":"استمرار التسوق"
+    },
+    "DASHBOARD":{
+        "ADDPRODUCT":"اضافة منتج",
+        "MANAGESALES":"ادارة المبيعات",
+        "DASHBOARD":"لوحة التحكم",
+        "CATEGORIESCHART":{
+            "CATEGORYSALES":"مبيعات الاصناف",
+            "TOTALEARNING":"اجمالي الارباح",
+            "YESTERDAY":"البارحة",
+            "TODAY":"اليوم",
+            "LAST7DAYS":"اخر 7 ايام",
+            "LAST30DAYS":"اخر 30 يوم",
+            "LAST90DAYS":"اخر 90 يوم"
+        },
+        "DAILYEARING":{
+            "DAILYEARING":"المبيعات اليومية"
+
+        },
+        "MENU":{
+            "MENU":"القائمة",
+            "PRODUCTS":"المنتجات",
+            "CATEGORIES":"اصناف",
+            "ADDCATEGORIES":"اضافة صنف",
+            "SALES":"مبيعات",
+            "ADMINISTRATION":"الادارة"
+        },
+        "RECENTORDERS":{
+            "RECENTORDERS":"الطلبات الحالية",
+            "ITEM":"المنتج",
+            "QUANTITY":"الكمية",
+            "PRICE":"السعر",
+            "TOTALPRICE":"اجمالي السعر"
+        }
+    },
+    "PRODUCTS":{
+        "PRODUCTVIEW":"عرض المنتجات",
+        "DASHBOARD":"لوحة التحكم",
+        "PRODUCTS":"المنتجات",
+        "PRODUCT":"المنتج",
+        "QUANTITY":"الكمية",
+        "PRICE":"السعر",
+        "RATING":"التقييم",
+        "STATUS":"الحالة",
+        "ACTION":"حدث",
+        "ADDPRODUCT":"اضافة منتج"
+    },
+    "ADDPRODUCT":{
+        "PRODUCTfORM":"بيانات المنتج",
+        "HOME":"الرئيسية",
+        "PRODUCTS":"المنتجات",
+        "ADDPRODUCT":"اضافة منتج",
+        "THUMBNAIL":"صورة رئيسية",
+        "GENERAL":"معلومات عامة",
+        "PRODUCTNAME":"اسم المنتج",
+        "PRODUCTNAMESHOULDBEUNIQUE":"اسم المنتج يجب ان يكون مميز",
+        "PRODUCTDESCRIPTION":"وصف المنتج",
+        "CATEGORY":"الصنف",
+        "ADDPRODUCTTOCATEGORY":"اضف المنتج الى الصنف",
+        "PRODUCTIMAGES":"اضف صور للمنتج",
+        "MEDIA":"صور",  
+        "PRICE":"السعر",
+        "BASEPRICE":"السعر الاساسي",
+        "SETPRODUCTPRICE":"قم باضافة السسعر",
+        "DISCOUNTTYPE":"نوع الخصم",
+        "NODISCOUNT":"بدون خصم",
+        "PERCENTIGE":"نسبة مؤية",
+        "FIXEDPRICE":"سعر ثابت",
+        "INVENTORY":"قائمة المخزن",
+        "QUANTITY":"الكمية"
+    }
+    ,
+    "SALES":{
+        "DASHBOARD":"لوحة التحكم",
+        "ORDERLIST":"قائمة الطلبات",
+        "CUSTOMERNAME":"اسم العميل",
+        "PHONENUMBER":"رقم التلفون",
+        "TOTAL":"اجمالي",
+        "DATEADDED":"تاريخ الانشاء",
+        "STATE":"الحالة",
+        "ACTION":"حدث"
+    },
+    "ADMINISTRATION":{
+        "DASHBOARD":"لوحة التحكم",
+        "ADMINISTRATION":"الادارة",
+        "THEMEANDTEXTCUSTOMIZATION":"تخصيص الالوان و النصوص",
+        "CAHNGELAYOUTCOLOR":"تغيير لون الموقع",
+        "SAVECOLOR":"حفظ اللون",
+        "UPLOADLOGO":"تغيير اللوجو",
+        "CHOOSEFILE":"اختار صورة",
+        "SAVELOGO":"حفظ الصورة",
+        "UPLOADHERO":"تغيير الصورة الرئيسية",
+        "WELCOMEMESSAGECUSTOMIZATION":"تخصيص الرسالة الترحييبية",
+        "DESCRIPTIONMESSAGECUSTOMIZATION":"تخصيص الوصف"
+    },
+    "CATEGORY":{
+        "CATEGORYFORM":"اضافة صنف",
+        "DASHBOARD":"لوحة التحكم",
+        "CATEGORYINFO":"معلومات الصنف",
+        "CATEGORIES":"اصناف",
+        "ADDCATEGORY":"اضافة صنف",
+        "CATEGORYNAME":"اسم الصنف",
+        "CATEGORYNAMESHOULDBEUNIQUE":"اسم الصنف يجب ان يكون مميز"
+    },
+    "ODRERDETAILS":{
+        "ORDERDETIALS":"تفاصيل الطلب",
+        "DASHBOARD":"لوحة التحكم",
+        "ORDERLIST":"قائمة الطلبات",
+        "ORDERSUMMARY":"اجمالي الطلب",
+        "DATEADDED":"تاريخ الانشاء",
+        "PAYMENTMETHOD":"طريقة الدفع",
+        "CASH":"نقدي",
+        "CUSTOMERDETAILS":"تفاصيل العميل",
+        "CUSTOMER":"العميل",
+        "EMAIL":"الايميل",
+        "PHONE":"الهاتف",
+        "SHIPPINGADDRESS":"عنوان التوصيل",
+        "STATE":"المحافظة",
+        "CITY":"المدينة",
+        "STREET":"الشارع",
+        "ORDER":"الطلب",
+        "PRODUCT":"المنتج",
+        "QUANTITY":"الكمية",
+        "UNITPRICE":"سعر الوحدة",
+        "TOTAL":"اجمالي",
+        "DELIVERYDATE":"تاريخ التوصيل",
+        "GRANDTOTAL":"الاجمالى النهائي"
+
+    },
+    "CONTACT":{
+        "CONTACTVIEW":"صندوق الوارد",
+        "DASHBOARD":"لوحة التحكم",
+        "CONTACT":"اتصل بنا",
+        
+    }
+}
+

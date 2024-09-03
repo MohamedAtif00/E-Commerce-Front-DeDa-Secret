@@ -1,8 +1,11 @@
 <app-check-out></app-check-out>
-<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+<section
+  class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16"
+  [dir]="translate.currentLang == 'ar' ? 'rtl' : 'ltr'"
+>
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-      Shopping Cart
+      {{ "CART.SHOPPINGCART" | translate }}
     </h2>
 
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -23,15 +26,17 @@
                   alt="imac image"
                 /> -->
                   <img
+                    *ngIf="product.masterImage.url"
                     class="h-20 w-20 dark:hidden"
-                    [src]="product.masterImage"
+                    [src]="product.masterImage.url"
                     alt="imac image"
                   />
-                  <img
+                  <!-- <img
+                    *ngIf="product.masterImage.url"
                     class="hidden h-20 w-20 dark:block"
-                    [src]="product.masterImage"
+                    [src]="product.masterImage.url"
                     alt="imac image"
-                  />
+                  /> -->
                 </a>
 
                 <label for="counter-input" class="sr-only"
@@ -464,7 +469,7 @@
           class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6"
         >
           <p class="text-xl font-semibold text-gray-900 dark:text-white">
-            Order summary
+            {{ "CART.ORDERSUMMARY" | translate }}
           </p>
 
           <div class="space-y-4">
@@ -473,7 +478,7 @@
                 <dt
                   class="text-base font-normal text-gray-500 dark:text-gray-400"
                 >
-                  Original price
+                  {{ "CART.ORIGINALPRICE" | translate }}
                 </dt>
                 <dd class="text-base font-medium text-gray-900 dark:text-white">
                   ${{ originalPrice }}
@@ -484,12 +489,12 @@
                 <dt
                   class="text-base font-normal text-gray-500 dark:text-gray-400"
                 >
-                  Savings
+                  {{ "CART.SAVING" | translate }}
                 </dt>
                 <dd class="text-base font-medium text-green-600">-$299.00</dd>
               </dl>
 
-              <dl class="flex items-center justify-between gap-4">
+              <!-- <dl class="flex items-center justify-between gap-4">
                 <dt
                   class="text-base font-normal text-gray-500 dark:text-gray-400"
                 >
@@ -509,14 +514,14 @@
                 <dd class="text-base font-medium text-gray-900 dark:text-white">
                   $799
                 </dd>
-              </dl>
+              </dl> -->
             </div>
 
             <dl
               class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700"
             >
               <dt class="text-base font-bold text-gray-900 dark:text-white">
-                Total
+                {{ "CART.TOTAL" | translate }}
               </dt>
               <dd class="text-base font-bold text-gray-900 dark:text-white">
                 ${{ total }}
@@ -531,7 +536,7 @@
             data-drawer-placement="right"
             aria-controls="drawer-right-example"
             class="flex w-full cursor-pointer items-center justify-center border-gray-500 bg-green-500 rounded-lg bg-primary-700 px-5 py-2.5 text-md font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >Proceed to Checkout</a
+            >{{ "CART.PROCESS" | translate }}</a
           >
 
           <div class="flex items-center justify-center gap-2">
@@ -543,13 +548,14 @@
               title=""
               class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
             >
-              Continue Shopping
+              {{ "CART.CONTINUE" | translate }}
               <svg
                 class="h-5 w-5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
+                *ngIf="translate.currentLang == 'en'"
               >
                 <path
                   stroke="currentColor"
@@ -557,6 +563,18 @@
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M19 12H5m14 0-4 4m4-4-4-4"
+                />
+              </svg>
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                *ngIf="translate.currentLang == 'ar'"
+              >
+                <path
+                  d="M1.02686 11.9928L5.2623 16.2426L6.67889 14.8308L4.85754 13.0032L22.9729 13.0011L22.9727 11.0011L4.85297 11.0032L6.68848 9.17392L5.27665 7.75732L1.02686 11.9928Z"
+                  fill="#000000"
                 />
               </svg>
             </a>

@@ -1,8 +1,11 @@
 <section
-  class="bg-center bg-cover bg-no-repeat bg-orange-300 bg-blend-multiply h-lvh"
+  class="w-full bg-center bg-cover bg-no-repeat bg-orange-300 bg-blend-multiply h-lvh"
   [ngStyle]="{ 'background-image': HeroImageUrl() }"
 >
-  <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+  <div
+    *ngIf="translateService.currentLang == 'en'"
+    class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56"
+  >
     <h1
       class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl"
     >
@@ -12,6 +15,21 @@
       class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
     >
       {{ desc_eng }}
+    </p>
+  </div>
+  <div
+    *ngIf="translateService.currentLang == 'ar'"
+    class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56"
+  >
+    <h1
+      class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl"
+    >
+      {{ title_arb }}
+    </h1>
+    <p
+      class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
+    >
+      {{ desc_arb }}
     </p>
   </div>
 </section>

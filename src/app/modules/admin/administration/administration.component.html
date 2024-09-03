@@ -1,6 +1,11 @@
-<div class="h-fit flex justify-between px-6 py-2 bg-white border-t-2">
+<div
+  [dir]="translation.currentLang() == 'ar' ? 'rtl' : ''"
+  class="h-fit flex justify-between px-6 py-2 bg-white border-t-2"
+>
   <div class="flex justify-start gap-10 w-1/2 px-12 ps-20">
-    <h3 class="text-xl font-bold my-auto">Administration</h3>
+    <h3 class="text-xl font-bold my-auto">
+      {{ "ADMINISTRATION.ADMINISTRATION" | translate }}
+    </h3>
 
     <nav class="flex" aria-label="Breadcrumb">
       <ol
@@ -22,7 +27,7 @@
                 d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
               />
             </svg>
-            Dashboard
+            {{ "ADMINISTRATION.DASHBOARD" | translate }}
           </a>
         </li>
         <li>
@@ -44,7 +49,7 @@
             </svg>
             <a
               class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-              >Administration</a
+              >{{ "ADMINISTRATION.ADMINISTRATION" | translate }}</a
             >
           </div>
         </li>
@@ -53,16 +58,19 @@
   </div>
 </div>
 <div
+  [dir]="translation.currentLang() == 'ar' ? 'rtl' : ''"
   class="relative overflow-x-auto p-10 h-full flex-col gap-10 justify-between justify-items-start shadow-md bg-white border rounded-2xl m-5 border-white"
 >
   <div
     class="flex-col justify-center align-middle h-full bg-white 2xl:flex-row 2xl:justify-between 2xl:align-middle 2xl:items-center"
   >
     <!-- Title -->
-    <h2 class="text-3xl mb-8 font-bold">Theme and Text Customization</h2>
+    <h2 class="text-3xl mb-8 font-bold">
+      {{ "ADMINISTRATION.THEMEANDTEXTCUSTOMIZATION" | translate }}
+    </h2>
 
     <div
-      class="w-full max-w-4xl h-full border-2 border-gray-300 rounded-xl p-6 space-y-8"
+      class="w-full h-full border-2 border-gray-300 rounded-xl p-6 space-y-8"
     >
       <!-- Color Picker -->
       <div class="w-full">
@@ -70,7 +78,7 @@
           for="colorPicker"
           class="block text-base font-medium text-gray-700 mb-2"
         >
-          Change Layout Color
+          {{ "ADMINISTRATION.CAHNGELAYOUTCOLOR" | translate }}
         </label>
         <div class="flex items-center space-x-4">
           <input
@@ -90,7 +98,7 @@
             (click)="ColorSelected()"
             class="bg-green-500 text-white hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
           >
-            Save Color
+            {{ "ADMINISTRATION.SAVECOLOR" | translate }}
           </button>
         </div>
       </div>
@@ -101,7 +109,7 @@
           for="logoUpload"
           class="block text-base font-medium text-gray-700 mb-2"
         >
-          Upload Logo
+          {{ "ADMINISTRATION.UPLOADLOGO" | translate }}
         </label>
         <div class="flex items-center space-x-4">
           <input
@@ -126,7 +134,7 @@
             (click)="saveLogo()"
             class="bg-green-500 text-white hover:bg-green-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
           >
-            Save Logo
+            {{ "ADMINISTRATION.SAVELOGO" | translate }}
           </button>
         </div>
       </div>
@@ -137,7 +145,7 @@
           for="HeroUpload"
           class="block text-base font-medium text-gray-700 mb-2"
         >
-          Upload Hero
+          {{ "ADMINISTRATION.UPLOADHERO" | translate }}
         </label>
         <div class="flex items-center space-x-4">
           <input
@@ -162,7 +170,7 @@
             (click)="saveHero()"
             class="bg-green-500 text-white hover:bg-green-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
           >
-            Save Hero
+            {{ "ADMINISTRATION.SAVELOGO" | translate }}
           </button>
         </div>
       </div>
@@ -172,7 +180,7 @@
         <!--  Title of Welcome Message Customization -->
         <div class="flex justify-between mb-5">
           <h3 class="text-2xl font-semibold mb-4">
-            Welcome Message Customization
+            {{ "ADMINISTRATION.WELCOMEMESSAGECUSTOMIZATION" | translate }}
           </h3>
 
           <div class="inline-flex rounded-md shadow-sm">
@@ -287,7 +295,7 @@
         <!--  Title of Description Message Customization -->
         <div class="flex justify-between mb-5">
           <h3 class="text-2xl font-semibold mb-4">
-            Description Message Customization
+            {{ "ADMINISTRATION.DESCRIPTIONMESSAGECUSTOMIZATION" | translate }}
           </h3>
 
           <div class="inline-flex rounded-md shadow-sm">

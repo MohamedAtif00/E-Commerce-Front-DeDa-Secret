@@ -26,12 +26,10 @@ export class AddImagesComponent implements OnInit {
     this.files = await Promise.all(data.map(async (file) => {
       // Generate URL for each file
       file.url = await this.createObjectURL(file.file);
-      console.log('image added',this.productService.files.value.length);
       
       return file;
     }));
 
-    console.log('init file', this.files);
   });
 }
 

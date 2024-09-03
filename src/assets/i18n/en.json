@@ -1,0 +1,146 @@
+{
+    "HEADER":{
+        "HOME":"Home",
+        "ABOUT":"About",
+        "OFFER":"Offer",
+        "BUNDLE":"Bundle",
+        "HAIR":"Hair",
+        "SKINCARE":"Skine Care",
+        "SERVICES":"Services",
+        "CONTACT":"Contact Us"
+    },
+    "CART":{
+        "SHOPPINGCART":"Shopping Cart",
+        "ORDERSUMMARY":"Order Summary",
+        "ORIGINALPRICE":"Original Price",
+        "SAVING":"Saving",
+        "TOTAL":"Total",
+        "PROCESS":"Process ",
+        "CONTINUE":"Continue "
+
+    },
+    "DASHBOARD":{
+        "ADDPRODUCT":"Add Product",
+        "MANAGESALES":"Sales",
+        "DASHBOARD":"Dashboard",
+        "CATEGORIESCHART":{
+            "CATEGORYSALES":"Categories Sales",
+            "TOTALEARNING":"Total Earning",
+            "YESTERDAY":"yesterday",
+            "TODAY":"today",
+            "LAST7DAYS":"last 7 daya",
+            "LAST30DAYS":"last 30 daya",
+            "LAST90DAYS":"last 90 daya"
+        },
+        "DAILYEARING":{
+            "DAILYEARING":"Daily Earning"
+
+        },
+        "MENU":{
+            "MENU":"Menu",
+            "PRODUCTS":"Products",
+            "CATEGORIES":"Categories",
+            "ADDCATEGORIES":"Add Category",
+            "SALES":"Sales",
+            "ADMINISTRATION":"Administration"
+        },
+        "RECENTORDERS":{
+            "RECENTORDERS":"Recent Orders",
+            "ITEM":"Item",
+            "QUANTITY":"Quantity",
+            "PRICE":"Price",
+            "TOTALPRICE":"Total Price"
+        }
+    },"PRODUCTS":{
+        "PRODUCTVIEW":"Product View",
+        "DASHBOARD":"Dashboard",
+        "PRODUCTS":"products",
+        "PRODUCT":"product",
+        "QUANTITY":"Quantity",
+        "PRICE":"Price",
+        "RATING":"Rating",
+        "STATUS":"Status",
+        "ACTION":"Action",
+        "ADDPRODUCT":"Add Product"
+    },
+    "ADDPRODUCT":{
+        "PRODUCTfORM":"Product Form",
+        "HOME":"Home",
+        "PRODUCTS":"Products",
+        "ADDPRODUCT":"Add Product",
+        "THUMBNAIL":"Thumbnail",
+        "GENERAL":"General",
+        "PRODUCTNAME":"Product Name",
+        "PRODUCTNAMESHOULDBEUNIQUE":"Product name should be unique",
+        "PRODUCTDESCRIPTION":"Product Description",
+        "CATEGORY":"Category",
+        "ADDPRODUCTTOCATEGORY":"Add product to category",
+        "PRODUCTIMAGES":"Product Image",
+        "MEDIA":"Media",  
+        "PRICE":"Price",
+        "BASEPRICE":"Base Price",
+        "SETPRODUCTPRICE":"Set Product Price",
+        "DISCOUNTTYPE":"Discount",
+        "NODISCOUNT":"No Discount",
+        "PERCENTIGE":"Percentige",
+        "FIXEDPRICE":"Fixed Price",
+        "INVENTORY":"Inventory",
+        "QUANTITY":"Quantity"
+    },
+    "SALES":{
+        "DASHBOARD":"Dashboard",
+        "ORDERLIST":"Order List",
+        "CUSTOMERNAME":"Customer Name",
+        "PHONENUMBER":"Phone Number",
+        "TOTAL":"Total",
+        "DATEADDED":"Date",
+        "STATE":"State",
+        "ACTION":"Action"
+    },
+    "ADMINISTRATION":{
+        "DASHBOARD":"Dashboard",
+        "ADMINISTRATION":"Administration",
+        "THEMEANDTEXTCUSTOMIZATION":"Theme And Text Customization",
+        "CAHNGELAYOUTCOLOR":"Change Layout",
+        "SAVECOLOR":"Save Color",
+        "UPLOADLOGO":"Upload Logo",
+        "CHOOSEFILE":"Choose File",
+        "SAVELOGO":"Save Logo",
+        "UPLOADHERO":"Upload Hero",
+        "WELCOMEMESSAGECUSTOMIZATION":"Welcome Message Customization",
+        "DESCRIPTIONMESSAGECUSTOMIZATION":"Description Message Customization"
+    },
+    "CATEGORY":{
+        "CATEGORYFORM":"Category Form",
+        "DASHBOARD":"Dashboard",
+        "CATEGORYINFO":"Category Information",
+        "CATEGORIES":"Categories",
+        "ADDCATEGORY":"Add Category",
+        "CATEGORYNAME":"Category Name",
+        "CATEGORYNAMESHOULDBEUNIQUE":"Category Name Should Be Unique"
+    },"ODRERDETAILS":{
+        "ORDERDETIALS":"Order Details",
+        "DASHBOARD":"Dashboard",
+        "ORDERLIST":"Order List",
+        "ORDERSUMMARY":"Order Summary",
+        "DATEADDED":"Date Added",
+        "PAYMENTMETHOD":"Payment Method",
+        "CASH":"Cash",
+        "CUSTOMERDETAILS":"Customer Details",
+        "CUSTOMER":"Cusmtomer",
+        "EMAIL":"Email",
+        "PHONE":"Phone",
+        "SHIPPINGADDRESS":"Shipping Address",
+        "STATE":"State",
+        "CITY":"City",
+        "STREET":"Street",
+        "ORDER":"Order",
+        "PRODUCT":"Product",
+        "QUANTITY":"Quantity",
+        "UNITPRICE":"Unit Price",
+        "TOTAL":"Total",
+        "DELIVERYDATE":"Delivery Date",
+        "GRANDTOTAL":"Grand Total"
+
+    }
+}

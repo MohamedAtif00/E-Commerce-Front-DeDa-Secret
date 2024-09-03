@@ -6,6 +6,7 @@ import { HeaderComponent } from '../layout/header/header.component';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { AppModule } from '../app.module';
 import { AdminHeaderComponent } from '../layout/admin-header/admin-header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -18,6 +19,7 @@ import { AdminHeaderComponent } from '../layout/admin-header/admin-header.compon
   imports: [
     CommonModule,
     PageRoutingModule,
+    TranslateModule
   ]
 })
 export class PageModule { }

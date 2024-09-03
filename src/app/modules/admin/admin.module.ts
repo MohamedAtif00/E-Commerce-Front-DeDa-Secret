@@ -18,10 +18,24 @@ import { ImageUploaderDirectiveDirective } from './add-product/image-uploader-di
 import { AddImagesComponent } from './add-product/general-info/add-images/add-images.component';
 import { SelectCategoryComponent } from './add-product/select-category/select-category.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { ToastrModule } from 'ngx-toastr';
-import { AppModule } from '../../app.module';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AdministrationComponent } from './administration/administration.component';
+
+import {
+  AlertComponent,
+  ButtonCloseDirective,
+  ButtonDirective,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalModule,
+  ModalTitleDirective,
+  ThemeDirective
+} from '@coreui/angular';
+import { AlertModalComponent } from '../../shared/components/alert-modal/alert-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { ManageContactComponent } from './manage-contact/manage-contact.component';
 
 
 @NgModule({
@@ -41,19 +55,23 @@ import { AdministrationComponent } from './administration/administration.compone
     AddCategoryComponent,
     ProductDetailsComponent,
     AdministrationComponent,
+    ManageContactComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+
+
+    TranslateModule.forChild(),
     AdminRoutingModule,
     WidgetsModule,
     TablesModule,
+    AlertModalComponent
   ],
   providers: [DatePipe
     
   ],
   exports: [
- 
   ]
 })
 export class AdminModule { }

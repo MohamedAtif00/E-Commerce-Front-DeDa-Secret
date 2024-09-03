@@ -3,6 +3,7 @@ import { ProductService } from '../../../shared/services/product.service';
 import { CreateProduct, Product } from '../../../shared/model/product.model';
 import { catchError, forkJoin, of, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-add-product',
@@ -14,7 +15,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   product: CreateProduct;
 
-  constructor(private productService: ProductService,private router:Router) { }
+  constructor(
+    private productService: ProductService,
+    public translate:TranslationService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -25,14 +29,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
 
   Create() {
-    console.log('add product component start adding product');
     
   this.productService.CreateNewProduct().pipe(
     switchMap(product => {
-      console.log(product);
       const id = product.value.id;
-      console.log(this.productService.files.value);
-      console.log('master image ', this.productService.file);
       
       return this.productService.files$.pipe(
         switchMap(files => {
@@ -56,7 +56,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
           return forkJoin(uploadObservables);
         }),
         switchMap(() => {
-          console.log('start master');
           
           // After all files have been uploaded, send a request to add master image
           return this.productService.AddMatserImage(id);
@@ -70,7 +69,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     })
   ).subscribe({
     next: (data) => {
-      console.log('Upload successful:', data);
       this.router.navigate(['admin','products']);
     },
     error: (err) => {

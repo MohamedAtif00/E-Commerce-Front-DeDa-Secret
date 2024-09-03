@@ -7,7 +7,7 @@
         [routerLink]="['orders']"
         class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
       >
-        Manage Sales
+        {{ "DASHBOARD.MANAGESALES" | translate }}
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['add-product']"
         class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       >
-        Add Product
+        {{ "DASHBOARD.ADDPRODUCT" | translate }}
       </button>
     </div>
   </div>
@@ -40,9 +40,9 @@
       class="flex flex-col xl:flex-row xl:justify-between justify-center justify-items-center gap-4 xl:gap-2 h-fit w-full"
     >
       <app-recent-order-table class="xl:w-1/2"></app-recent-order-table>
-      <app-product-order-table
+      <!-- <app-product-order-table
         class="xl:w-1/2 w-full"
-      ></app-product-order-table>
+      ></app-product-order-table> -->
     </div>
   </div>
 </div>

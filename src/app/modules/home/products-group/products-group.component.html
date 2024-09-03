@@ -1,10 +1,15 @@
-<div class="">
-  <div class="h-fit pb-28">
+<div
+  class="w-full flex flex-col justify-end justify-items-end content-start align-end items-start"
+>
+  <div
+    class="h-fit pb-28 ps-10 flex flex-col justify-content-end align-content-end align-items-end"
+  >
     <div
-      class="h-fit w-full flex flex-col xl:flex-row xl:gap-5 xl:justify-start xl:items-start xl:align-top xl:pt-0 xl:flex-wrap"
+      class="h-fit w-fit ps-10 flex flex-col justify-center align-content-center align-middle items-center gap-10 md:flex-row lg:flex-row xl:flex-row xl:gap-5 xl:justify-start xl:items-start xl:align-top xl:pt-0 xl:flex-wrap"
     >
       <app-card
         [product]="product"
+        [routerLink]="['product-detials', product.id]"
         *ngFor="let product of Products"
         class="h-[37rem] w-fit block"
       ></app-card>
@@ -27,7 +32,7 @@
   </div>
 </div>
 <app-pagination
-  class="mb-3.5 h-fit"
+  class="mb-3.5 h-fit text-center"
   [page]="page"
   (goToPage)="GoToPage($event)"
 ></app-pagination>

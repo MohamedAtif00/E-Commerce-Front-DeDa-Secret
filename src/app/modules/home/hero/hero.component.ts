@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { catchError, of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,12 +18,12 @@ export class HeroComponent implements OnInit{
   
   HeroImageUrl = signal('')
 
-  constructor(private adminService:AdministrationService) { }
+  constructor(private adminService:AdministrationService,public translateService:TranslateService) { }
 
   ngOnInit(): void {
     this.adminService.GetAdministration().subscribe(data =>
     { 
-      console.log(data);
+      console.log('current lang',this.translateService.defaultLang);
       this.title_eng = data.value.title_Eng
       this.title_arb = data.value.title_Arb
       this.desc_eng = data.value.desc_Eng

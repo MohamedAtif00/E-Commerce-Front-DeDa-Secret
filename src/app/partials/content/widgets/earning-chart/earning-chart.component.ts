@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, signal } from '@angular/core';
 import { initDropdowns, initFlowbite } from 'flowbite';
  import type { DropdownOptions, DropdownInterface } from 'flowbite';
 import ApexCharts from 'apexcharts';
 import { CategoryProfits } from '../../../../modules/admin/model/categoriesProfits.model';
 import { AdministrationService } from '../../../../modules/admin/administration.service';
 import { FlowbiteService } from '../../../../core/services/flowbite.service';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-earning-chart',
@@ -17,12 +18,16 @@ export class EarningChartComponent implements OnInit, OnDestroy {
   options: DropdownOptions;
   daysDropdown: DropdownInterface;
 
-
-
-  constructor(private adminService: AdministrationService,private fow:FlowbiteService) { 
-  }
-
-  ngOnInit(): void {
+  totalEaring = signal('');
+  
+  constructor(private adminService: AdministrationService,
+    private fow: FlowbiteService,
+    private translate:TranslationService  ) { 
+    }
+    
+    ngOnInit(): void {
+      
+      this.totalEaring.set(this.translate.currentLang() == 'en' ? "Total Earnings" : 'اجمالي الارباح');
     initFlowbite();
 
     this.GetCategoriesProfits()
@@ -32,7 +37,6 @@ export class EarningChartComponent implements OnInit, OnDestroy {
   { 
     this.adminService.categoryProfits.subscribe(data => { 
       this.categoriesProfits = data;
-      console.log('chart', this.categoriesProfits);
       if(this.categoriesProfits.length != 0)
       this.startChart();
     });
@@ -69,11 +73,12 @@ export class EarningChartComponent implements OnInit, OnDestroy {
                 total: {
                   showAlways: true,
                   show: true,
-                  label: "Total Earnings",
+                  label:this.totalEaring(),
                   fontFamily: "Inter, sans-serif",
-                  formatter: function (w) {
-                      const sum = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
-                      return 'EGP'+ (sum >= 1000 ? (Math.round(sum / 1000) + 'k') : '');
+                  formatter:  (w)=> {
+                    const sum = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                    let total =  (this.translate.currentLang() == 'en'? "EGP":'جنيه') + (sum >= 1000 ? (Math.round(sum / 1000) + 'k') : '');
+                      return total
                   }
                   ,
                 },
@@ -165,11 +170,9 @@ export class EarningChartComponent implements OnInit, OnDestroy {
     const seriesData = this.categoriesProfits.map(category => category.total);
     
     if (this.chart) {
-      console.log('Updating chart with series data:', seriesData);
       this.chart.updateSeries(seriesData);
     }
   } else {
-    console.log('No matching category found for value:', value);
     // Optionally handle the case where no matching data is found
   }
 }

@@ -23,7 +23,6 @@ export class InnerCardComponent {
 
   clicked()
   {
-    console.log('Clicked');
     
   }
 
@@ -42,7 +41,6 @@ export class InnerCardComponent {
       );
 
       this.basketService.cart$.subscribe(data => {
-        console.log('basket info', data);
   
       })
     } catch (e)

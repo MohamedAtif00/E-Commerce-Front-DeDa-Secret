@@ -11,7 +11,10 @@ import { ProductsGroupComponent } from './products-group/products-group.componen
 import { CardComponent } from '../../shared/components/card/card.component';
 import { FilterGroupComponent } from './filter-group/filter-group.component';
 import { PaginationComponent } from './pagination/pagination.component';
-
+import { AdminLoginComponent } from '../admin/admin-login/admin-login.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PriceRangeComponent } from './filter-group/price-range/price-range.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +24,17 @@ import { PaginationComponent } from './pagination/pagination.component';
     AboutComponent,
     ProductsGroupComponent,
     FilterGroupComponent,
-    PaginationComponent
+    PaginationComponent,
+    AdminLoginComponent,
+    PriceRangeComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
     HomeRoutingModule,
     ProductCarouselComponent,
-    CardComponent
-  ]
+    CardComponent,
+    ReactiveFormsModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EarningChartComponent } from './earning-chart/earning-chart.component';
 import { DailySalesChartComponent } from './daily-sales-chart/daily-sales-chart.component';
 import { MonthSalesComponent } from './month-sales/month-sales.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -13,7 +14,8 @@ import { MonthSalesComponent } from './month-sales/month-sales.component';
     MonthSalesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule.forChild()
   ],exports:[
     EarningChartComponent,
     DailySalesChartComponent,

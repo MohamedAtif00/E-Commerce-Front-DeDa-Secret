@@ -6,10 +6,72 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/pagedone@1.2.1/src/css/pagedone.css"
+    />
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <style>
+      input[type="range"]::-webkit-slider-thumb {
+        pointer-events: all;
+        width: 24px;
+        height: 24px;
+        -webkit-appearance: none;
+        /* @apply w-6 h-6 appearance-none pointer-events-auto; */
+      }
+    </style>
   </head>
-  <body class="overflow-y-scroll h-fit">
+  <body>
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
     <app-root></app-root>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+      function range() {
+        return {
+          min: 0,
+          max: 10000,
+          minprice: 1000,
+          maxprice: 8000,
+          minthumb: 10,
+          maxthumb: 90,
+          mintrigger() {
+            this.minthumb =
+              ((this.minprice - this.min) / (this.max - this.min)) * 100;
+          },
+          maxtrigger() {
+            this.maxthumb =
+              ((this.maxprice - this.min) / (this.max - this.min)) * 100;
+          },
+        };
+      }
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/pagedone@1.2.1/src/js/pagedone.js"></script> -->
+    <!-- <script src="./assets/product-details.config.js"></script> -->
   </body>
 </html>

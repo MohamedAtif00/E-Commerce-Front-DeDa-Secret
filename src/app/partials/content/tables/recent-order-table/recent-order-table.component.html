@@ -1,5 +1,7 @@
 <div class="w-full bg-white rounded-lg shadow-md p-4">
-  <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
+  <h2 class="text-xl font-semibold mb-4">
+    {{ "DASHBOARD.RECENTORDERS.RECENTORDERS" | translate }}
+  </h2>
   <div class="flex space-x-4 mb-4">
     <button
       *ngFor="let category of categories"
@@ -33,10 +35,12 @@
   <table class="w-full text-left">
     <thead>
       <tr>
-        <th class="p-2">ITEM</th>
-        <th class="p-2">QTY</th>
-        <th class="p-2">PRICE</th>
-        <th class="p-2">TOTAL PRICE</th>
+        <th class="p-2">{{ "DASHBOARD.RECENTORDERS.ITEM" | translate }}</th>
+        <th class="p-2">{{ "DASHBOARD.RECENTORDERS.QUANTITY" | translate }}</th>
+        <th class="p-2">{{ "DASHBOARD.RECENTORDERS.PRICE" | translate }}</th>
+        <th class="p-2">
+          {{ "DASHBOARD.RECENTORDERS.TOTALPRICE" | translate }}
+        </th>
       </tr>
     </thead>
     <tbody>
