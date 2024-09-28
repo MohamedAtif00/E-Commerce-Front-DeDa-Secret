@@ -12,6 +12,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { AdministrationComponent } from './administration/administration.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ManageContactComponent } from './manage-contact/manage-contact.component';
+import { BostaGuard } from './shipment/guard/bosta-guard.guard';
 
 const routes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -31,6 +32,11 @@ const routes: Routes = [
   { path: 'add-category', component: AddCategoryComponent },
   { path: 'administration', component: AdministrationComponent },
   { path: 'contact', component: ManageContactComponent },
+  {
+    path: 'shipment',
+    loadChildren: () =>
+      import('./shipment/shipment.module').then((x) => x.ShipmentModule),
+  },
 ];
 
 @NgModule({

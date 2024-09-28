@@ -1,4 +1,5 @@
 let mainhost = 'https://localhost:7113/api/';
+let bosta = 'http://app.bosta.co/api/v2/';
 // let mainhost = 'api/'
 export const development = {
   localhosts: {
@@ -25,6 +26,7 @@ export const development = {
       getAllOrders: `${mainhost}Order/GetAllOrders?pageNumber=`,
       getSingleOrder: `${mainhost}Order/GetSingleOrder/`,
       getOrderStetes: `${mainhost}Order/OrderStates`,
+      changeOrderState: `${mainhost}Order/ChangeState`,
     },
     administration: {
       categoriesProfits: `${mainhost}Category/GetCategoriesProfits/`,
@@ -48,6 +50,14 @@ export const development = {
     contact: {
       sendContact: `${mainhost}Contact`,
       getAllContact: `${mainhost}Contact`,
+    },
+    address: {
+      getAllDistricts: `${bosta}cities/getAllDistricts`,
+      getAllPickupAddress: `${mainhost}Shipment/GetAllPickupAddress`,
+      addPickupAddress: `${mainhost}Shipment/AddPickupAddress`,
+    },
+    shipment: {
+      sendInformation: `${mainhost}Shipment`,
     },
   },
 };

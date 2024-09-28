@@ -8,7 +8,10 @@ import {
   PageList,
 } from '../../core/model/general-response.model';
 import { GetAllProducts } from '../model/product.model';
-import { Order } from '../../modules/admin/model/order.model';
+import {
+  Order,
+  ChangeStateRequest,
+} from '../../modules/admin/model/order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +21,7 @@ export class OrderService {
   private _getAllOrders = development.localhosts.order.getAllOrders;
   private _getSingleOrder = development.localhosts.order.getSingleOrder;
   private _getOrderStetes = development.localhosts.order.getOrderStetes;
+  private _changeOrderState = development.localhosts.order.changeOrderState;
 
   constructor(private _http: GenericCRUDService) {}
 
@@ -55,5 +59,13 @@ export class OrderService {
 
   GetOrderStetes() {
     return this._http.genericGetAPIData<any>(this._getOrderStetes);
+  }
+
+  // Update Order
+  CancelOrder(request: ChangeStateRequest) {
+    return this._http.genericPostAPIData<GeneralResponse<any>>(
+      this._changeOrderState,
+      request
+    );
   }
 }

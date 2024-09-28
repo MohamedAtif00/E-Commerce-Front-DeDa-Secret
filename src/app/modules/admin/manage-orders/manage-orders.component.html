@@ -330,15 +330,13 @@
         >
           <select
             class="text-indigo-600 hover:text-indigo-900 rounded-lg"
-            [(ngModel)]="order.state"
+            (change)="ChangeState($event)"
           >
             <option
               class="cursor-pointer"
-              *ngFor="let state of states"
-              [value]="state.name"
-            >
-              {{ state.name }}
-            </option>
+              *ngFor="let state of chooseState"
+              [value]="state"
+            ></option>
           </select>
         </td>
       </tr>

@@ -50,6 +50,7 @@
   </button>
   <div class="max-w-md mx-auto mt-10">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Full Name -->
       <div>
         <label for="fullName" class="block text-sm font-medium text-gray-700"
           >Full Name</label
@@ -71,16 +72,16 @@
         </div>
       </div>
 
+      <!-- Phone Number -->
       <div>
-        <label
-          for="phoneNumber"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Phone number:</label
+        <label for="phoneNumber" class="block text-sm font-medium text-gray-700"
+          >Phone Number</label
         >
         <div class="relative">
           <div
             class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none"
           >
+            <!-- Phone Icon -->
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"
               aria-hidden="true"
@@ -94,27 +95,12 @@
             </svg>
           </div>
           <input
-            type="text"
             id="phoneNumber"
+            type="text"
             formControlName="phoneNumber"
-            aria-describedby="helper-text-explanation"
-            class="bg-white border-0 border-b-2 appearance-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 focus:border-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            class="bg-white border-0 border-b-2 appearance-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 focus:border-indigo-500"
             placeholder="123-456-7890"
           />
-        </div>
-        <div
-          *ngIf="
-            (phoneNumber?.invalid && phoneNumber?.touched) ||
-            (phoneNumber?.invalid && submitted)
-          "
-          class="text-red-600 text-sm"
-        >
-          <div *ngIf="phoneNumber?.errors?.['required']">
-            Phone Number is required.
-          </div>
-          <!-- <div *ngIf="phoneNumber?.errors?.['pattern']">
-            Phone Number must be 10 digits.
-          </div> -->
         </div>
         <div
           *ngIf="
@@ -123,69 +109,184 @@
           "
           class="text-red-600 text-sm"
         >
-          Valid Phone Number is required.
+          <div *ngIf="contactForm.get('phoneNumber')?.errors?.['required']">
+            Phone Number is required.
+          </div>
+          <div *ngIf="contactForm.get('phoneNumber')?.errors?.['pattern']">
+            Phone Number must be 10 digits.
+          </div>
         </div>
       </div>
 
+      <!-- Address Section -->
       <div formGroupName="address">
-        <label for="streetName" class="block text-sm font-medium text-gray-700"
-          >Street Name</label
-        >
-        <input
-          id="streetName"
-          type="text"
-          formControlName="streetName"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-        <div
-          *ngIf="
-            contactForm.get('address.streetName')?.invalid &&
-            contactForm.get('address.streetName')?.touched
-          "
-          class="text-red-600 text-sm"
-        >
-          Street Name is required.
+        <!-- State -->
+        <div>
+          <label for="state" class="block text-sm font-medium text-gray-700"
+            >State</label
+          >
+          <select
+            id="state"
+            formControlName="state"
+            (change)="StateSelected($event)"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option *ngFor="let state of states" [value]="state.cityId">
+              {{ state.cityOtherName }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              contactForm.get('address.state')?.invalid &&
+              contactForm.get('address.state')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            State is required.
+          </div>
         </div>
 
-        <label for="state" class="block text-sm font-medium text-gray-700 mt-4"
-          >State</label
-        >
-        <input
-          id="state"
-          type="text"
-          formControlName="state"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-        <div
-          *ngIf="
-            contactForm.get('address.state')?.invalid &&
-            contactForm.get('address.state')?.touched
-          "
-          class="text-red-600 text-sm"
-        >
-          State is required.
+        <!-- City -->
+        <div *ngIf="stateSelected">
+          <label for="city" class="block text-sm font-medium text-gray-700 mt-4"
+            >City</label
+          >
+          <select
+            id="city"
+            formControlName="city"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option
+              *ngFor="let district of stateSelected.districts"
+              [value]="district.districtId"
+            >
+              {{ district.districtOtherName }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              contactForm.get('address.city')?.invalid &&
+              contactForm.get('address.city')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            City is required.
+          </div>
         </div>
 
-        <label for="city" class="block text-sm font-medium text-gray-700 mt-4"
-          >City</label
-        >
-        <input
-          id="city"
-          type="text"
-          formControlName="city"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-        <div
-          *ngIf="
-            contactForm.get('address.city')?.invalid &&
-            contactForm.get('address.city')?.touched
-          "
-          class="text-red-600 text-sm"
-        >
-          City is required.
+        <!-- Address First Line -->
+        <div>
+          <label
+            for="addressFirstLine"
+            class="block text-sm font-medium text-gray-700 mt-4"
+            >Address First Line</label
+          >
+          <input
+            id="addressFirstLine"
+            type="text"
+            formControlName="addressFirstLine"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <div
+            *ngIf="
+              contactForm.get('address.addressFirstLine')?.invalid &&
+              contactForm.get('address.addressFirstLine')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            Address First Line is required.
+          </div>
+        </div>
+
+        <!-- Address Second Line (Optional) -->
+        <div>
+          <label
+            for="addressSecondLine"
+            class="block text-sm font-medium text-gray-700 mt-4"
+            >Address Second Line (Optional)</label
+          >
+          <input
+            id="addressSecondLine"
+            type="text"
+            formControlName="addressSecondLine"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Building Number -->
+        <div>
+          <label
+            for="buildingNumber"
+            class="block text-sm font-medium text-gray-700 mt-4"
+            >Building Number</label
+          >
+          <input
+            id="buildingNumber"
+            type="text"
+            formControlName="buildingNumber"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <div
+            *ngIf="
+              contactForm.get('address.buildingNumber')?.invalid &&
+              contactForm.get('address.buildingNumber')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            Building Number is required.
+          </div>
+        </div>
+
+        <!-- Floor -->
+        <div>
+          <label
+            for="floor"
+            class="block text-sm font-medium text-gray-700 mt-4"
+            >Floor</label
+          >
+          <input
+            id="floor"
+            type="text"
+            formControlName="floor"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <div
+            *ngIf="
+              contactForm.get('address.floor')?.invalid &&
+              contactForm.get('address.floor')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            Floor is required.
+          </div>
+        </div>
+
+        <!-- Apartment -->
+        <div>
+          <label
+            for="apartment"
+            class="block text-sm font-medium text-gray-700 mt-4"
+            >Apartment</label
+          >
+          <input
+            id="apartment"
+            type="text"
+            formControlName="apartment"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <div
+            *ngIf="
+              contactForm.get('address.apartment')?.invalid &&
+              contactForm.get('address.apartment')?.touched
+            "
+            class="text-red-600 text-sm"
+          >
+            Apartment is required.
+          </div>
         </div>
       </div>
 
+      <!-- Submit Button -->
       <div>
         <button
           type="submit"

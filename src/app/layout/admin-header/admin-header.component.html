@@ -311,6 +311,21 @@
           Contact</a
         >
       </li>
+      <li *ngIf="!auth.isAuthenticated()">
+        <a
+          [routerLink]="['shipment']"
+          class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
+        >
+          Shipment</a
+        >
+      </li>
+      <li>
+        <app-slide-dropdown
+          [title]="'shipment'"
+          [items]="['Dashboard', 'Profile']"
+          (itemSelected)="onItemSelected($event)"
+        ></app-slide-dropdown>
+      </li>
 
       <!-- <li>
         <a

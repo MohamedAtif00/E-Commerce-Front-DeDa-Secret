@@ -1,0 +1,94 @@
+<div
+  [ngClass]="getStateStyle(state)"
+  class="inline-flex gap-3 items-center rounded-lg p-2"
+>
+  {{ state }}
+  <ng-container class="text-lg ps-10" *ngIf="showIcon" [ngSwitch]="state">
+    <!-- Add Pending icon here -->
+    <svg
+      *ngSwitchCase="'Pending'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Accepted icon here -->
+    <svg
+      *ngSwitchCase="'Accepted'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Expired icon here -->
+    <svg
+      *ngSwitchCase="'Expired'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Failed icon here -->
+    <i *ngSwitchCase="'Failed'" class="pi pi-exclamation-triangle"></i>
+
+    <!-- Add Cancelled icon here -->
+    <i *ngSwitchCase="'Cancelled'" class="pi pi-times-circle"></i>
+
+    <!-- Add Completed icon here -->
+    <svg
+      *ngSwitchCase="'Completed'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Denied icon here -->
+    <svg
+      *ngSwitchCase="'Denied'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Processing icon here -->
+    <svg
+      *ngSwitchCase="'Processing'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Refunded icon here -->
+    <svg
+      *ngSwitchCase="'Refunded'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Delivered icon here -->
+    <svg
+      *ngSwitchCase="'Delivered'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Delivering icon here -->
+    <svg
+      *ngSwitchCase="'Delivering'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+    <!-- Add Default icon here -->
+    <svg
+      *ngSwitchDefault
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 mr-2"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    ></svg>
+  </ng-container>
+</div>

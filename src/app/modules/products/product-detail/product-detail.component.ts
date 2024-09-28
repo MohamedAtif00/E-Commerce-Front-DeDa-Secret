@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../shared/services/product.service';
-import { GetSingleProduct, Product } from '../../../shared/model/product.model';
+import { GetSingleProduct } from '../../../shared/model/product.model';
 import { CategoryService } from '../../../shared/services/category.service';
 import { BasketService } from '../../../shared/services/basket.service';
 import { BasketItem } from '../../../shared/model/basket.model';
@@ -19,11 +19,14 @@ import {
   OrderItem,
 } from '../../../shared/model/order.model';
 import { OrderService } from '../../../shared/services/order.service';
+import { City, District } from '../../cart/model/address.model';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { AddressService } from '../../cart/service/address.service';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss',
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
   product: GetSingleProduct = {
@@ -43,6 +46,14 @@ export class ProductDetailComponent implements OnInit {
 
   category: string;
 
+  states: City[] = [];
+  filteredStates: City[] = [];
+
+  districts: District[] = [];
+
+  stateSelected: City | undefined;
+  citySelected: District | undefined;
+
   // Buying
   quantity: number = 1;
   total: number = this.product._price._total;
@@ -51,7 +62,7 @@ export class ProductDetailComponent implements OnInit {
   $modalElement: HTMLElement;
   modal: ModalInterface;
   contactForm: FormGroup;
-  submitted: Boolean = false;
+  submitted: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +71,8 @@ export class ProductDetailComponent implements OnInit {
     private orderService: OrderService,
     private categoryService: CategoryService,
     private cartService: BasketService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private addressService: AddressService
   ) {
     this.contactForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -69,15 +81,20 @@ export class ProductDetailComponent implements OnInit {
         [Validators.required /*, Validators.pattern(/^[0-9]{10}$/)*/],
       ],
       address: this.fb.group({
-        streetName: ['', Validators.required],
         state: ['', Validators.required],
         city: ['', Validators.required],
+        addressFirstLine: ['', Validators.required],
+        addressSecondLine: [''], // Optional
+        buildingNumber: ['', Validators.required],
+        floor: ['', Validators.required],
+        apartment: ['', Validators.required],
       }),
     });
   }
 
   ngOnInit(): void {
     initFlowbite();
+    this.GetAllCities();
     this.InitModal();
     let id = this.route.snapshot.params['id'];
     this.productService.GetSingleProduct(id).subscribe((data) => {
@@ -108,7 +125,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   // Init Modal
-
   InitModal() {
     this.$modalElement = document.querySelector('#default-modal');
 
@@ -118,25 +134,22 @@ export class ProductDetailComponent implements OnInit {
       backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
       closable: true,
       onHide: () => {
-        //console.log('modal is hidden');
+        // Handle modal hide
       },
       onShow: () => {
-        //console.log('modal is shown');
+        // Handle modal show
       },
       onToggle: () => {
-        //console.log('modal has been toggled');
+        // Handle modal toggle
       },
     };
 
-    // instance options object
     const instanceOptions: InstanceOptions = {
       id: 'modalEl',
       override: true,
     };
 
     this.modal = new Modal(this.$modalElement, modalOptions, instanceOptions);
-
-    //this.modal.show();
   }
 
   ShowModal() {
@@ -146,21 +159,35 @@ export class ProductDetailComponent implements OnInit {
   HideModal() {
     this.modal.hide();
   }
+
   // Modal Configuration
   onSubmit() {
+    this.submitted = true; // Mark as submitted
     if (this.contactForm.valid) {
-      // Create Order Items and Adding to the odrer
+      // Create Order Items and Adding to the order
       let orderItems: OrderItem[] = [];
 
       let orderItem: OrderItem = {
         ProductId: this.product.id,
         quantity: this.quantity,
       };
+      orderItems.push(orderItem); // Add order item to the list
+
       // Create Address Object
       let address: Address = {
         state: this.state.value,
+        stateId: this.states.find((x) => x.cityOtherName == address.state)
+          .cityId,
         city: this.city.value,
-        street: this.streetName.value,
+        cityId: this.states
+          .find((x) => x.cityId == address.stateId)
+          .districts.find((x) => x.districtOtherName == address.city)
+          .districtId,
+        firstLine: this.contactForm.get('address.addressFirstLine')?.value,
+        secondLine: this.contactForm.get('address.addressSecondLine')?.value,
+        buildingNumber: this.contactForm.get('address.buildingNumber')?.value,
+        floor: this.contactForm.get('address.floor')?.value,
+        apartment: this.contactForm.get('address.apartment')?.value,
       };
 
       let order: CreateOrder = {
@@ -170,15 +197,20 @@ export class ProductDetailComponent implements OnInit {
         CustomerName: this.fullName.value,
         PhoneNumber: this.phoneNumber.value,
       };
+
       this.modal.hide();
       this.orderService.AddOrder(order).subscribe({
         next: (data) => {
           this.router.navigate(['cart', 'success']);
         },
-        error: () => {},
+        error: () => {
+          // Handle error
+        },
       });
     } else {
       console.log('Form is invalid');
+      let errors = this.contactForm.errors;
+      console.log(errors);
     }
   }
 
@@ -190,8 +222,8 @@ export class ProductDetailComponent implements OnInit {
     return this.contactForm.get('phoneNumber');
   }
 
-  get streetName() {
-    return this.contactForm.get('address.streetName');
+  get street() {
+    return this.contactForm.get('address.street');
   }
 
   get state() {
@@ -203,11 +235,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   // Set Quantity
-
   AddOne() {
     this.quantity++;
     this.total += this.product._price._total;
   }
+
   RemoveOne() {
     if (this.quantity >= 2) {
       this.quantity--;
@@ -216,7 +248,7 @@ export class ProductDetailComponent implements OnInit {
       this.quantity;
     }
   }
-  //
+
   // Add To Cart
   AddToCart() {
     let item: BasketItem = {
@@ -231,7 +263,7 @@ export class ProductDetailComponent implements OnInit {
   BuyNow() {
     this.ShowModal();
   }
-  //
+
   // Create Image From Blob
   private createImageFromBlob(image: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -259,14 +291,53 @@ export class ProductDetailComponent implements OnInit {
       }
     });
   }
-  //
+
   MakeMasterImage(image: string) {
     let index = this.productImages.indexOf(image);
-    // If the image is found in the array, remove it
     if (index > -1) {
       this.productImages.splice(index, 1);
     }
-    this.productImages.push(this.productImageUrl.toString());
+    this.productImages.push(this.productImageUrl?.toString());
     this.productImageUrl = image;
+  }
+
+  // Fetch all cities (states)
+  private GetAllCities() {
+    this.addressService.GetAllCities().subscribe((data) => {
+      console.log(data);
+      this.states = data.data.filter(
+        (e: any): e is City => this.isCity(e) && e.dropOffAvailability
+      );
+    });
+  }
+
+  // Type guard to check if the object is a City
+  isCity(e: any): e is City {
+    return e && typeof e.cityName === 'string' && typeof e.cityId === 'string';
+  }
+
+  // Autocomplete state filtering
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    let query = event.query.toLowerCase();
+    this.filteredStates = this.states.filter((state: City) =>
+      state.cityName.toLowerCase().includes(query)
+    );
+  }
+
+  // Handle state selection from dropdown
+  StateSelected(e: Event) {
+    let value = (e.target as HTMLSelectElement).value;
+    this.stateSelected = this.states.find((e) => e.cityId == value);
+
+    // Fetch districts based on selected state
+    if (this.stateSelected) {
+      this.districts = this.stateSelected.districts;
+    }
+  }
+
+  // Handle city selection (not yet implemented in detail)
+  CitySelected(e: Event) {
+    let value = (e.target as HTMLSelectElement).value;
+    this.citySelected = this.districts.find((e) => e.districtId == value);
   }
 }

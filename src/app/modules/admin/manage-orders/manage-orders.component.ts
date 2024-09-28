@@ -8,12 +8,19 @@ import { GetAllOrders } from '../../../shared/model/order.model';
 import { PageList } from '../../../core/model/general-response.model';
 import { Router } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
+import { ShipmentService } from '../service/shipment.service';
 
 class orders {}
 
 class OrderStetes {
   name: string;
   value: number;
+}
+
+enum states {
+  Pending = 'Pending',
+  Accepted = 'Accepted',
+  Denied = 'Denied',
 }
 
 @Component({
@@ -30,16 +37,21 @@ export class ManageOrdersComponent implements OnInit {
 
   // Stetes For dropdown list
   states: OrderStetes[] = [];
+  chooseState = Object.values(states);
   constructor(
     private orderService: OrderService,
     private router: Router,
-    public translation: TranslationService
+    public translation: TranslationService,
+    private shipmentService: ShipmentService
   ) {}
 
   ngOnInit(): void {
     this.DropDownMenuConfiguration();
     this.GetAllOrders(1);
     this.GetOrderStetes();
+    this.shipmentService.GetAllDeliveries().subscribe((data) => {
+      console.log('Shipments', data);
+    });
   }
 
   GetAllOrders(
@@ -119,5 +131,12 @@ export class ManageOrdersComponent implements OnInit {
 
   Reconfig() {
     this.DropDownMenuConfiguration();
+  }
+
+  ChangeState(e: Event) {
+    let value = (e.target as HTMLSelectElement).value;
+
+    if (value == states.Accepted) {
+    }
   }
 }

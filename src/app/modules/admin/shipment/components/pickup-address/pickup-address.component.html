@@ -1,0 +1,201 @@
+<div class="container mx-auto p-6">
+  <!-- Table for Addresses -->
+  <h2 class="text-2xl font-bold mb-4">Added Addresses</h2>
+
+  <div *ngIf="addresses.length > 0">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-6">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="text-left px-4 py-2">State</th>
+          <th class="text-left px-4 py-2">City</th>
+          <th class="text-left px-4 py-2">Address Line 1</th>
+          <th class="text-left px-4 py-2">Building Number</th>
+          <th class="text-left px-4 py-2">Floor</th>
+          <th class="text-left px-4 py-2">Apartment</th>
+          <th class="text-left px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let address of addresses; let i = index" class="border-b">
+          <td class="px-4 py-2">{{ address.state }}</td>
+          <td class="px-4 py-2">{{ address.city }}</td>
+          <td class="px-4 py-2">{{ address.firstLine }}</td>
+          <td class="px-4 py-2">{{ address.buildingNumber }}</td>
+          <td class="px-4 py-2">{{ address.floor || "-" }}</td>
+          <td class="px-4 py-2">{{ address.apartment || "-" }}</td>
+          <td class="px-4 py-2">
+            <button
+              (click)="deleteAddress(i)"
+              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="addresses.length === 0" class="text-gray-500 mb-6">
+    No addresses added yet.
+  </div>
+
+  <!-- Form for Adding a New Address -->
+  <h2 class="text-2xl font-bold mb-4">Add New Address</h2>
+
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- State -->
+    <div>
+      <label for="state" class="block text-sm font-medium text-gray-700"
+        >State</label
+      >
+      <select
+        id="state"
+        formControlName="state"
+        (change)="StateSelected($event)"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option *ngFor="let state of states" [value]="state.cityId">
+          {{ state.cityOtherName }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          addressForm.get('address.state')?.invalid &&
+          addressForm.get('address.state')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        State is required.
+      </div>
+    </div>
+    <!-- City -->
+    <div *ngIf="stateSelected">
+      <label for="city" class="block text-sm font-medium text-gray-700 mt-4"
+        >City</label
+      >
+      <select
+        id="city"
+        formControlName="city"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option
+          *ngFor="let district of stateSelected.districts"
+          [value]="district.districtId"
+        >
+          {{ district.districtOtherName }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          addressForm.get('address.city')?.invalid &&
+          addressForm.get('address.city')?.touched
+        "
+        class="text-red-600 text-sm"
+      >
+        City is required.
+      </div>
+    </div>
+
+    <!-- First Line -->
+    <div>
+      <label
+        for="firstLine"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >Address Line 1</label
+      >
+      <input
+        type="text"
+        id="firstLine"
+        formControlName="firstLine"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        placeholder="Enter the first line of your address"
+      />
+      <div
+        *ngIf="
+          addressForm.get('firstLine').invalid &&
+          addressForm.get('firstLine').touched
+        "
+        class="text-red-500 text-sm"
+      >
+        Address Line 1 is required.
+      </div>
+    </div>
+
+    <!-- Optional Fields -->
+    <div>
+      <label
+        for="secondLine"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >Address Line 2 (Optional)</label
+      >
+      <input
+        type="text"
+        id="secondLine"
+        formControlName="secondLine"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        placeholder="Enter additional address details"
+      />
+    </div>
+
+    <div>
+      <label
+        for="buildingNumber"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >Building Number</label
+      >
+      <input
+        type="text"
+        id="buildingNumber"
+        formControlName="buildingNumber"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        placeholder="Enter building number"
+      />
+      <div
+        *ngIf="
+          addressForm.get('buildingNumber').invalid &&
+          addressForm.get('buildingNumber').touched
+        "
+        class="text-red-500 text-sm"
+      >
+        Building Number is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="floor" class="block mb-2 text-sm font-medium text-gray-700"
+        >Floor (Optional)</label
+      >
+      <input
+        type="text"
+        id="floor"
+        formControlName="floor"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        placeholder="Enter floor number (if applicable)"
+      />
+    </div>
+
+    <div>
+      <label
+        for="apartment"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >Apartment (Optional)</label
+      >
+      <input
+        type="text"
+        id="apartment"
+        formControlName="apartment"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        placeholder="Enter apartment or unit number"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200"
+    >
+      Add Address
+    </button>
+  </form>
+</div>

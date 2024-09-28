@@ -6,7 +6,7 @@ import { ManageProductsComponent } from './manage-products/manage-products.compo
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { WidgetsModule } from '../../partials/content/widgets/widgets.module';
-import { TablesModule } from "../../partials/content/tables/tables.module";
+import { TablesModule } from '../../partials/content/tables/tables.module';
 import { ProductRowComponent } from './manage-products/product-row/product-row.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -21,22 +21,16 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AdministrationComponent } from './administration/administration.component';
 
-import {
-  AlertComponent,
-  ButtonCloseDirective,
-  ButtonDirective,
-  ModalBodyComponent,
-  ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
-  ModalModule,
-  ModalTitleDirective,
-  ThemeDirective
-} from '@coreui/angular';
 import { AlertModalComponent } from '../../shared/components/alert-modal/alert-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageContactComponent } from './manage-contact/manage-contact.component';
+import { ShipmentService } from './service/shipment.service';
 
+// prime ng
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { BostaAuthentication } from './shipment/service/bosta-auth.service';
+import { StateBadgeComponent } from '../../shared/components/state-badge/state-badge.component';
 
 @NgModule({
   declarations: [
@@ -55,23 +49,22 @@ import { ManageContactComponent } from './manage-contact/manage-contact.componen
     AddCategoryComponent,
     ProductDetailsComponent,
     AdministrationComponent,
-    ManageContactComponent
+    ManageContactComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
-
-
     TranslateModule.forChild(),
     AdminRoutingModule,
     WidgetsModule,
     TablesModule,
-    AlertModalComponent
+    AlertModalComponent,
+    //primeng
+    ButtonModule,
+    SplitButtonModule,
+    StateBadgeComponent,
   ],
-  providers: [DatePipe
-    
-  ],
-  exports: [
-  ]
+  providers: [DatePipe, ShipmentService, BostaAuthentication],
+  exports: [],
 })
-export class AdminModule { }
+export class AdminModule {}

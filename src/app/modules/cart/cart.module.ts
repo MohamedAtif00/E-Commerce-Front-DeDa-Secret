@@ -7,6 +7,7 @@ import { CheckOutComponent } from './cart-list/check-out/check-out.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderSuccessComponent } from './order-success/order-success.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [CartListComponent, CheckOutComponent, OrderSuccessComponent],
@@ -16,6 +17,7 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
     CartRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    AutoCompleteModule,
   ],
 })
 export class CartModule {}
