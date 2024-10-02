@@ -11,6 +11,10 @@ import { Address } from '../../../shared/model/order.model';
 export class AddressService {
   private _getDestricts = development.localhosts.address.getAllDistricts;
   private _addPickupAddress = development.localhosts.address.addPickupAddress;
+  private _getAllPickupAddresses =
+    development.localhosts.address.getAllPickupAddress;
+  private _getActivePickupAddress =
+    development.localhosts.address.getActivePickupAddress;
 
   constructor(private _http: GenericCRUDService) {}
 
@@ -18,8 +22,19 @@ export class AddressService {
     return this._http.genericGetAPIData<AddressResponse>(this._getDestricts);
   }
 
-  GetAllPickupAddress() {}
+  GetAllPickupAddress() {
+    return this._http.genericGetAPIData<GeneralResponse<Address[]>>(
+      this._getAllPickupAddresses
+    );
+  }
 
+  GetActivePickupAddress() {
+    return this._http.genericGetAPIData<GeneralResponse<Address>>(
+      this._getActivePickupAddress
+    );
+  }
+
+  // Add
   AddPickupAddress(request: Address) {
     return this._http.genericPostAPIData<GeneralResponse<any>>(
       this._addPickupAddress,

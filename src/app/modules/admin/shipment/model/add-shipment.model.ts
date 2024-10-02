@@ -32,7 +32,7 @@ export interface Specs {
 
 export interface Address {
   city: string;
-  zoneId: string;
+  zoneId?: string;
   districtId: string;
   firstLine: string;
   secondLine: string;
@@ -44,19 +44,19 @@ export interface Address {
 export interface Receiver {
   firstName: string;
   lastName: string;
-  phone: string;
+  phone?: string;
   email: string;
 }
 
 export interface AddDeliveryRequest {
   type: number;
   specs: Specs;
-  notes: string;
+  notes?: string;
   cod: number;
   dropOffAddress: Address;
   pickupAddress: Address;
-  returnAddress: Address;
-  businessReference: string;
-  receiver: Receiver;
-  webhookUrl: string;
+  returnAddress?: Address;
+  businessReference?: string;
+  receiver?: Receiver;
+  webhookUrl?: string;
 }

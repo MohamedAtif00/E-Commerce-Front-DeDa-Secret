@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BostaInterceptor } from './interceptor/bosta-auth.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PickUpAddressComponent } from './components/pickup-address/pickup-address.component';
+import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PickUpAddressComponent } from './components/pickup-address/pickup-addre
     BostaLoginComponent,
     ProfileComponent,
     PickUpAddressComponent,
+    DeliveryListComponent,
   ],
   imports: [
     CommonModule,

@@ -1,11 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../../shared/services/order.service';
 import { DatePipe } from '@angular/common';
 import { ChangeStateRequest, Order, OrderState } from '../model/order.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { MenuItem } from 'primeng/api';
+import { AddressService } from '../../cart/service/address.service';
+import { Address } from '../../../shared/model/order.model';
+import { AddDeliveryRequest } from '../shipment/model/add-shipment.model';
 import { BostaService } from '../shipment/service/bosta.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-details',
@@ -16,6 +20,10 @@ export class OrderDetailsComponent implements OnInit {
   id: string;
   formattedDate: string;
   Order: Order;
+  pickupAddress: Address;
+  firstName: string;
+  lastName: string;
+  email: string;
 
   items: MenuItem[] = [
     {
@@ -49,11 +57,22 @@ export class OrderDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private orderService: OrderService,
+    private addressService: AddressService,
+    private bostaService: BostaService,
+    private toastrService: ToastrService,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
+    this.addressService.GetActivePickupAddress().subscribe((data) => {
+      console.log('Admin pickup address', data);
+      this.pickupAddress = data.value;
+      let name = data.value.shipmentInformation.fullName as string;
+      this.firstName = name.split(' ')[0];
+      this.lastName = name.split(' ')[1];
+      this.email = data.value.shipmentInformation.email;
+    });
     this.GetSingleOrder(this.id);
   }
 
@@ -106,20 +125,60 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   SubmitOrder() {
-    // let request: AddDeliveryRequest = {
-    //   type: 10,
-    //   specs: {
-    //     size: 'SMALL',
-    //     packageDetails: {
-    //       itemsCount: this.Order.products.length,
-    //       description: 'Cosmatics',
-    //     },
-    //   },
-    //   notes: null,
-    //   cod: 50,
-    //   // dropOffAddress: {
-    //   //   city: this.Order.address.city,
-    //   // }
-    // };
+    let request: AddDeliveryRequest = {
+      type: 10,
+      specs: {
+        packageType: 'Parcel',
+        size: 'SMALL',
+        packageDetails: {
+          itemsCount: this.Order.products.length,
+          description: 'Cosmatics',
+        },
+      },
+      notes: 'no notes',
+      cod: this.Order.total,
+      dropOffAddress: {
+        city: this.Order.address.state,
+        districtId: this.Order.address.cityId,
+        firstLine: this.Order.address.firstLine,
+        secondLine: this.Order.address.secondLine,
+        buildingNumber: this.Order.address.buildingNumber.toString(),
+        floor: this.Order.address.floor.toString(),
+        apartment: this.Order.address.apartment,
+      },
+      pickupAddress: {
+        city: this.pickupAddress.state,
+        districtId: this.pickupAddress.cityId,
+        firstLine: this.pickupAddress.firstLine,
+        secondLine: this.pickupAddress.secondLine,
+        buildingNumber: this.pickupAddress.buildingNumber.toString(),
+        floor: this.pickupAddress.floor.toString(),
+        apartment: this.pickupAddress.apartment,
+      },
+      returnAddress: {
+        city: this.pickupAddress.state,
+        districtId: this.pickupAddress.cityId,
+        firstLine: this.pickupAddress.firstLine,
+        secondLine: this.pickupAddress.secondLine,
+        buildingNumber: this.pickupAddress.buildingNumber.toString(),
+        floor: this.pickupAddress.floor.toString(),
+        apartment: this.pickupAddress.apartment,
+      },
+      receiver: {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        phone: '01022474089',
+      },
+    };
+
+    console.log(request);
+
+    this.bostaService.AddDelivery(request).subscribe((data) => {
+      console.log(data);
+      if (data.success) {
+        this.toastrService.success('Delivery Added');
+      }
+    });
   }
 }

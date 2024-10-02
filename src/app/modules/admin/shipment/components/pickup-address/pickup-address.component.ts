@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Address } from '../../../../../shared/model/order.model';
 import { AddressService } from '../../../../cart/service/address.service';
 import { State } from '../../model/add-shipment.model';
 import { City, District } from '../../../../cart/model/address.model';
+import { ToastrService } from 'ngx-toastr';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-pickup-locations',
@@ -18,7 +20,11 @@ export class PickUpAddressComponent implements OnInit {
 
   districts: District[] = [];
 
-  constructor(private fb: FormBuilder, private addressService: AddressService) {
+  constructor(
+    private fb: FormBuilder,
+    private addressService: AddressService,
+    private toastr: ToastrService
+  ) {
     // Initialize the form with the address fields
     this.addressForm = this.fb.group({
       state: ['', Validators.required],
@@ -32,17 +38,23 @@ export class PickUpAddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.addressService.GetAllPickupAddress().subscribe((data) => {
+      console.log(data);
+      this.addresses = data.value;
+    });
     this.GetAllCities();
   }
 
   // Function to submit the form and add the address to the list
   onSubmit() {
     if (this.addressForm.valid) {
+      console.log(this.citySelected);
+
       console.log(this.addressForm);
       let request: Address = {
-        state: this.state.value,
+        state: this.stateSelected.cityName,
         stateId: this.stateSelected.cityId,
-        city: this.city.value,
+        city: this.citySelected.districtName,
         cityId: this.citySelected.districtId,
         firstLine: this.firstLine.value,
         secondLine: this.secondLine.value,
@@ -51,7 +63,10 @@ export class PickUpAddressComponent implements OnInit {
         apartment: this.apartment.value,
       };
 
-      this.addressService.AddPickupAddress(request).subscribe((data) => {});
+      this.addressService.AddPickupAddress(request).subscribe((data) => {
+        console.log(data);
+        this.toastr.success('Pickup address');
+      });
       // const newAddress: Address = this.addressForm.value;
       // this.addresses.push(newAddress); // Add the new address to the array
       // this.addressForm.reset(); // Reset the form after submission
@@ -96,6 +111,7 @@ export class PickUpAddressComponent implements OnInit {
   // Handle city selection (not yet implemented in detail)
   CitySelected(e: Event) {
     let value = (e.target as HTMLSelectElement).value;
+
     this.citySelected = this.districts.find((e) => e.districtId == value);
   }
 

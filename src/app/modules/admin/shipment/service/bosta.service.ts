@@ -7,10 +7,17 @@ import {
   AddDeliveryRequest,
   AddShipmentResponse,
 } from '../model/add-shipment.model';
+import {
+  Delivery,
+  GetAllDeliviesResponse,
+} from '../model/all-deliveries.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BostaService {
   private _addDelivery = bosta.addDelivery;
+  private _getAllDeliveries = bosta.getAllDeliveries;
 
   headers = new HttpHeaders().set('Authorization', this.auth.getToken());
 
@@ -22,7 +29,18 @@ export class BostaService {
   AddDelivery(request: AddDeliveryRequest) {
     return this._http.genericPostAPIData<AddShipmentResponse>(
       this._addDelivery,
-      request
+      request,
+      { headers: this.headers }
+    );
+  }
+
+  GetAllDeliveries() {
+    return this._http.genericPostAPIData<GetAllDeliviesResponse>(
+      this._getAllDeliveries,
+      null,
+      {
+        headers: this.headers,
+      }
     );
   }
 }

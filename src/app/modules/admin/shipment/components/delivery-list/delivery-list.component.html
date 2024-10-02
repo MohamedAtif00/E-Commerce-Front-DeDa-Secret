@@ -1,0 +1,59 @@
+<!-- Show a loading spinner or message -->
+<!-- <div *ngIf="loading" class="text-gray-500 text-center my-4">
+  Loading deliveries...
+</div> -->
+
+<!-- Show error message if there's an error -->
+<!-- <div
+  *ngIf="error"
+  class="bg-red-100 text-red-700 p-4 rounded-lg text-center my-4"
+>
+  {{ error }}
+</div> -->
+
+<!-- Display deliveries in a table once the data is loaded -->
+<div class="bg-transparent p-6">
+  <div class="overflow-x-auto p-10 bg-white rounded-lg">
+    <table class="min-w-full text-left border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border-b">Tracking Number</th>
+          <th class="px-4 py-2 border-b">Sender</th>
+          <th class="px-4 py-2 border-b">Receiver</th>
+          <th class="px-4 py-2 border-b">State</th>
+          <th class="px-4 py-2 border-b">COD</th>
+          <th class="px-4 py-2 border-b">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let delivery of deliveries"
+          class="bg-white hover:bg-gray-50"
+        >
+          <td class="px-4 py-2 border-b">{{ delivery.trackingNumber }}</td>
+          <td class="px-4 py-2 border-b">{{ delivery.sender.name }}</td>
+          <td class="px-4 py-2 border-b">{{ delivery.receiver.fullName }}</td>
+          <td class="px-4 py-2 border-b">{{ delivery.state.value }}</td>
+          <td class="px-4 py-2 border-b">{{ delivery.cod | currency }}</td>
+          <td class="px-4 py-2 border-b">
+            <button class="text-blue-500">View</button>
+            <button class="text-red-500 ml-2">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination or other info -->
+  <div class="mt-4 text-center">
+    <span>Total deliveries: {{ deliveries.length }}</span>
+  </div>
+</div>
+
+<!-- If no deliveries -->
+<!-- <div
+  *ngIf="!loading && !error && deliveries.length === 0"
+  class="text-center text-gray-500 my-4"
+>
+  No deliveries found.
+</div> -->

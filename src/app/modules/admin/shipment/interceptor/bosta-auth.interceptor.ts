@@ -22,7 +22,7 @@ export class BostaInterceptor implements HttpInterceptor {
     // Clone the request and add the new header
     const authReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${authToken}`,
+        Authorization: `${authToken}`,
       },
     });
 

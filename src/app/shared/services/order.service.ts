@@ -60,6 +60,9 @@ export class OrderService {
   GetOrderStetes() {
     return this._http.genericGetAPIData<any>(this._getOrderStetes);
   }
+  // Add Order
+
+
 
   // Update Order
   CancelOrder(request: ChangeStateRequest) {

@@ -54,6 +54,7 @@ export const development = {
     address: {
       getAllDistricts: `${bosta}cities/getAllDistricts`,
       getAllPickupAddress: `${mainhost}Shipment/GetAllPickupAddress`,
+      getActivePickupAddress: `${mainhost}Shipment/GetActivePickupAddress`,
       addPickupAddress: `${mainhost}Shipment/AddPickupAddress`,
     },
     shipment: {

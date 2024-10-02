@@ -80,7 +80,7 @@ export class BostaAuthentication {
   }
 
   /**
-   * Get the user data by token
+   * Get the user data by token 
    */
   GetUserData() {
     const token = this.getToken(); // Get token from localStorage

@@ -21,6 +21,7 @@ class Address {
   buildingNumber: string; // Building number (specific to the address)
   floor: string; // Floor number (if applicable)
   apartment: string; // Apartment or unit number (if applicable)
+  shipmentInformation?: any;
 
   constructor(
     state: string,

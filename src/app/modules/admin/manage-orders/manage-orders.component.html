@@ -3,9 +3,9 @@
   class="h-fit flex justify-between px-5 py-2 bg-white border-t-2"
 >
   <div class="flex justify-start gap-10 w-1/2 ps-10">
-    <h3 class="text-xl font-bold ms-10 my-auto">
+    <div class="text-xl font-bold ms-10 my-auto">
       {{ "SALES.ORDERLIST" | translate }}
-    </h3>
+    </div>
 
     <nav class="flex" aria-label="Breadcrumb">
       <ol
@@ -114,9 +114,8 @@
         <input
           type="search"
           id="default-search"
-          [(ngModel)]="search"
-          (input)="Search()"
-          class="block w-full p-4 mb-5 ps-10 text-sm text-gray-900 border-0 border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          (input)="Search($event)"
+          class="block w-full p-4 mb-5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Mockups, Logos..."
           required
         />

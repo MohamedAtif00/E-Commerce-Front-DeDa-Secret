@@ -1,6 +1,6 @@
 <div class="container mx-auto p-6">
   <!-- Table for Addresses -->
-  <h2 class="text-2xl font-bold mb-4">Added Addresses</h2>
+  <h2 class="text-2xl font-bold mb-4 text-left">Your Pickup Addresses</h2>
 
   <div *ngIf="addresses.length > 0">
     <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-6">
@@ -41,12 +41,18 @@
   </div>
 
   <!-- Form for Adding a New Address -->
-  <h2 class="text-2xl font-bold mb-4">Add New Address</h2>
+  <h2 class="text-2xl font-bold mb-4 text-left">Add New Address</h2>
 
-  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="space-y-4">
+  <form
+    [formGroup]="addressForm"
+    (ngSubmit)="onSubmit()"
+    class="space-y-4 text-left"
+  >
     <!-- State -->
     <div>
-      <label for="state" class="block text-sm font-medium text-gray-700"
+      <label
+        for="state"
+        class="block text-sm font-medium text-gray-700 text-left"
         >State</label
       >
       <select
@@ -78,6 +84,7 @@
         id="city"
         formControlName="city"
         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        (change)="CitySelected($event)"
       >
         <option
           *ngFor="let district of stateSelected.districts"

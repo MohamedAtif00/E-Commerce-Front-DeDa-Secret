@@ -49,9 +49,6 @@ export class ManageOrdersComponent implements OnInit {
     this.DropDownMenuConfiguration();
     this.GetAllOrders(1);
     this.GetOrderStetes();
-    this.shipmentService.GetAllDeliveries().subscribe((data) => {
-      console.log('Shipments', data);
-    });
   }
 
   GetAllOrders(
@@ -72,7 +69,9 @@ export class ManageOrdersComponent implements OnInit {
     this.GetAllOrders(page, this.sort, this.search);
   }
 
-  Search() {
+  Search(e: Event) {
+    const inputElement = e.target as HTMLInputElement;
+    this.search = inputElement.value as string;
     this.GetAllOrders(1, this.sort, this.search);
   }
 

@@ -1,0 +1,21 @@
+mat-tree-node {
+    display: flex;
+    align-items: center;
+}
+
+ .tree-node {
+     margin-top: 8px;
+     padding: 4px;
+     background-color: #f9fafb;
+     border: 1px solid #e5e7eb;
+     border-radius: 4px;
+     transition: background-color 0.2s;
+ }
+
+ .tree-node:hover {
+     background-color: #e5e7eb;
+ }
+
+ .cursor-move {
+     cursor: move;
+ }  

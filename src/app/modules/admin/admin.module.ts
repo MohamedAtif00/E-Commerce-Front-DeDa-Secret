@@ -11,7 +11,6 @@ import { ProductRowComponent } from './manage-products/product-row/product-row.c
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { SelectImageComponent } from './add-product/select-image/select-image.component';
-import { GeneralInfoComponent } from './add-product/general-info/general-info.component';
 import { NavigationComponent } from './add-product/navigation/navigation.component';
 import { FormsModule } from '@angular/forms';
 import { ImageUploaderDirectiveDirective } from './add-product/image-uploader-directive.directive';
@@ -31,6 +30,10 @@ import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { BostaAuthentication } from './shipment/service/bosta-auth.service';
 import { StateBadgeComponent } from '../../shared/components/state-badge/state-badge.component';
+import { GeneralInfoComponent } from './add-product/general-info/general-info.component';
+import { CategoriesComponent } from './add-category/categories/categories.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -50,8 +53,13 @@ import { StateBadgeComponent } from '../../shared/components/state-badge/state-b
     ProductDetailsComponent,
     AdministrationComponent,
     ManageContactComponent,
+    CategoriesComponent,
   ],
   imports: [
+    // MatProgressBarModule,
+    // MatButtonModule,
+    // MatIconModule,
+    // MatTreeModule,
     CommonModule,
     FormsModule,
     TranslateModule.forChild(),
