@@ -7,6 +7,7 @@ export const development = {
       addCategory: `${mainhost}Category/AddCategory`,
       getAllCategories: `${mainhost}Category`,
       getSingleCategory: `${mainhost}Category/`,
+      moveCategory: `${mainhost}Category/MoveCategory`,
     },
     product: {
       getAllProducts: `${mainhost}Product`,

@@ -32,14 +32,23 @@
       >
         {{ "ADDPRODUCT.PRODUCTDESCRIPTION" | translate }}</label
       >
-      <textarea
+
+      <div class="card">
+        <p-editor
+          [(ngModel)]="ProductDescription"
+          (onTextChange)="SetDescription($event)"
+          [style]="{ height: '320px' }"
+        />
+      </div>
+
+      <!-- <textarea
         id="message"
         rows="4"
         (change)="SetDescription($event)"
         [value]="ProductDescription ?? ''"
         class="block p-2.5 w-full h-[15rem] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Write description here..."
-      ></textarea>
+      ></textarea> -->
       <p
         id="helper-text-explanation"
         class="mt-2 text-sm text-gray-500 dark:text-gray-400"

@@ -34,7 +34,8 @@ import { GeneralInfoComponent } from './add-product/general-info/general-info.co
 import { CategoriesComponent } from './add-category/categories/categories.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
-
+import { EditorModule } from 'primeng/editor';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     ManageProductsComponent,
@@ -71,6 +72,8 @@ import { MatIconModule } from '@angular/material/icon';
     ButtonModule,
     SplitButtonModule,
     StateBadgeComponent,
+    EditorModule,
+    DragDropModule,
   ],
   providers: [DatePipe, ShipmentService, BostaAuthentication],
   exports: [],

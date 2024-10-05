@@ -2,9 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasketService } from '../../../shared/services/basket.service';
 import { Subscription, forkJoin } from 'rxjs';
 import { ProductService } from '../../../shared/services/product.service';
-import { GetSingleProduct, Image } from '../../../shared/model/product.model';
+import {
+  GetSingleProduct,
+  Image,
+  Product,
+} from '../../../shared/model/product.model';
 import { BasketItem } from '../../../shared/model/basket.model';
 import { TranslateService } from '@ngx-translate/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart-list',
@@ -24,7 +29,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   constructor(
     private basketService: BasketService,
     private productService: ProductService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +51,12 @@ export class CartListComponent implements OnInit, OnDestroy {
         console.log('step 2');
 
         this.products.forEach((product) => {
-          console.log('step 3');
-          console.log(product.id);
+          this.saving =
+            product._price._discount != 0
+              ? this.saving + this.getSaving(product)
+              : this.saving + 0;
 
-          console.log('Here');
-
+          // Start Get Images
           this.productService.GetProductMasterImage(product.id).subscribe({
             next: (blob) => {
               console.log('start blob conversion');
@@ -180,4 +187,30 @@ export class CartListComponent implements OnInit, OnDestroy {
     });
   }
   //
+
+  getTruncatedDescription(description: string, maxLength: number): SafeHtml {
+    // Strip HTML tags to ensure accurate length calculation
+    const strippedDescription = description.replace(/<[^>]+>/g, '');
+
+    // Check if description exceeds maxLength and truncate
+    if (strippedDescription.length > maxLength) {
+      const truncated = strippedDescription.slice(0, maxLength) + '...';
+
+      // Return safe HTML
+      return this.sanitizer.bypassSecurityTrustHtml(truncated);
+    }
+
+    // Return full description if it's within the length limit
+    return this.sanitizer.bypassSecurityTrustHtml(strippedDescription);
+  }
+
+  getSaving(product: GetSingleProduct): number {
+    const price = product._price._price; // Get the original price
+    const discountPercentage = product._price._discount; // Get the discount percentage
+
+    // Calculate savings based on the discount percentage
+    const savings = (price * discountPercentage) / 100;
+
+    return savings;
+  }
 }

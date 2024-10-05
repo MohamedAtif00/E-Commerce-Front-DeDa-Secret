@@ -17,8 +17,11 @@
             EGP{{ product._price._total }}
           </h6>
         </div>
-        <p class="text-gray-500 text-base font-normal mb-8">
-          {{ product._description }}
+        <p
+          class="text-gray-500 text-base font-normal mb-8"
+          [innerHTML]="product._description"
+        >
+          <!-- {{ product._description | striphtml }} -->
         </p>
         <div class="block w-full">
           <div class="text">

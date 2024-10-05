@@ -1,6 +1,12 @@
 class Category {
   id: string;
   name: string;
+  childsCategories: Category[];
 }
 
-export { Category };
+class MoveCategoryRequest {
+  sourceCategoryId: string;
+  newParentCategoryId: string;
+}
+
+export { Category, MoveCategoryRequest };

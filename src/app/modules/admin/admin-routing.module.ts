@@ -13,6 +13,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ManageContactComponent } from './manage-contact/manage-contact.component';
 import { BostaGuard } from './shipment/guard/bosta-guard.guard';
+import { CategoryResolver } from './service/category-resolver.resolver';
 
 const routes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -29,7 +30,11 @@ const routes: Routes = [
     component: AddProductComponent,
     children: [{ path: '', component: GeneralInfoComponent }],
   },
-  { path: 'add-category', component: AddCategoryComponent },
+  {
+    path: 'add-category',
+    component: AddCategoryComponent,
+    resolve: { categoriesData: CategoryResolver },
+  },
   { path: 'administration', component: AdministrationComponent },
   { path: 'contact', component: ManageContactComponent },
   {

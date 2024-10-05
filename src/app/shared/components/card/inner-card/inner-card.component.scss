@@ -9,7 +9,7 @@
    }
    
    .card::before {
-    content: '---content---';
+    content: '--------Show Details--------';
     letter-spacing: 0.2em;
     position: absolute;
     bottom: 8px;
@@ -31,7 +31,7 @@
    }
    
    .card:hover div {
-    transform: translateY(-40px);
+    transform: translateY(-31px);
    }
 
 

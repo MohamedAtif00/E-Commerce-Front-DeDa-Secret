@@ -117,13 +117,14 @@
                   class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md"
                 >
                   <a
-                    href="#"
+                    [innerHTML]="
+                      getTruncatedDescription(product._description, 200)
+                    "
                     class="text-base font-medium text-gray-900 hover:underline dark:text-white"
-                    >{{ product._description }}</a
-                  >
+                  ></a>
 
                   <div class="flex items-center gap-4">
-                    <button
+                    <!-- <button
                       type="button"
                       class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
                     >
@@ -145,7 +146,7 @@
                         />
                       </svg>
                       Add to Favorites
-                    </button>
+                    </button> -->
 
                     <button
                       type="button"
@@ -493,7 +494,9 @@
                 >
                   {{ "CART.SAVING" | translate }}
                 </dt>
-                <dd class="text-base font-medium text-green-600">-$299.00</dd>
+                <dd class="text-base font-medium text-green-600">
+                  -${{ saving }}
+                </dd>
               </dl>
 
               <!-- <dl class="flex items-center justify-between gap-4">

@@ -1,85 +1,103 @@
-<div *ngFor="let node of treeData" class="ml-4">
-  <div
-    class="tree-node flex items-center"
-    draggable="true"
-    (dragstart)="onDragStart($event, node)"
-    (dragover)="onDragOver($event)"
-    (drop)="onDrop($event, node)"
-  >
-    <!-- Editable node section -->
-    <div *ngIf="node.editing; else displayNode">
-      <input
-        type="text"
-        [(ngModel)]="node.name"
-        class="border border-gray-300 p-1 rounded"
-      />
-      <button class="ml-2 text-blue-500" (click)="saveNode(node)">Save</button>
-    </div>
-
-    <!-- Display node with drag handle -->
-    <ng-template #displayNode>
-      <span class="cursor-move">{{ node.name }}</span>
-      <button class="ml-2 text-green-500" (click)="toggleAddCategory(node)">
-        Add
-      </button>
-      <button class="ml-2 text-blue-500" (click)="editNode(node)">Edit</button>
-    </ng-template>
-  </div>
-
-  <!-- Input field to add new category -->
-  <div *ngIf="node.isAddingChild" class="ml-6">
-    <input
-      type="text"
-      [(ngModel)]="node.newCategoryName"
-      placeholder="New Category Name"
-      class="border border-gray-300 p-1 rounded"
-    />
-    <button class="ml-2 text-green-500" (click)="addNewCategory(node)">
-      Add Category
-    </button>
-  </div>
-
-  <!-- Recursively render children -->
-  <div *ngIf="node.children?.length > 0" class="ml-4">
-    <ng-container *ngFor="let child of node.children">
+<div *ngIf="nodes.length != 0" class="">
+  <div class="bg-gray-400">
+    <ng-template #tmplNode let-node="node">
       <div
-        class="tree-node flex items-center"
-        draggable="true"
-        (dragstart)="onDragStart($event, child)"
-        (dragover)="onDragOver($event)"
-        (drop)="onDrop($event, child)"
+        class="node-item m-0"
+        [attr.data-id]="node.id"
+        [attr.id]="'node-' + node.id"
       >
-        <div *ngIf="child.editing; else displayChildNode">
-          <input
-            type="text"
-            [(ngModel)]="child.name"
-            class="border border-gray-300 p-1 rounded"
-          />
-          <button class="ml-2 text-blue-500" (click)="saveNode(child)">
-            Save
+        <div
+          *ngIf="node.isExpanded != null"
+          class="node-title bg-white border border-black rounded-sm"
+          (click)="node.isExpanded = !node.isExpanded"
+        >
+          <i class="pi pi-ellipsis-v me-[-10px]" style="color: green"></i>
+          <i class="pi pi-ellipsis-v" style="color: green"></i>
+          {{
+            node.childsCategories?.length
+              ? node.isExpanded
+                ? "-&nbsp;"
+                : "+"
+              : "&nbsp;&nbsp;&nbsp;"
+          }}
+          &nbsp;&nbsp;&nbsp; {{ node.name }}
+          <span class="item-notes"
+            >({{ node.childsCategories?.length }}
+            {{
+              node.childsCategories?.length
+                ? ", expanded: " + !!node.isExpanded
+                : ""
+            }})</span
+          >
+
+          <!-- Add buttons for adding/removing child categories -->
+          <button
+            class="rounded-lg p-2 bg-green-400"
+            (click)="addChildCategory(node.id)"
+          >
+            Add Child Category
+          </button>
+          <button class="rounded-lg p-2" (click)="removeItem(node.id)">
+            Remove
           </button>
         </div>
 
-        <ng-template #displayChildNode>
-          <span class="cursor-move">{{ child.name }}</span>
-          <button
-            class="ml-2 text-green-500"
-            (click)="toggleAddCategory(child)"
+        <div
+          *ngIf="
+            node.isExpanded != null &&
+            node.isExpanded &&
+            node.childsCategories?.length != 0
+          "
+          class="node-children"
+          cdkDropList
+          [cdkDropListData]="node.childsCategories"
+          [id]="node.id"
+          [cdkDropListConnectedTo]="dropTargetIds"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListSortingDisabled]="true"
+        >
+          <div
+            *ngFor="let child of node.childsCategories"
+            cdkDrag
+            [cdkDragData]="child.id"
+            (cdkDragMoved)="dragMoved($event)"
           >
-            Add
-          </button>
-          <button class="ml-2 text-blue-500" (click)="editNode(child)">
-            Edit
-          </button>
-        </ng-template>
+            <ng-container
+              *ngTemplateOutlet="tmplNode; context: { node: child }"
+            ></ng-container>
+          </div>
+        </div>
       </div>
+    </ng-template>
+  </div>
 
-      <!-- Recursively render grandchildren -->
-      <div *ngIf="child.children?.length > 0" class="ml-4">
-        <ng-container *ngFor="let grandChild of child.children">
-          <!-- Continue rendering the nested children -->
-        </ng-container>
-      </div>
-    </ng-container>
+  <div>
+    <button
+      class="bg-green-600 text-white p-2 rounded-lg my-2"
+      (click)="addItem()"
+    >
+      Add new category
+    </button>
+  </div>
+
+  <div
+    cdkDropList
+    [cdkDropListData]="nodes"
+    [id]="'main'"
+    [cdkDropListConnectedTo]="dropTargetIds"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListSortingDisabled]="true"
+    class="bg-gray-300 p-3"
+  >
+    <div
+      *ngFor="let node of nodes"
+      cdkDrag
+      [cdkDragData]="node.id"
+      (cdkDragMoved)="dragMoved($event)"
+    >
+      <ng-container
+        *ngTemplateOutlet="tmplNode; context: { node: node }"
+      ></ng-container>
+    </div>
   </div>
 </div>

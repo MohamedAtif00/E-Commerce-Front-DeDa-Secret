@@ -1,6 +1,10 @@
 <div class="container h-fit w-fit">
-  <div class="card_box relative flex h-[250px] w-fit">
-    <span class="absolute z-20"></span>
+  <div class="card_box relative flex h-[250px] w-[100%] max-w-[250px]">
+    <span
+      *ngIf="product._price._discount != 0"
+      class="absolute z-20"
+      [attr.data-content]="'Save' + ' ' + product._price._discount + '%'"
+    ></span>
     <app-inner-card
       [productName]="product._name"
       [productPrice]="product._price._total"
