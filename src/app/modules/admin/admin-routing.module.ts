@@ -14,6 +14,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ManageContactComponent } from './manage-contact/manage-contact.component';
 import { BostaGuard } from './shipment/guard/bosta-guard.guard';
 import { CategoryResolver } from './service/category-resolver.resolver';
+import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
 
 const routes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./shipment/shipment.module').then((x) => x.ShipmentModule),
   },
+  { path: 'coupon', component: ManageCouponComponent },
 ];
 
 @NgModule({

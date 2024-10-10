@@ -10,6 +10,9 @@ import {
 import { BasketItem } from '../../../shared/model/basket.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CouponService } from '../../../shared/services/coupon.service';
+import { ToastrService } from 'ngx-toastr';
+import { Coupon } from '../../../shared/model/coupon.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -26,11 +29,17 @@ export class CartListComponent implements OnInit, OnDestroy {
   basketItems: BasketItem[] = [];
   productRequest: Subscription = new Subscription();
 
+  // Coupon
+  couponCode: string = '';
+  coupon: Coupon;
+
   constructor(
     private basketService: BasketService,
     private productService: ProductService,
     public translate: TranslateService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private couponService: CouponService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -212,5 +221,18 @@ export class CartListComponent implements OnInit, OnDestroy {
     const savings = (price * discountPercentage) / 100;
 
     return savings;
+  }
+
+  ApplyCode() {
+    if (this.couponCode) {
+      this.couponService.GetCouponByCode(this.couponCode).subscribe((data) => {
+        if (data.isSuccess) {
+          if (data.successMessage) this.toastr.error(data.successMessage);
+          this.coupon = data.value;
+        } else {
+          this.toastr.error(data.errors[0]);
+        }
+      });
+    }
   }
 }

@@ -44,7 +44,8 @@
             "CATEGORIES":"اصناف",
             "ADDCATEGORIES":"اضافة صنف",
             "SALES":"مبيعات",
-            "ADMINISTRATION":"الادارة"
+            "ADMINISTRATION":"الادارة",
+            "COUPON":"كوبونات"
         },
         "RECENTORDERS":{
             "RECENTORDERS":"الطلبات الحالية",

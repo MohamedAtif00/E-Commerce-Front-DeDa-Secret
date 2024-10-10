@@ -22,6 +22,8 @@ import { OrderService } from '../../../shared/services/order.service';
 import { City, District } from '../../cart/model/address.model';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { AddressService } from '../../cart/service/address.service';
+import { catchError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-detail',
@@ -32,7 +34,9 @@ export class ProductDetailComponent implements OnInit {
   product: GetSingleProduct = {
     id: '',
     _name: '',
+    _name_arab: '',
     _description: '',
+    _description_arab: '',
     _discount: 0,
     categoryId: '',
     _price: { _discount: 0, _price: 0, _total: 0 },
@@ -64,6 +68,11 @@ export class ProductDetailComponent implements OnInit {
   contactForm: FormGroup;
   submitted: boolean = false;
 
+  // modal
+  modalVisible: boolean;
+  rating: number;
+  comment: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -72,7 +81,8 @@ export class ProductDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private cartService: BasketService,
     private fb: FormBuilder,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private toastr: ToastrService
   ) {
     this.contactForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -99,6 +109,8 @@ export class ProductDetailComponent implements OnInit {
     let id = this.route.snapshot.params['id'];
     this.productService.GetSingleProduct(id).subscribe((data) => {
       this.product = data.value;
+      console.log(data);
+
       this.total = this.product._price._total;
 
       this.product.images.forEach((e) => {
@@ -113,7 +125,7 @@ export class ProductDetailComponent implements OnInit {
       this.categoryService
         .GetSingleCategory(this.product.categoryId)
         .subscribe((category) => {
-          this.category = category.value._name;
+          this.category = category.value;
         });
     });
 
@@ -339,5 +351,32 @@ export class ProductDetailComponent implements OnInit {
   CitySelected(e: Event) {
     let value = (e.target as HTMLSelectElement).value;
     this.citySelected = this.districts.find((e) => e.districtId == value);
+  }
+
+  // modal
+  ShowDialog() {
+    this.modalVisible = !this.modalVisible;
+  }
+
+  Submite() {
+    this.productService
+      .AddComment({
+        ProductId: this.product.id,
+        rating: this.rating,
+        comment: this.comment,
+      })
+      .pipe(
+        catchError((error) => {
+          this.toastr.error('Try again later!');
+          throw error;
+        })
+      )
+      .subscribe((data) => {
+        if (data.isSuccess) {
+          this.toastr.success('Review Sent');
+        } else {
+          this.toastr.error('Please try again later!');
+        }
+      });
   }
 }

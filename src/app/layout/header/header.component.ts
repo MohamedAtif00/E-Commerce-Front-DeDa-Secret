@@ -1,8 +1,13 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, Signal, signal } from '@angular/core';
 import { BasketService } from '../../shared/services/basket.service';
 import { AdministrationService } from '../../core/services/administration.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from '../../core/services/translation.service';
+import { CategoryService } from '../../shared/services/category.service';
+import { Category } from '../../shared/model/category.model';
+import { MenuItem } from 'primeng/api';
+import { MenubarModule } from 'primeng/menubar';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +15,28 @@ import { TranslationService } from '../../core/services/translation.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
+  lines = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. -',
+    'Quisque nec leo eget diam fringilla consectetur ac in diam. -',
+    'Aenean interdum sem at gravida scelerisque -',
+  ];
+
   websiteColor = signal<string>('');
+
+  items: MenuItem[] | undefined = [];
+
+  categories: Category[];
 
   constructor(
     public basketService: BasketService,
     public adminService: AdministrationService,
-    public translate: TranslationService
+    public translate: TranslationService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
     this.websiteColor.set(this.adminService.websiteColor);
+    this.GetAllCategories();
   }
 
   megashow() {
@@ -77,5 +94,38 @@ export class HeaderComponent implements OnInit {
 
   SetLnaguage(lang: string) {
     this.translate.changeLanguage(lang);
+  }
+
+  // Categories
+  GetAllCategories() {
+    this.categoryService.GetAllCategories().subscribe((data) => {
+      console.log('Categories in headers', data);
+      this.categories = data.value;
+
+      this.categories.forEach((category) => {
+        // Push top-level categories and recursively process child categories
+        const categoryItem = {
+          styleClass: 'custome',
+          label: category.name,
+          items: [],
+        };
+        this.items.push(this.mapCategoryToItem(category, categoryItem));
+        console.log('my categories', this.categories);
+      });
+    });
+  }
+
+  // Recursive method to map categories and their child categories
+  mapCategoryToItem(category: any, parentItem: any) {
+    if (category.childsCategories && category.childsCategories.length > 0) {
+      category.childsCategories.forEach((childCategory) => {
+        const childItem = {
+          label: childCategory.name,
+          items: [],
+        };
+        parentItem.items.push(this.mapCategoryToItem(childCategory, childItem));
+      });
+    }
+    return parentItem;
   }
 }

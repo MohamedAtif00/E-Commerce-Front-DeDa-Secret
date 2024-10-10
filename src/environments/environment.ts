@@ -21,6 +21,7 @@ export const development = {
       updateProductImage: `${mainhost}Product/UpdateProductImage`,
       getProductMasterImage: `${mainhost}Product/GetProductMasterImage/`,
       getProductImage: `${mainhost}Product/GetProductImage/`,
+      postComment: `${mainhost}Product/AddReview/`,
     },
     order: {
       createOrder: `${mainhost}Order`,
@@ -60,6 +61,11 @@ export const development = {
     },
     shipment: {
       sendInformation: `${mainhost}Shipment`,
+    },
+    coupon: {
+      addCoupon: `${mainhost}Order/AddCoupon`,
+      getCouponByCode: `${mainhost}Order/GetCoupon?code=`,
+      getAllCoupons: `${mainhost}Order/GetAllCoupons`,
     },
   },
 };

@@ -42,7 +42,8 @@
             "CATEGORIES":"Categories",
             "ADDCATEGORIES":"Add Category",
             "SALES":"Sales",
-            "ADMINISTRATION":"Administration"
+            "ADMINISTRATION":"Administration",
+            "COUPON":"Coupon"
         },
         "RECENTORDERS":{
             "RECENTORDERS":"Recent Orders",

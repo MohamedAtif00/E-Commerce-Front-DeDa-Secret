@@ -14,6 +14,7 @@ import {
 import { UploadedFile } from '../../modules/admin/add-product/general-info/add-images/add-images.component';
 import { BehaviorSubject, Observable, map, filter } from 'rxjs';
 import { FilterService } from '../../modules/home/filter.service';
+import { CreateReview, Review } from '../model/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class ProductService {
   private _updateProduct = development.localhosts.product.updateProducts;
   private _addMasterImage = development.localhosts.product.addMasterImage;
   private _addProductImages = development.localhosts.product.addProductImages;
+  private _addComment = development.localhosts.product.postComment;
 
   private _getAllProducts =
     development.localhosts.product.getAllProductsWithNumber;
@@ -75,6 +77,10 @@ export class ProductService {
 
   AddProductImages(data: FormData, id: string) {
     return this._http.post(this._addProductImages + id, data);
+  }
+
+  AddComment(request: CreateReview) {
+    return this._http.post<GeneralResponse<any>>(this._addComment, request);
   }
 
   GetAllProducts(

@@ -10,11 +10,38 @@
         class="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
         >{{ "ADDPRODUCT.PRODUCTNAME" | translate }}</label
       >
+      <div class="inline-flex rounded-md shadow-sm my-3">
+        <a
+          [ngClass]="nameLang === 'ar' ? 'text-blue-700' : 'text-dark'"
+          (click)="SetNameLang('ar')"
+          class="px-4 py-2 text-sm font-medium me-3 cursor-pointer bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+        >
+          Arabic
+        </a>
+        <a
+          [ngClass]="nameLang === 'en' ? 'text-blue-700' : 'text-dark'"
+          (click)="SetNameLang('en')"
+          class="px-4 py-2 text-sm font-medium cursor-pointer bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+        >
+          English
+        </a>
+      </div>
       <input
+        *ngIf="nameLang == 'en'"
         type="email"
         id="email"
         (change)="SetName($event)"
         [value]="productName ?? ''"
+        aria-describedby="helper-text-explanation"
+        class="bg-white border border-gray-300 text-gray-600 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Product Name"
+      />
+      <input
+        *ngIf="nameLang == 'ar'"
+        type="email"
+        id="email"
+        (change)="SetName($event)"
+        [value]="productNameArab ?? ''"
         aria-describedby="helper-text-explanation"
         class="bg-white border border-gray-300 text-gray-600 font-semibold text-sm rounded-lg placeholder:text-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Product Name"
@@ -34,10 +61,36 @@
       >
 
       <div class="card">
+        <div class="inline-flex rounded-md shadow-sm my-3">
+          <a
+            [ngClass]="descriptionLang === 'ar' ? 'text-blue-700' : 'text-dark'"
+            (click)="SetDescriptionLangLang('ar')"
+            class="px-4 py-2 text-sm font-medium me-3 cursor-pointer bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+          >
+            Arabic
+          </a>
+          <a
+            [ngClass]="descriptionLang === 'en' ? 'text-blue-700' : 'text-dark'"
+            (click)="SetDescriptionLangLang('en')"
+            class="px-4 py-2 text-sm font-medium cursor-pointer bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+          >
+            English
+          </a>
+        </div>
         <p-editor
+          *ngIf="descriptionLang == 'en'"
           [(ngModel)]="ProductDescription"
+          [ngModelOptions]="{ standalone: true }"
           (onTextChange)="SetDescription($event)"
           [style]="{ height: '320px' }"
+        />
+        <p-editor
+          *ngIf="descriptionLang == 'ar'"
+          [(ngModel)]="productDescriptionArab"
+          [ngModelOptions]="{ standalone: true }"
+          (onTextChange)="SetDescription($event)"
+          [style]="{ height: '320px' }"
+          (onInit)="init($event)"
         />
       </div>
 

@@ -10,6 +10,7 @@ import { Address } from '../../../shared/model/order.model';
 import { AddDeliveryRequest } from '../shipment/model/add-shipment.model';
 import { BostaService } from '../shipment/service/bosta.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExcelExportService } from '../service/excel-export.service';
 
 @Component({
   selector: 'app-order-details',
@@ -60,7 +61,8 @@ export class OrderDetailsComponent implements OnInit {
     private addressService: AddressService,
     private bostaService: BostaService,
     private toastrService: ToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private excelService: ExcelExportService
   ) {}
 
   ngOnInit(): void {
@@ -68,10 +70,10 @@ export class OrderDetailsComponent implements OnInit {
     this.addressService.GetActivePickupAddress().subscribe((data) => {
       console.log('Admin pickup address', data);
       this.pickupAddress = data.value;
-      let name = data.value.shipmentInformation.fullName as string;
-      this.firstName = name.split(' ')[0];
-      this.lastName = name.split(' ')[1];
-      this.email = data.value.shipmentInformation.email;
+      let name = data.value?.shipmentInformation.fullName as string;
+      this.firstName = name?.split(' ')[0];
+      this.lastName = name?.split(' ')[1];
+      this.email = data.value?.shipmentInformation.email;
     });
     this.GetSingleOrder(this.id);
   }
@@ -125,52 +127,55 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   SubmitOrder() {
-    let request: AddDeliveryRequest = {
-      type: 10,
-      specs: {
-        packageType: 'Parcel',
-        size: 'SMALL',
-        packageDetails: {
-          itemsCount: this.Order.products.length,
-          description: 'Cosmatics',
+    let request: AddDeliveryRequest;
+    if (this.Order) {
+      request = {
+        type: 10,
+        specs: {
+          packageType: 'Parcel',
+          size: 'SMALL',
+          packageDetails: {
+            itemsCount: this.Order.products.length,
+            description: 'Cosmatics',
+          },
         },
-      },
-      notes: 'no notes',
-      cod: this.Order.total,
-      dropOffAddress: {
-        city: this.Order.address.state,
-        districtId: this.Order.address.cityId,
-        firstLine: this.Order.address.firstLine,
-        secondLine: this.Order.address.secondLine,
-        buildingNumber: this.Order.address.buildingNumber.toString(),
-        floor: this.Order.address.floor.toString(),
-        apartment: this.Order.address.apartment,
-      },
-      pickupAddress: {
-        city: this.pickupAddress.state,
-        districtId: this.pickupAddress.cityId,
-        firstLine: this.pickupAddress.firstLine,
-        secondLine: this.pickupAddress.secondLine,
-        buildingNumber: this.pickupAddress.buildingNumber.toString(),
-        floor: this.pickupAddress.floor.toString(),
-        apartment: this.pickupAddress.apartment,
-      },
-      returnAddress: {
-        city: this.pickupAddress.state,
-        districtId: this.pickupAddress.cityId,
-        firstLine: this.pickupAddress.firstLine,
-        secondLine: this.pickupAddress.secondLine,
-        buildingNumber: this.pickupAddress.buildingNumber.toString(),
-        floor: this.pickupAddress.floor.toString(),
-        apartment: this.pickupAddress.apartment,
-      },
-      receiver: {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        phone: '01022474089',
-      },
-    };
+        notes: 'no notes',
+        cod: this.Order.total,
+        dropOffAddress: {
+          city: this.Order.address?.state,
+          districtId: this.Order.address?.cityId,
+          firstLine: this.Order.address?.firstLine,
+          secondLine: this.Order.address?.secondLine,
+          buildingNumber: this.Order.address?.buildingNumber.toString(),
+          floor: this.Order.address?.floor.toString(),
+          apartment: this.Order.address?.apartment,
+        },
+        pickupAddress: {
+          city: this.pickupAddress?.state,
+          districtId: this.pickupAddress?.cityId,
+          firstLine: this.pickupAddress?.firstLine,
+          secondLine: this.pickupAddress?.secondLine,
+          buildingNumber: this.pickupAddress?.buildingNumber.toString(),
+          floor: this.pickupAddress?.floor.toString(),
+          apartment: this.pickupAddress?.apartment,
+        },
+        returnAddress: {
+          city: this.pickupAddress?.state,
+          districtId: this.pickupAddress?.cityId,
+          firstLine: this.pickupAddress?.firstLine,
+          secondLine: this.pickupAddress?.secondLine,
+          buildingNumber: this.pickupAddress?.buildingNumber.toString(),
+          floor: this.pickupAddress?.floor.toString(),
+          apartment: this.pickupAddress?.apartment,
+        },
+        receiver: {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          phone: '01022474089',
+        },
+      };
+    }
 
     console.log(request);
 
@@ -178,7 +183,58 @@ export class OrderDetailsComponent implements OnInit {
       console.log(data);
       if (data.success) {
         this.toastrService.success('Delivery Added');
+      } else {
+        console.log(data);
       }
     });
+  }
+
+  // Flattening Order and OrderItem for Excel export
+  exportOrderToExcel(): void {
+    const exportData = this.flattenOrderData(this.Order);
+    this.excelService.exportAsExcelFile(exportData, 'OrderDetails');
+  }
+
+  flattenOrderData(order: Order): any[] {
+    const flattenedOrder = [
+      {
+        'Order ID': order.orderId,
+        'Customer Name': order.customerName,
+        'Phone Number': order.phoneNumber,
+        'Order State': order.state,
+        'Order Date': order.createdDate,
+        Total: order.total,
+        Address: `${order.address.firstLine}, ${
+          order.address.secondLine || ''
+        }, ${order.address.city}, ${order.address.state}`,
+        'Building Number': order.address.buildingNumber,
+        Floor: order.address.floor,
+        Apartment: order.address.apartment,
+        'Shipment Info': JSON.stringify(order.address.shipmentInformation),
+      },
+    ];
+
+    const flattenedProducts = order.products.map((product) => ({
+      'Product ID': product.productId,
+      'Product Name': product.productName,
+      Quantity: product.quantity,
+      'Price per Unit': product.priceForUnit,
+      'Total Price': product.total,
+    }));
+
+    return [...flattenedOrder, ...flattenedProducts];
+  }
+
+  // Method to print the order using HTML table
+  printOrderAsHtmlTable(): void {
+    const printContent = document.getElementById('orderTable')!.innerHTML;
+    const originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = printContent;
+    window.print();
+
+    // Restore the original page content after printing
+    document.body.innerHTML = originalContent;
+    window.location.reload(); // Reload to ensure that the application works as expected after print
   }
 }

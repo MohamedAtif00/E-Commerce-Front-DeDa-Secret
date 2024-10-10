@@ -4,18 +4,28 @@ import { CommonModule } from '@angular/common';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { SwiperModule } from 'swiper/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckOutComponent } from '../cart/cart-list/check-out/check-out.component';
-import { CartModule } from '../cart/cart.module';
+import { CommentComponent } from './product-detail/comment/comment.component';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
-  declarations: [ProductListComponent, ProductDetailComponent],
+  declarations: [
+    ProductListComponent,
+    ProductDetailComponent,
+    CommentComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ProductsRoutingModule,
     ReactiveFormsModule,
+    DialogModule,
+    InputTextModule,
+    ButtonModule,
+    RatingModule,
   ],
 })
 export class ProductsModule {}

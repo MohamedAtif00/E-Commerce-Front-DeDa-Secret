@@ -82,6 +82,18 @@
               {{ "DASHBOARD.MENU.ADMINISTRATION" | translate }}</a
             >
           </li>
+          <li>
+            <a
+              [routerLink]="['coupon']"
+              [ngClass]="{ 
+                'text-blue-700': currentRoute === 'coupon',
+
+               }"
+              class="block py-2 px-3 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
+            >
+              {{ "DASHBOARD.MENU.COUPON" | translate }}</a
+            >
+          </li>
         </ul>
       </div>
     </div>
@@ -266,14 +278,23 @@
       <li>
         <a
           [routerLink]="['products']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'products',
+
+               }"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
         >
           {{ "DASHBOARD.MENU.PRODUCTS" | translate }}</a
         >
       </li>
+
       <li>
         <a
-          href="#"
+          [routerLink]="['add-category']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'add-category',
+
+               }"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
         >
           {{ "DASHBOARD.MENU.CATEGORIES" | translate }}</a
@@ -281,15 +302,11 @@
       </li>
       <li>
         <a
-          [routerLink]="['add-category']"
-          class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
-        >
-          {{ "DASHBOARD.MENU.ADDCATEGORIES" | translate }}</a
-        >
-      </li>
-      <li>
-        <a
           [routerLink]="['orders']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'orders',
+
+               }"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
         >
           {{ "DASHBOARD.MENU.SALES" | translate }}</a
@@ -298,6 +315,10 @@
       <li>
         <a
           [routerLink]="['administration']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'adminisstration',
+
+               }"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
         >
           {{ "DASHBOARD.MENU.ADMINISTRATION" | translate }}</a
@@ -306,9 +327,25 @@
       <li>
         <a
           [routerLink]="['contact']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'contact',
+
+               }"
           class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
         >
           Contact</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['coupon']"
+          [ngClass]="{ 
+                'bg-gradient-to-r from-rose-600 to-red-400': currentRoute === 'coupon',
+
+               }"
+          class="flex items-center w-full p-2 pl-11 text-base font-normal text-gray-300 rounded-lg transition duration-75 hover:bg-gray-700"
+        >
+          {{ "DASHBOARD.MENU.COUPON" | translate }}</a
         >
       </li>
       <li *ngIf="!auth.isAuthenticated()">

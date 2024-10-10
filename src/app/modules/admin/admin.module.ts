@@ -12,7 +12,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { SelectImageComponent } from './add-product/select-image/select-image.component';
 import { NavigationComponent } from './add-product/navigation/navigation.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageUploaderDirectiveDirective } from './add-product/image-uploader-directive.directive';
 import { AddImagesComponent } from './add-product/general-info/add-images/add-images.component';
 import { SelectCategoryComponent } from './add-product/select-category/select-category.component';
@@ -36,6 +36,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { EditorModule } from 'primeng/editor';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
 @NgModule({
   declarations: [
     ManageProductsComponent,
@@ -55,6 +56,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AdministrationComponent,
     ManageContactComponent,
     CategoriesComponent,
+    ManageCouponComponent,
   ],
   imports: [
     // MatProgressBarModule,
@@ -68,6 +70,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     WidgetsModule,
     TablesModule,
     AlertModalComponent,
+    FormsModule,
+    ReactiveFormsModule,
     //primeng
     ButtonModule,
     SplitButtonModule,

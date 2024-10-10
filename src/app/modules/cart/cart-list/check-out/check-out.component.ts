@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OrderService } from '../../../../shared/services/order.service';
 import {
@@ -13,6 +13,7 @@ import { City, District } from '../../model/address.model';
 import { AddressService } from '../../service/address.service';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { TranslationService } from '../../../../core/services/translation.service';
+import { Coupon } from '../../../../shared/model/coupon.model';
 
 @Component({
   selector: 'app-check-out',
@@ -30,6 +31,9 @@ export class CheckOutComponent implements OnInit {
 
   stateSelected: City | undefined;
   citySelected: District | undefined;
+
+  // coupon
+  @Input() couon: Coupon | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -108,6 +112,7 @@ export class CheckOutComponent implements OnInit {
         Address: address,
         CustomerName: this.fullName?.value || '',
         PhoneNumber: this.phoneNumber?.value || '',
+        couponCode: this.couon.code,
       };
 
       // Submit the Order

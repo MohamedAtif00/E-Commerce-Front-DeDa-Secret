@@ -7,19 +7,10 @@ import { FooterComponent } from '../layout/footer/footer.component';
 import { AppModule } from '../app.module';
 import { AdminHeaderComponent } from '../layout/admin-header/admin-header.component';
 import { TranslateModule } from '@ngx-translate/core';
-
-
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
-  declarations: [
-    PageComponent,
-    HeaderComponent,
-    FooterComponent,
-  ],
-  imports: [
-    CommonModule,
-    PageRoutingModule,
-    TranslateModule
-  ]
+  declarations: [PageComponent, HeaderComponent, FooterComponent],
+  imports: [CommonModule, PageRoutingModule, TranslateModule, MenubarModule],
 })
-export class PageModule { }
+export class PageModule {}

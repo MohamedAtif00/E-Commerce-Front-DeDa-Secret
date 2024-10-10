@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, input, signal } from '@angular/core';
 import { ImageFile } from '../image-uploader-directive.directive';
 import { ProductService } from '../../../../shared/services/product.service';
 import { UploadedFile } from './add-images/add-images.component';
 import { TranslationService } from '../../../../core/services/translation.service';
-import { EditorTextChangeEvent } from 'primeng/editor';
+import { EditorInitEvent, EditorTextChangeEvent } from 'primeng/editor';
 
 @Component({
   selector: 'app-general-info',
@@ -15,12 +15,20 @@ export class GeneralInfoComponent implements OnInit {
   @Input() selectOption: string = 'no';
 
   @Input() productName: string;
+  @Input() productNameArab: string;
   @Input() ProductDescription: string;
+  @Input() productDescriptionArab: string;
   @Input() price: number;
   @Input() fixedPrice: number;
   @Input() percentige: number;
   @Input() quantity: number;
   @Input() files = signal<UploadedFile[]>([]); // Receive files from parent
+
+  // name
+  nameLang = 'en';
+
+  // description
+  descriptionLang = 'en';
 
   constructor(
     private productService: ProductService,
@@ -29,7 +37,11 @@ export class GeneralInfoComponent implements OnInit {
     // Example file initialization
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    document.addEventListener('DOMNodeInserted', function (event) {
+      console.log('A node was inserted!');
+    });
+  }
 
   GetRange(e: Event) {
     const value = this.GetValue(e);
@@ -46,13 +58,21 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   SetName(e: Event) {
-    let value = this.GetValue(e);
-    this.productService.Product.name = value;
+    if (this.nameLang == 'en') {
+      let value = this.GetValue(e);
+      this.productName = value;
+      this.productService.Product.name = value;
+    } else {
+      let value = this.GetValue(e);
+      this.productNameArab = value;
+      this.productService.Product.nameArab = value;
+    }
   }
 
   SetDescription(e: EditorTextChangeEvent) {
     // let value = this.GetValue(e);
     this.productService.Product.description = e.htmlValue;
+    this.productService.Product.descriptionArab = e.htmlValue;
     //console.log(e);
   }
 
@@ -77,5 +97,17 @@ export class GeneralInfoComponent implements OnInit {
 
   GetValue(e: Event) {
     return (e.target as HTMLInputElement).value;
+  }
+
+  SetNameLang(lang: string) {
+    this.nameLang = lang;
+  }
+
+  SetDescriptionLangLang(lang: string) {
+    this.descriptionLang = lang;
+  }
+
+  init(e: EditorInitEvent) {
+    console.log(e.editor.container);
   }
 }

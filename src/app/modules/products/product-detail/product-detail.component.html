@@ -190,6 +190,21 @@
         </div>
       </div>
     </div>
+    <div class="h-fit m-5">
+      <p-button
+        class="bg-green-500 p-3 rounded-lg"
+        (onClick)="ShowDialog()"
+        label="Add Comment"
+      />
+    </div>
+    <div class="flex gap-4">
+      <app-comment
+        [product]="product"
+        [review]="review"
+        *ngFor="let review of product.reviews"
+      >
+      </app-comment>
+    </div>
   </div>
 </section>
 
@@ -537,3 +552,49 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  header="Header"
+  [(visible)]="modalVisible"
+  [modal]="true"
+  [style]="{ width: '25rem' }"
+>
+  <ng-template pTemplate="header">
+    <div class="inline-flex align-items-center justify-content-center gap-2">
+      <span class="font-bold white-space-nowrap"> Amy Elsner </span>
+    </div>
+  </ng-template>
+  <span class="p-text-secondary block mb-5"> Did you like this product? </span>
+  <div class="flex align-items-center gap-3 mb-3">
+    <div class="card flex justify-content-center text-xl">
+      <p-rating [(ngModel)]="rating" />
+    </div>
+  </div>
+  <div class="flex align-items-center gap-3 mb-5">
+    <label for="email" class="font-semibold w-6rem">Comment</label>
+    <input
+      pInputText
+      id="email"
+      class="flex-auto border-2"
+      autocomplete="off"
+      [(ngModel)]="comment"
+    />
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-between">
+      <p-button
+        label="Cancel"
+        [text]="true"
+        severity="secondary"
+        (onClick)="modalVisible = false"
+      />
+      <p-button
+        label="Save"
+        [outlined]="true"
+        severity="secondary"
+        class="rounded-lg bg-green-400 p-3 text-white"
+        (onClick)="modalVisible = false; Submite()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

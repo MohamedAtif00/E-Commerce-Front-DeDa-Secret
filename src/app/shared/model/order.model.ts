@@ -4,6 +4,7 @@ class CreateOrder {
   Address: Address;
   CustomerName: string;
   PhoneNumber: string;
+  couponCode?: string;
 }
 
 class OrderItem {

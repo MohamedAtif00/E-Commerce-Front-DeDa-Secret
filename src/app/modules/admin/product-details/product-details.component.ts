@@ -71,7 +71,9 @@ export class ProductDetailsComponent implements OnInit {
           this.product = productData.value;
           this.productService.Product = {
             name: this.product._name ?? '',
+            nameArab: this.product._name_arab,
             description: this.product._description,
+            descriptionArab: this.product._description_arab,
             discount: this.product._discount,
             categoryId: this.product.categoryId,
             price: this.product._price._price,

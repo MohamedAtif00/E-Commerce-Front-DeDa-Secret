@@ -36,3 +36,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.p-menubar{
+    background-color: transparent;
+    padding: 5px;
+}
+
+.p-menu-list{
+    background-color: transparent;
+    padding: 5px;
+    color: red;
+}
+
+.p-menuitem{
+    background-color: transparent;
+    padding: 5px;
+}

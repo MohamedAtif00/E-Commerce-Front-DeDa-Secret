@@ -22,16 +22,20 @@ export class AddCategoryComponent {
   CreateCategory() {
     this.categoryService.AddCategory(this.name).subscribe(
       (data) => {
-        let note = this.toastrService.success(
-          'Success Operation',
-          'Done successfully :)',
-          {
-            progressBar: true,
-            timeOut: 5000, // Auto-dismiss after 5 seconds
-          }
-        );
+        if (data.isSuccess) {
+          this.toastrService.success(
+            'Success Operation',
+            'Done successfully :)',
+            {
+              progressBar: true,
+              timeOut: 5000, // Auto-dismiss after 5 seconds
+            }
+          );
 
-        this.router.navigate(['admin']);
+          this.router.navigate(['admin']);
+        } else {
+          this.toastrService.error(data.errors[0]);
+        }
       },
       (error) => {
         this.toastrService.error('Error occurred', 'Failed to add category', {

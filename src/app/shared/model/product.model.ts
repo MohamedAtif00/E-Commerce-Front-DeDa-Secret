@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Signal, signal } from '@angular/core';
+import { Review } from './review.model';
 
 class Product {
   id: string;
@@ -13,7 +14,9 @@ class Product {
 
 class CreateProduct {
   name: string;
+  nameArab: string;
   description: string;
+  descriptionArab: string;
   discount: number;
   categoryId: string;
   price: number;
@@ -36,13 +39,16 @@ class GetAllProducts {
 class GetSingleProduct {
   id: any;
   _name: string;
+  _name_arab: string;
   _description: string;
+  _description_arab: string;
   _discount: number;
   categoryId: string;
   _price: { _discount: number; _price: number; _total: number };
   _stockQuantity: number;
   masterImage: Image | null;
   images: Image[];
+  reviews?: Review[];
 }
 
 class Image {
