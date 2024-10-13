@@ -11,6 +11,7 @@ import { GetAllProducts } from '../model/product.model';
 import {
   Order,
   ChangeStateRequest,
+  UpdateOrder,
 } from '../../modules/admin/model/order.model';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class OrderService {
   private _getSingleOrder = development.localhosts.order.getSingleOrder;
   private _getOrderStetes = development.localhosts.order.getOrderStetes;
   private _changeOrderState = development.localhosts.order.changeOrderState;
-
+  private _updateOrder = development.localhosts.order.updateOrder;
   constructor(private _http: GenericCRUDService) {}
 
   AddOrder(order: CreateOrder) {
@@ -62,7 +63,13 @@ export class OrderService {
   }
   // Add Order
 
-
+  // update
+  UpdateOrder(request: UpdateOrder) {
+    return this._http.genericPostAPIData<GeneralResponse<any>>(
+      this._updateOrder,
+      request
+    );
+  }
 
   // Update Order
   CancelOrder(request: ChangeStateRequest) {

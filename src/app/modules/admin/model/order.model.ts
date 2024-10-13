@@ -10,6 +10,7 @@ export interface Order {
   total: number;
   products: OrderItem[];
   orderId: string;
+  trackingNumber?: string;
 }
 
 export interface OrderItem {
@@ -21,6 +22,13 @@ export interface OrderItem {
   url?: string;
 }
 
+export interface UpdateOrder {
+  orderId: string;
+  state?: OrderState;
+  trackingNumber?: string;
+  address?: Address;
+}
+
 export interface ChangeStateRequest {
   id: string;
   state: OrderState;
@@ -28,14 +36,33 @@ export interface ChangeStateRequest {
 
 export enum OrderState {
   Pending = 'Pending',
-  Accepted = 'Accepted',
-  Expired = 'Expired',
+  PickupRequested = 'PickupRequested',
+  WaitingForRoute = 'WaitingForRoute',
+  RouteAssigned = 'RouteAssigned',
+  PickedUpFromBusiness = 'PickedUpFromBusiness',
+  PickingUpFromConsignee = 'PickingUpFromConsignee',
+  PickedUpFromConsignee = 'PickedUpFromConsignee',
+  ReceivedAtWarehouse = 'ReceivedAtWarehouse',
+  Fulfilled = 'Fulfilled',
+  InTransitBetweenHubs = 'InTransitBetweenHubs',
+  PickingUp = 'PickingUp',
+  PickedUp = 'PickedUp',
+  PendingCustomerSignature = 'PendingCustomerSignature',
+  DebriefedSuccessfully = 'DebriefedSuccessfully',
+  Delivered = 'Delivered',
+  ReturnedToBusiness = 'ReturnedToBusiness',
+  Exception = 'Exception',
+  Terminated = 'Terminated',
+  CanceledUncoveredArea = 'CanceledUncoveredArea',
+  CollectionFailed = 'CollectionFailed',
+  ReturnedToStock = 'ReturnedToStock',
+  Lost = 'Lost',
+  Damaged = 'Damaged',
+  Investigation = 'Investigation',
+  AwaitingYourAction = 'AwaitingYourAction',
+  Archived = 'Archived',
+  OnHold = 'OnHold',
   Failed = 'Failed',
   Cancelled = 'Cancelled',
-  Completed = 'Completed',
-  Denied = 'Denied',
-  Processing = 'Processing',
-  Refunded = 'Refunded',
-  Delivered = 'Delivered',
   Delivering = 'Delivering',
 }

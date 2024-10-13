@@ -14,7 +14,8 @@
           <h6
             class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5"
           >
-            EGP{{ product._price._total }}
+            <span class="line-through"> {{ product._price._price }} EGP</span>
+            {{ product._price._total }} EGP
           </h6>
         </div>
         <p

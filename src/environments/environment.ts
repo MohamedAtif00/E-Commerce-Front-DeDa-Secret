@@ -8,6 +8,7 @@ export const development = {
       getAllCategories: `${mainhost}Category`,
       getSingleCategory: `${mainhost}Category/`,
       moveCategory: `${mainhost}Category/MoveCategory`,
+      getallChildsCategories: `${mainhost}Category/GetAllChildsCategories`,
     },
     product: {
       getAllProducts: `${mainhost}Product`,
@@ -29,6 +30,7 @@ export const development = {
       getSingleOrder: `${mainhost}Order/GetSingleOrder/`,
       getOrderStetes: `${mainhost}Order/OrderStates`,
       changeOrderState: `${mainhost}Order/ChangeState`,
+      updateOrder: `${mainhost}Order/UpdateOrder/`,
     },
     administration: {
       categoriesProfits: `${mainhost}Category/GetCategoriesProfits/`,

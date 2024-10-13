@@ -7,6 +7,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        slideInLeft: {
+          '0%': { transform: 'translateY(60%)', opacity: '0', visibility: 'hidden' },
+          '1%': {visibility:'visible'},
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },animation: {
+        slideInLeft: 'slideInLeft 1s ease-out',
+      },// Adding custom delay utilities
+      animationDelay: {
+        '1s': '1s',
+        '2s': '2s',
+        '3s': '3s',
+      },
       colors:{
         'back-color':'#fefdfc',
         'card-color':'#fff',
@@ -16,7 +30,8 @@ module.exports = {
       },fontFamily:{
         'primary':'Lustria',
         'secondry':'Alex Brush',
-        'inter':'inter'
+        'inter': 'inter',
+        'Merienda':'Merienda'
       }
     },
   },

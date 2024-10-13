@@ -12,41 +12,26 @@ import { filter } from 'rxjs';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
 })
-export class AdminDashboardComponent implements OnInit{
-
-
-
+export class AdminDashboardComponent implements OnInit {
   constructor(
     private adminService: AdministrationService,
     private routeService: RouteService,
     private route: ActivatedRoute,
-    private router:Router
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    
-    
-    initFlowbite()
-    this.adminService.categoriesProfitsDays.subscribe(data =>
-    { 
-      this.GetCategoryProfits()
-
-    })
+    initFlowbite();
+    this.adminService.categoriesProfitsDays.subscribe((data) => {
+      this.GetCategoryProfits();
+    });
   }
 
-  GetCategoryProfits()
-  { 
-    this.adminService.GetCategoriesProfits().subscribe(data =>
-    { 
-      let categoryProfits = data.value
+  GetCategoryProfits() {
+    this.adminService.GetCategoriesProfits().subscribe((data) => {
+      let categoryProfits = data.value;
+
       this.adminService.categoryProfits.next(categoryProfits);
-      
-    })
+    });
   }
-
-
-
-  
-
-
 }

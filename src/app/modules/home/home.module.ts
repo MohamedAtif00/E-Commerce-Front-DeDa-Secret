@@ -36,5 +36,6 @@ import { PriceRangeComponent } from './filter-group/price-range/price-range.comp
     CardComponent,
     ReactiveFormsModule,
   ],
+  exports: [PaginationComponent],
 })
 export class HomeModule {}

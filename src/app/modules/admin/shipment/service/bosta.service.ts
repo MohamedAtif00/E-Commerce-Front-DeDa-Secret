@@ -34,10 +34,10 @@ export class BostaService {
     );
   }
 
-  GetAllDeliveries() {
+  GetAllDeliveries(trackingNumber?: string) {
     return this._http.genericPostAPIData<GetAllDeliviesResponse>(
       this._getAllDeliveries,
-      null,
+      trackingNumber ? { trackingNumbers: trackingNumber } : null,
       {
         headers: this.headers,
       }

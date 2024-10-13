@@ -10,6 +10,8 @@ import { Category, MoveCategoryRequest } from '../model/category.model';
 export class CategoryService {
   private _addCategory = development.localhosts.category.addCategory;
   private _getAllCategories = development.localhosts.category.getAllCategories;
+  private _getAllChildsCategories =
+    development.localhosts.category.getallChildsCategories;
   private _getSingleCategory =
     development.localhosts.category.getSingleCategory;
   private _postMoveCategory = development.localhosts.category.moveCategory;
@@ -29,8 +31,14 @@ export class CategoryService {
     );
   }
 
+  GetAllChidlsCategories() {
+    return this._http.genericGetAPIData<GeneralResponse<Category[]>>(
+      this._getAllChildsCategories
+    );
+  }
+
   GetSingleCategory(id: string) {
-    return this._http.genericGetAPIData<GeneralResponse<any>>(
+    return this._http.genericGetAPIData<GeneralResponse<Category>>(
       this._getSingleCategory + id
     );
   }

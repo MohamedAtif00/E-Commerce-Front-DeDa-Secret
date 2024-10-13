@@ -10,6 +10,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RatingModule } from 'primeng/rating';
+import { PageModule } from '../../page/page.module';
+import { PaginationComponent } from '@coreui/angular';
+import { CardComponent } from '../../shared/components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,8 @@ import { RatingModule } from 'primeng/rating';
     InputTextModule,
     ButtonModule,
     RatingModule,
+    PaginationComponent,
+    CardComponent,
   ],
 })
 export class ProductsModule {}

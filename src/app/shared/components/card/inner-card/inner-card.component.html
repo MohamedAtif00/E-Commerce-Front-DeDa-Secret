@@ -1,6 +1,6 @@
 <div class="card h-[400px] w-[250px] flex flex-col gap-10" (click)="clicked()">
   <div
-    [routerLink]="['product-detials', productId]"
+    [routerLink]="['/product-detials', productId]"
     [ngStyle]="{ 'background-image': 'url(' + productImage + ')' }"
     class="z-10 w-full bg-[url(https://cdn.shopify.com/s/files/1/0684/4923/9327/files/Body-Cravings-Lip-_-Cheek-Tint-Strawberry-2-Source-Beauty-Egypt_large.png?v=1718112601)] bg-center bg-cover"
   >
@@ -8,8 +8,14 @@
   </div>
 </div>
 
-<div class="text-2xl font-inter mt-5 mb-5">{{ productName }}</div>
-<div class="mb-5 text-lx">EGP {{ productPrice }}</div>
+<div class="text-xl font-inter mt-5 mb-5">{{ productName }}</div>
+<div
+  class="mb-5 text-2lx text-red-600 line-through float-end"
+  *ngIf="productPriceBefore != productPrice"
+>
+  EGP {{ productPriceBefore }}
+</div>
+<div class="mb-5 text-lg">EGP {{ productPrice }}</div>
 
 <button
   (click)="$event.stopPropagation()"

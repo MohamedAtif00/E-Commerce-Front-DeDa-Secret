@@ -9,6 +9,7 @@ import { GeneralResponse } from '../../core/model/general-response.model';
 })
 export class ContactService {
   private sendContact = development.localhosts.contact.sendContact;
+  private _getAllContact = development.localhosts.contact.getAllContact;
 
   constructor(private _http: GenericCRUDService) {}
 
@@ -16,6 +17,12 @@ export class ContactService {
     return this._http.genericPostAPIData<GeneralResponse<Contact>>(
       this.sendContact,
       contact
+    );
+  }
+
+  GetAllContact() {
+    return this._http.genericGetAPIData<GeneralResponse<Contact[]>>(
+      this._getAllContact
     );
   }
 }

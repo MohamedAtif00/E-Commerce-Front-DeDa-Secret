@@ -33,7 +33,7 @@ export class CheckOutComponent implements OnInit {
   citySelected: District | undefined;
 
   // coupon
-  @Input() couon: Coupon | undefined;
+  @Input() coupon: Coupon | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -112,7 +112,7 @@ export class CheckOutComponent implements OnInit {
         Address: address,
         CustomerName: this.fullName?.value || '',
         PhoneNumber: this.phoneNumber?.value || '',
-        couponCode: this.couon.code,
+        couponCode: this.coupon.code,
       };
 
       // Submit the Order

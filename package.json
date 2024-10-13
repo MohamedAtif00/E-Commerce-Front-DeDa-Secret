@@ -27,6 +27,7 @@
     "@coreui/icons-angular": "^5.2.13",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "aos": "^2.3.4",
     "apexcharts": "^3.50.0",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",

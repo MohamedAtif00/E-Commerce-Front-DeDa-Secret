@@ -125,7 +125,7 @@ export class ProductDetailComponent implements OnInit {
       this.categoryService
         .GetSingleCategory(this.product.categoryId)
         .subscribe((category) => {
-          this.category = category.value;
+          this.category = category.value.name;
         });
     });
 
@@ -263,13 +263,19 @@ export class ProductDetailComponent implements OnInit {
 
   // Add To Cart
   AddToCart() {
-    let item: BasketItem = {
-      ProductId: this.product.id,
-      Quantity: this.quantity,
-      UnitPrice: this.product._price._total,
-      Total: this.quantity * this.product._price._total,
-    };
-    this.cartService.addItem(item);
+    try {
+      let item: BasketItem = {
+        ProductId: this.product.id,
+        Quantity: this.quantity,
+        UnitPrice: this.product._price._total,
+        Total: this.quantity * this.product._price._total,
+      };
+      this.cartService.addItem(item);
+
+      this.toastr.success(`${this.quantity} have been add successfully`);
+    } catch {
+      this.toastr.error('Please try again later!');
+    }
   }
 
   BuyNow() {

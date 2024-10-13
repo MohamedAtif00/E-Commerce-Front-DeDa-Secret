@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasketService } from '../../../shared/services/basket.service';
-import { Subscription, forkJoin } from 'rxjs';
+import { Subscription, forkJoin, map, of } from 'rxjs';
 import { ProductService } from '../../../shared/services/product.service';
 import {
   GetSingleProduct,
@@ -49,6 +49,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     const productRequests = this.basketItems.map((item) =>
       this.productService.GetSingleProduct(item.ProductId)
     );
+
     this.productRequest = forkJoin(productRequests).subscribe({
       next: (productData) => {
         console.log('step 1');
@@ -60,10 +61,13 @@ export class CartListComponent implements OnInit, OnDestroy {
         console.log('step 2');
 
         this.products.forEach((product) => {
-          this.saving =
-            product._price._discount != 0
-              ? this.saving + this.getSaving(product)
-              : this.saving + 0;
+          const basketItem = this.basketItems.find(
+            (item) => item.ProductId === product.id
+          );
+          const quantity = basketItem ? basketItem.Quantity : 0; // Get the quantity from the basket
+
+          // Calculate total saving based on the fixed discount and quantity
+          this.saving += this.getSaving(product) * quantity;
 
           // Start Get Images
           this.productService.GetProductMasterImage(product.id).subscribe({
@@ -105,10 +109,33 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   calculateTotals(): void {
-    this.originalPrice = this.basketItems.reduce(
-      (total, item) => total + item.UnitPrice * item.Quantity,
-      0
-    );
+    // calc Orignal Price
+    let items: BasketItem[] = [];
+    let productObservables = this.basketItems.map((item) => {
+      // Check if the item hasn't been processed already
+      if (!items.find((x) => x.ProductId === item.ProductId)) {
+        // Add item to the processed list
+        items.push(item);
+        // Return the observable that fetches the product details
+        return this.productService.GetSingleProduct(item.ProductId).pipe(
+          // Map the observable to return the total price for this product
+          map((data) => data.value._price._price * item.Quantity)
+        );
+      }
+      return of(0); // Return 0 if the item has already been processed
+    });
+
+    // Use forkJoin to wait for all product observables to complete
+    forkJoin(productObservables).subscribe((productPrices) => {
+      // Sum up the total price
+      this.originalPrice = productPrices.reduce(
+        (total, price) => total + price,
+        0
+      );
+    });
+
+    ///////////////////////////////////////
+
     this.total = this.basketItems.reduce(
       (total, item) => total + item.Total,
       0
@@ -128,18 +155,40 @@ export class CartListComponent implements OnInit, OnDestroy {
         UnitPrice: existingItem.UnitPrice,
         Total: existingItem.UnitPrice,
       });
+      this.productService
+        .GetSingleProduct(existingItem.ProductId)
+        .subscribe((data) => {
+          this.saving += this.getSaving(data.value);
+        });
       this.updateBasketItems();
     }
   }
 
   RemoveOne(id: string): void {
     this.basketService.removeOneItem(id);
+    this.productService.GetSingleProduct(id).subscribe((data) => {
+      this.saving = this.saving - this.getSaving(data.value);
+    });
     this.updateBasketItems();
   }
 
   Remove(product: GetSingleProduct): void {
-    this.basketService.removeItem(product.id);
-    this.updateBasketItems();
+    // Find the corresponding basket item to get the quantity
+    const basketItem = this.basketItems.find(
+      (item) => item.ProductId === product.id
+    );
+
+    if (basketItem) {
+      const quantity = basketItem.Quantity;
+      const savingsToRemove = this.getSaving(product) * quantity;
+
+      // Subtract the saving for this product
+      this.saving -= savingsToRemove;
+
+      // Remove the product from the basket
+      this.basketService.removeItem(product.id);
+      this.updateBasketItems();
+    }
   }
 
   private updateBasketItems(): void {
@@ -214,25 +263,54 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   getSaving(product: GetSingleProduct): number {
-    const price = product._price._price; // Get the original price
-    const discountPercentage = product._price._discount; // Get the discount percentage
+    const originalPrice = product._price._price; // Get the original price
+    const discountAmount = product._price._discount; // Assuming _discount is a fixed amount
 
-    // Calculate savings based on the discount percentage
-    const savings = (price * discountPercentage) / 100;
-
-    return savings;
+    // Check if there's a valid discount amount
+    if (discountAmount && discountAmount > 0) {
+      // Return the fixed discount amount directly
+      return discountAmount;
+    } else {
+      // No discount, so no savings
+      return 0;
+    }
   }
 
   ApplyCode() {
     if (this.couponCode) {
       this.couponService.GetCouponByCode(this.couponCode).subscribe((data) => {
         if (data.isSuccess) {
-          if (data.successMessage) this.toastr.error(data.successMessage);
-          this.coupon = data.value;
+          if (data.successMessage) {
+            this.toastr.error(data.successMessage);
+          } else {
+            this.coupon = data.value; // Coupon successfully applied
+            this.toastr.success('Discount applied');
+
+            // Now apply the discount to the total
+            this.calculateDiscount();
+          }
         } else {
           this.toastr.error(data.errors[0]);
         }
       });
+    }
+  }
+
+  calculateDiscount(): void {
+    if (this.coupon) {
+      if (this.coupon.discount) {
+        // Apply percentage discount
+        this.saving = (this.total * this.coupon.discount) / 100;
+      } else if (this.coupon.discount) {
+        // Apply fixed discount amount
+        this.saving = this.coupon.discount;
+      }
+
+      // Ensure the savings do not exceed the total
+      this.saving = Math.min(this.saving, this.total);
+
+      // Subtract the saving from the total to get the final total
+      this.total = this.total - this.saving;
     }
   }
 }

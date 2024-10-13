@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { BasketService } from '../../../services/basket.service';
 import { BasketItem } from '../../../model/basket.model';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,7 @@ export class InnerCardComponent {
   @Input() productPrice: number;
   @Input() productImage: string;
   @Input() productId: string;
+  @Input() productPriceBefore?: number;
 
   constructor(
     private basketService: BasketService,

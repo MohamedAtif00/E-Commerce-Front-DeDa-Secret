@@ -82,6 +82,14 @@ export class OrderDetailsComponent implements OnInit {
     this.orderService.GetSingleOrder(id).subscribe((data) => {
       this.Order = data.value;
       console.log(this.Order);
+      if (this.Order.trackingNumber) {
+        this.bostaService
+          .GetAllDeliveries(this.Order.trackingNumber)
+          .subscribe((data) => {
+            console.log('single delivery', data.data.deliveries);
+            this.Order.state = data.data.deliveries[0].state.value;
+          });
+      }
 
       this.Order.products.map((e) => {
         this.productService
@@ -183,6 +191,15 @@ export class OrderDetailsComponent implements OnInit {
       console.log(data);
       if (data.success) {
         this.toastrService.success('Delivery Added');
+        let trackingNumber = data.data.trackingNumber;
+        this.orderService
+          .UpdateOrder({
+            orderId: this.Order.orderId,
+            trackingNumber: trackingNumber,
+          })
+          .subscribe((data) => {
+            console.log('odrer updateed', data);
+          });
       } else {
         console.log(data);
       }
