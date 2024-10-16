@@ -109,7 +109,8 @@
         "SAVELOGO":"Save Logo",
         "UPLOADHERO":"Upload Hero",
         "WELCOMEMESSAGECUSTOMIZATION":"Welcome Message Customization",
-        "DESCRIPTIONMESSAGECUSTOMIZATION":"Description Message Customization"
+        "DESCRIPTIONMESSAGECUSTOMIZATION":"Description Message Customization",
+        "MARQUEE":"Marquee Message"
     },
     "CATEGORY":{
         "CATEGORYFORM":"Category Form",

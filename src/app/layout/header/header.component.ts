@@ -8,6 +8,7 @@ import { Category } from '../../shared/model/category.model';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { style } from '@angular/animations';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +16,7 @@ import { style } from '@angular/animations';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  lines = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. -',
-    'Quisque nec leo eget diam fringilla consectetur ac in diam. -',
-    'Aenean interdum sem at gravida scelerisque -',
-  ];
+  lines: string = '';
 
   websiteColor = signal<string>('');
 
@@ -37,6 +34,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.websiteColor.set(this.adminService.websiteColor);
     this.GetAllCategories();
+    this.adminService.GetAdministration().subscribe((data) => {
+      this.lines = data.value.marquee_Eng;
+    });
   }
 
   megashow() {

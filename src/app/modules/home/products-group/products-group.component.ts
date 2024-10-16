@@ -3,7 +3,6 @@ import { GetAllProducts, Product } from '../../../shared/model/product.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { PageList } from '../../../core/model/general-response.model';
 import { FilterService } from '../filter.service';
-import AOS from 'aos';
 
 @Component({
   selector: 'app-products-group',
@@ -22,7 +21,7 @@ export class ProductsGroupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    AOS.init();
+    //AOS.init();
     this.GetAllProducts(1);
 
     this.filterService.filter.subscribe((data) => {

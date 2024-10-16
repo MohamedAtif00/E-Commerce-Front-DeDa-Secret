@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BasketService } from '../../shared/services/basket.service';
 import { initFlowbite } from 'flowbite';
 import { Meta, Title } from '@angular/platform-browser';
+import AOS from 'aos';
 
 @Component({
   selector: 'app-home',

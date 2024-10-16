@@ -10,9 +10,8 @@
       <app-card
         [product]="product"
         *ngFor="let product of Products"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-        class="h-[37rem] w-fit block"
+        class="h-[37rem] w-fit block delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0"
+        data-taos-offset="300"
       ></app-card>
     </div>
     <!-- <div class="h-fit w-fit">

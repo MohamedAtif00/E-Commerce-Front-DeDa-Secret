@@ -3,7 +3,12 @@ module.exports = {
   darkMode:'class',
   content: [
     "./src/**/*.{html,ts}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    {
+    relative: true,
+    transform: (content) => content.replace(/taos:/g, ''),
+    files: ['./src/*.{html,js}'],
+  },
   ],
   theme: {
     extend: {
@@ -38,7 +43,14 @@ module.exports = {
   plugins: [
     require('flowbite/plugin')({
       charts:true
-    })
+    }),
+    require('taos/plugin')
+
   ],
+   safelist: [
+    '!duration-[0ms]',
+    '!delay-[0ms]',
+    'html.js :where([class*="taos:"]:not(.taos-init))'
+  ]
 }
 

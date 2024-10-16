@@ -2,7 +2,6 @@ import { Component, OnInit, signal } from '@angular/core';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { catchError, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import AOS from 'aos';
 
 @Component({
   selector: 'app-hero',
@@ -23,7 +22,7 @@ export class HeroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    AOS.init();
+    // AOS.init();
     this.adminService.GetAdministration().subscribe((data) => {
       console.log('current lang', this.translateService.defaultLang);
       this.title_eng = data.value.title_Eng;

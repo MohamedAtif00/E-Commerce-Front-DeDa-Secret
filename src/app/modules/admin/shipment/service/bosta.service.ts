@@ -11,6 +11,8 @@ import {
   Delivery,
   GetAllDeliviesResponse,
 } from '../model/all-deliveries.model';
+import { Observable } from 'rxjs';
+import { GetShippingFeeResponse } from '../model/get-total-fee.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,7 @@ import {
 export class BostaService {
   private _addDelivery = bosta.addDelivery;
   private _getAllDeliveries = bosta.getAllDeliveries;
+  private _getShippingFee = bosta.getShippingFee;
 
   headers = new HttpHeaders().set('Authorization', this.auth.getToken());
 
@@ -38,6 +41,29 @@ export class BostaService {
     return this._http.genericPostAPIData<GetAllDeliviesResponse>(
       this._getAllDeliveries,
       trackingNumber ? { trackingNumbers: trackingNumber } : null,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  GetShippingFee(
+    dropOffCity: string,
+    pickupCity: string,
+    cod: number,
+    size: string = 'Normal'
+  ): Observable<any> {
+    // Build the query parameters dynamically
+    const params = new URLSearchParams({
+      dropOffCity,
+      pickupCity,
+      cod: cod.toString(),
+      size,
+    }).toString();
+
+    // Make the HTTP GET request
+    return this._http.genericGetAPIData<GetShippingFeeResponse>(
+      `${this._getShippingFee}?${params}`,
       {
         headers: this.headers,
       }

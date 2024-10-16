@@ -1,4 +1,8 @@
-<app-check-out [coupon]="coupon"></app-check-out>
+<app-check-out
+  [coupon]="coupon"
+  [total]="total"
+  [saving]="saving"
+></app-check-out>
 <section
   class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16"
   [dir]="translate.currentLang == 'ar' ? 'rtl' : 'ltr'"

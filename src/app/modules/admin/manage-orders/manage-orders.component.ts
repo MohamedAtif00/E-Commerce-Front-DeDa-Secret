@@ -9,6 +9,7 @@ import { PageList } from '../../../core/model/general-response.model';
 import { Router } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ShipmentService } from '../service/shipment.service';
+import { BostaService } from '../shipment/service/bosta.service';
 
 class orders {}
 
@@ -42,7 +43,8 @@ export class ManageOrdersComponent implements OnInit {
     private orderService: OrderService,
     private router: Router,
     public translation: TranslationService,
-    private shipmentService: ShipmentService
+    private shipmentService: ShipmentService,
+    private bostaService: BostaService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +63,17 @@ export class ManageOrdersComponent implements OnInit {
       .GetAllOrders(page, sortColumn, search, des)
       .subscribe((data) => {
         this.orders = data.value.items;
+        this.orders.forEach((order) => {
+          if (order.trackingNumber) {
+            this.bostaService
+              .GetAllDeliveries(order.trackingNumber)
+              .subscribe((data) => {
+                console.log('single delivery', data.data.deliveries);
+                order.state = data.data.deliveries[0].state.value;
+              });
+          }
+        });
+
         this.page = data.value;
       });
   }

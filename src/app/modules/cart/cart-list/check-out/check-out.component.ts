@@ -14,6 +14,7 @@ import { AddressService } from '../../service/address.service';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { TranslationService } from '../../../../core/services/translation.service';
 import { Coupon } from '../../../../shared/model/coupon.model';
+import { BostaService } from '../../../admin/shipment/service/bosta.service';
 
 @Component({
   selector: 'app-check-out',
@@ -31,9 +32,22 @@ export class CheckOutComponent implements OnInit {
 
   stateSelected: City | undefined;
   citySelected: District | undefined;
+  // Address
+  pichupAddress: Address;
+
+  // Order Detials
+
+  @Input() total: number;
+
+  @Input() saving: number;
+
+  TotalShippingFee: number;
 
   // coupon
   @Input() coupon: Coupon | undefined;
+
+  // final bill
+  visible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +55,7 @@ export class CheckOutComponent implements OnInit {
     private basketService: BasketService,
     private addressService: AddressService,
     private router: Router,
+    private bostaService: BostaService,
     private translateService: TranslationService
   ) {
     this.contactForm = this.fb.group({
@@ -67,9 +82,15 @@ export class CheckOutComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     this.GetAllCities();
+    this.addressService.GetAllPickupAddress().subscribe((data) => {
+      console.log('pickup Address', data.value[0]);
+      this.pichupAddress = data.value[0];
+    });
   }
 
   onSubmit() {
+    console.log(this.contactForm.valid);
+
     if (this.contactForm.valid) {
       // Create Order Items and Add to the order
       let orderItems: OrderItem[] = [];
@@ -112,13 +133,14 @@ export class CheckOutComponent implements OnInit {
         Address: address,
         CustomerName: this.fullName?.value || '',
         PhoneNumber: this.phoneNumber?.value || '',
-        couponCode: this.coupon.code,
+        couponCode: this.coupon?.code,
       };
 
       // Submit the Order
       this.orderService.AddOrder(order).subscribe((data) => {
         if (data.isSuccess) {
           this.basketService.clearBasket();
+          this.visible = false;
           this.router.navigate(['cart', 'success']);
         } else {
           console.log('Order submission failed');
@@ -173,6 +195,23 @@ export class CheckOutComponent implements OnInit {
   StateSelected(e: Event) {
     let value = (e.target as HTMLSelectElement).value;
     this.stateSelected = this.states.find((e) => e.cityId == value);
+    console.log(this.stateSelected);
+
+    this.bostaService
+      .GetShippingFee(
+        this.stateSelected.cityName,
+        this.pichupAddress.state,
+        0,
+        'Normal'
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.TotalShippingFee = data.data.shippingFee;
+      });
+
+    // this.addressService.GetActivePickupAddress().subscribe((data) => {
+    //   console.log('pickup address', data);
+    // });
 
     // Fetch districts based on selected state
     if (this.stateSelected) {
@@ -184,5 +223,10 @@ export class CheckOutComponent implements OnInit {
   CitySelected(e: Event) {
     let value = (e.target as HTMLSelectElement).value;
     this.citySelected = this.districts.find((e) => e.districtId == value);
+    console.log(this.citySelected);
+  }
+
+  ShowDialog() {
+    this.visible = true;
   }
 }

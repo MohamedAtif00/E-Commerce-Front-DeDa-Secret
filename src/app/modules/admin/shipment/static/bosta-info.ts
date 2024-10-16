@@ -5,4 +5,5 @@ export const bosta = {
   ViewData: `${mainLink}users/fullData`,
   addDelivery: `${mainLink}deliveries`,
   getAllDeliveries: `${mainLink}deliveries/search`,
+  getShippingFee: `${mainLink}pricing/shipment/calculator`,
 };

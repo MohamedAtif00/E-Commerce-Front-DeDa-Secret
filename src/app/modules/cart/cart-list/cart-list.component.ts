@@ -2,11 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasketService } from '../../../shared/services/basket.service';
 import { Subscription, forkJoin, map, of } from 'rxjs';
 import { ProductService } from '../../../shared/services/product.service';
-import {
-  GetSingleProduct,
-  Image,
-  Product,
-} from '../../../shared/model/product.model';
+import { GetSingleProduct } from '../../../shared/model/product.model';
 import { BasketItem } from '../../../shared/model/basket.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -263,7 +259,7 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   getSaving(product: GetSingleProduct): number {
-    const originalPrice = product._price._price; // Get the original price
+    //const originalPrice = product._price._price; // Get the original price
     const discountAmount = product._price._discount; // Assuming _discount is a fixed amount
 
     // Check if there's a valid discount amount

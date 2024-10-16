@@ -52,6 +52,7 @@ class GetAllOrders {
   address: Address;
   phoneNumber: string;
   totalPrice: number;
+  trackingNumber: string;
 }
 
 export { CreateOrder, OrderItem, Address, GetAllOrders };

@@ -33,7 +33,7 @@ export class FilterGroupComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    this.categoryService.GetAllCategories().subscribe({
+    this.categoryService.GetAllChidlsCategories().subscribe({
       next: (data) => {
         this.categories = data.value;
       },
