@@ -1,5 +1,5 @@
-<div class="container h-fit w-fit">
-  <div class="card_box relative flex h-[250px] w-[100%] max-w-[250px]">
+<div class="container h-fit w-full">
+  <div class="card_box relative flex h-[250px] w-full">
     <span
       *ngIf="product._price._discount != 0"
       class="absolute z-20"
@@ -11,7 +11,7 @@
       [productImage]="product.masterImage"
       [productId]="product.id"
       [productPriceBefore]="product._price._price"
-      class="h-3/4 w-fit self-center"
+      class="h-3/4 w-full self-center"
     ></app-inner-card>
   </div>
 </div>

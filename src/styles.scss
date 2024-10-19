@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@glidejs/glide/src/assets/sass/glide.core' as *;
+@use '@glidejs/glide/src/assets/sass/glide.theme' as *;
 
 
 // swiper bundle styles
@@ -25,6 +27,11 @@
 @import "../node_modules/quill/dist/quill.core.css";
 @import "../node_modules/quill/dist/quill.snow.css";
 
+
+// Glidejs
+
+// @import '../node_modules/@glidejs/glide/dist/css/glide.core.min.css';
+// @import '../node_modules/@glidejs/glide/dist/css/glide.theme.min.css';
 
 
 html, body { height: 100%; }

@@ -42,6 +42,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/aos/dist/aos.css",
+              "node_modules/@glidejs/glide/dist/css/glide.core.min.css",
+              "node_modules/@glidejs/glide/dist/css/glide.theme.min.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",

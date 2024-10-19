@@ -35,6 +35,8 @@ export class ProductService {
   private _addMasterImage = development.localhosts.product.addMasterImage;
   private _addProductImages = development.localhosts.product.addProductImages;
   private _addComment = development.localhosts.product.postComment;
+  private _addProductToCarsoul =
+    development.localhosts.product.addProductToCarsoul;
 
   private _getAllProducts =
     development.localhosts.product.getAllProductsWithNumber;
@@ -42,6 +44,9 @@ export class ProductService {
   private _getProductMasterImage =
     development.localhosts.product.getProductMasterImage;
   private _getproductImage = development.localhosts.product.getProductImage;
+  private _getSpecialProducts =
+    development.localhosts.product.getSpecialProducts;
+  private _getAllReviews = development.localhosts.product.getAllReviews;
 
   // constructor(private genericService: GenericCRUDService) { }
   constructor(
@@ -83,6 +88,14 @@ export class ProductService {
     return this._http.post<GeneralResponse<any>>(this._addComment, request);
   }
 
+  AddProductToCarsoul(productId: string, carsoulId: string) {
+    console.log(this._addProductToCarsoul + productId + '/' + carsoulId);
+
+    return this._http.get<GeneralResponse<any>>(
+      this._addProductToCarsoul + productId + '/' + carsoulId
+    );
+  }
+
   GetAllProducts(
     number: number,
     searchTerm?: string,
@@ -90,6 +103,8 @@ export class ProductService {
     startPrice?: number,
     endPrice?: number
   ) {
+    console.log(sortColumn);
+
     const filter = this.filterService.filter.value;
     let categoriesFilter: string = '';
     if (filter.categoryIds)
@@ -99,13 +114,16 @@ export class ProductService {
     const url =
       this._getAllProducts +
       number +
-      (filter.searchTerm ? `&searchTerm=${filter.searchTerm}` : '') +
-      (filter.sortColumn ? `&sortColumn=${filter.sortColumn}` : '') +
+      (filter.searchTerm ? `&searchTerm=${searchTerm}` : '') +
+      (filter.sortColumn ? `&sortColumn=${sortColumn}` : '') +
       (filter.startPrice ? `&startPrice=${filter.startPrice}` : '') +
       (filter.endPrice ? `&endPrice=${filter.endPrice}` : '') +
+      (filter.asend ? `&asend=${filter.asend}` : '') +
       (filter.categoryIds && filter.categoryIds.length != 0
         ? categoriesFilter
         : '');
+    console.log(url);
+
     return this._http.get<GeneralResponse<PageList<GetAllProducts[]>>>(url);
   }
 
@@ -151,5 +169,15 @@ export class ProductService {
           };
         })
       );
+  }
+
+  GetSpecialProducts(id: string) {
+    return this._http.get<GeneralResponse<GetAllProducts[]>>(
+      this._getSpecialProducts + id
+    );
+  }
+
+  GetAllReviews() {
+    return this._http.get<GeneralResponse<Review[]>>(this._getAllReviews);
   }
 }

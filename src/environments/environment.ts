@@ -9,11 +9,14 @@ export const development = {
       getSingleCategory: `${mainhost}Category/`,
       moveCategory: `${mainhost}Category/MoveCategory`,
       getallChildsCategories: `${mainhost}Category/GetAllChildsCategories`,
+      deleteCategory: `${mainhost}Category/`,
     },
     product: {
       getAllProducts: `${mainhost}Product`,
       getAllProductsWithNumber: `${mainhost}Product/GetAll?pageNumber=`,
       getSingleProduct: `${mainhost}Product/`,
+      getSpecialProducts: `${mainhost}Product/GetSpecialProducts/`,
+      getAllReviews: `${mainhost}Product/GetAllReviews`,
       addProduct: `${mainhost}Product`,
       updateProducts: `${mainhost}product/`,
       addMasterImage: `${mainhost}Product/AddMasterImage`,
@@ -23,6 +26,7 @@ export const development = {
       getProductMasterImage: `${mainhost}Product/GetProductMasterImage/`,
       getProductImage: `${mainhost}Product/GetProductImage/`,
       postComment: `${mainhost}Product/AddReview/`,
+      addProductToCarsoul: `${mainhost}Product/MakeSpecial/`,
     },
     order: {
       createOrder: `${mainhost}Order`,
@@ -46,7 +50,9 @@ export const development = {
       changeWelcomeMessage: `${mainhost}Administration/ChangeWelcomeMessage`,
       changeDescription: `${mainhost}Administration/ChangeDescription`,
       addSpecialProduct: `${mainhost}Administration/AddSpecialProduct/`,
+      addCarsoul: `${mainhost}Administration/AddCarsoul`,
       deleteProduct: `${mainhost}Administration/`,
+      deleteCarousel: `${mainhost}Administration/DeleteCarousel/`,
     },
     account: {
       adminLogin: `${mainhost}Account/AdminLogin`,

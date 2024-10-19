@@ -71,8 +71,11 @@ export class GeneralInfoComponent implements OnInit {
 
   SetDescription(e: EditorTextChangeEvent) {
     // let value = this.GetValue(e);
-    this.productService.Product.description = e.htmlValue;
-    this.productService.Product.descriptionArab = e.htmlValue;
+    if (this.descriptionLang == 'en') {
+      this.productService.Product.description = e.htmlValue;
+    } else {
+      this.productService.Product.descriptionArab = e.htmlValue;
+    }
     //console.log(e);
   }
 

@@ -13,6 +13,7 @@ import { RatingModule } from 'primeng/rating';
 import { PageModule } from '../../page/page.module';
 import { PaginationComponent } from '@coreui/angular';
 import { CardComponent } from '../../shared/components/card/card.component';
+import { AppModule } from '../../app.module';
 
 @NgModule({
   declarations: [

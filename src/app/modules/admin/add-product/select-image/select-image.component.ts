@@ -6,22 +6,22 @@ import { ProductService } from '../../../../shared/services/product.service';
 @Component({
   selector: 'app-select-image',
   templateUrl: './select-image.component.html',
-  styleUrl: './select-image.component.scss'
+  styleUrl: './select-image.component.scss',
 })
-export class SelectImageComponent implements OnInit{
-
-  
+export class SelectImageComponent implements OnInit {
   backgroundImage: SafeStyle | null = null;
   base64String: string | null = null;
   @Input() imageUrl: string | null = null;
-  file = signal<File>(null)
+  file = signal<File>(null);
 
-  constructor(private _sanitizer: DomSanitizer,private productService:ProductService) { }
+  constructor(
+    private _sanitizer: DomSanitizer,
+    private productService: ProductService
+  ) {}
 
   ngOnInit(): void {
     initFlowbite();
-
-    
+    this.file = signal<File>(null);
   }
 
   onFileSelected(event: Event): void {
@@ -37,15 +37,15 @@ export class SelectImageComponent implements OnInit{
         if (typeof result === 'string') {
           this.base64String = result;
           this.imageUrl = result; // Directly use the Base64 string as the image URL
-          this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(`url(${result})`);
+          this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(
+            `url(${result})`
+          );
         }
       };
 
       reader.readAsDataURL(file);
     }
   }
-
-
 
   private convertBlobToImageUrl(blob: Blob | File): void {
     const reader = new FileReader();
@@ -54,14 +54,11 @@ export class SelectImageComponent implements OnInit{
       if (typeof result === 'string') {
         this.base64String = result;
         this.imageUrl = result; // Directly use the Base64 string as the image URL
-        this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(`url(${result})`);
+        this.backgroundImage = this._sanitizer.bypassSecurityTrustStyle(
+          `url(${result})`
+        );
       }
     };
     reader.readAsDataURL(blob);
   }
-  
-
-  
-
-
 }

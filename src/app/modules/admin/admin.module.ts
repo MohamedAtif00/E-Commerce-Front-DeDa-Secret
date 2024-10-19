@@ -32,11 +32,11 @@ import { BostaAuthentication } from './shipment/service/bosta-auth.service';
 import { StateBadgeComponent } from '../../shared/components/state-badge/state-badge.component';
 import { GeneralInfoComponent } from './add-product/general-info/general-info.component';
 import { CategoriesComponent } from './add-category/categories/categories.component';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon';
 import { EditorModule } from 'primeng/editor';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
+import { AddCarsoulComponent } from './administration/add-carsoul/add-carsoul.component';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   declarations: [
     ManageProductsComponent,
@@ -57,6 +57,7 @@ import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
     ManageContactComponent,
     CategoriesComponent,
     ManageCouponComponent,
+    AddCarsoulComponent,
   ],
   imports: [
     // MatProgressBarModule,
@@ -78,6 +79,7 @@ import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
     StateBadgeComponent,
     EditorModule,
     DragDropModule,
+    DialogModule,
   ],
   providers: [DatePipe, ShipmentService, BostaAuthentication],
   exports: [],

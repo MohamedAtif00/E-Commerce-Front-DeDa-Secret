@@ -1,5 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
   <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="70%">
+      <stop
+        offset="0%"
+        [attr.stop-color]="startColor"
+        style="stop-opacity: 0"
+      />
+      <stop
+        offset="40%"
+        [attr.stop-color]="middleColor1"
+        style="stop-opacity: 1"
+      />
+      <stop
+        offset="60%"
+        [attr.stop-color]="middleColor2"
+        style="stop-opacity: 1"
+      />
+      <stop
+        offset="100%"
+        [attr.stop-color]="endColor"
+        style="stop-opacity: 1"
+      />
+    </linearGradient>
+  </defs>
+  <path
+    fill="url(#gradient1)"
+    fill-opacity="1"
+    d="M0,256L0,64L180,64L180,64L360,64L360,128L540,128L540,128L720,128L720,256L900,256L900,224L1080,224L1080,32L1260,32L1260,96L1440,96L1440,320L1260,320L1260,320L1080,320L1080,320L900,320L900,320L720,320L720,320L540,320L540,320L360,320L360,320L180,320L180,320L0,320L0,320Z"
+  ></path>
+</svg>
+<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+  <defs>
     <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop
         offset="0%"
@@ -28,10 +59,10 @@
     fill-opacity="1"
     d="M0,128L40,154.7C80,181,160,235,240,266.7C320,299,400,309,480,309.3C560,309,640,299,720,266.7C800,235,880,181,960,165.3C1040,149,1120,171,1200,186.7C1280,203,1360,213,1400,218.7L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
   ></path>
-</svg>
+</svg> -->
 
 <footer class="dark:bg-red-300" [ngStyle]="GetCustomColor()">
-  <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+  <div class="mx-auto w-full max-w-screen-xl p-4 lg:py-8">
     <div class="md:flex md:justify-between">
       <div class="mb-6 md:mb-0">
         <a href="https://flowbite.com/" class="flex items-center">
@@ -42,27 +73,22 @@
           />
         </a>
       </div>
-      <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+      <div
+        class="grid grid-cols-2 gap-8 text-[#f4f4f4] sm:gap-6 sm:grid-cols-3"
+      >
         <div>
-          <h2
-            class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
-          >
-            Resources
+          <h2 class="mb-6 text-sm font-semibold uppercase dark:text-white">
+            Shop
           </h2>
-          <ul class="text-gray-500 dark:text-gray-400 font-medium">
-            <li class="mb-4">
-              <a href="https://flowbite.com/" class="hover:underline"
-                >Flowbite</a
-              >
-            </li>
-            <li>
-              <a href="https://tailwindcss.com/" class="hover:underline"
-                >Tailwind CSS</a
-              >
+          <ul class="font-medium">
+            <li class="mb-4" *ngFor="let category of categories">
+              <a href="https://flowbite.com/" class="hover:underline">{{
+                category.name
+              }}</a>
             </li>
           </ul>
         </div>
-        <div>
+        <!-- <div>
           <h2
             class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
           >
@@ -82,8 +108,8 @@
               >
             </li>
           </ul>
-        </div>
-        <div>
+        </div> -->
+        <!-- <div>
           <h2
             class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
           >
@@ -97,19 +123,19 @@
               <a href="#" class="hover:underline">Terms &amp; Conditions</a>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     <div class="sm:flex sm:items-center sm:justify-between">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+      <!-- <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
         >© 2023
         <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>.
         All Rights Reserved.
-      </span>
+      </span> -->
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <a
-          href="#"
+          href="https://www.facebook.com/DedaSecretBeauty"
           class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
         >
           <svg
@@ -127,7 +153,7 @@
           </svg>
           <span class="sr-only">Facebook page</span>
         </a>
-        <a
+        <!-- <a
           href="#"
           class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
         >
@@ -143,8 +169,8 @@
             />
           </svg>
           <span class="sr-only">Discord community</span>
-        </a>
-        <a
+        </a> -->
+        <!-- <a
           href="#"
           class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
         >
@@ -162,8 +188,8 @@
             />
           </svg>
           <span class="sr-only">Twitter page</span>
-        </a>
-        <a
+        </a> -->
+        <!-- <a
           href="#"
           class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
         >
@@ -181,8 +207,8 @@
             />
           </svg>
           <span class="sr-only">GitHub account</span>
-        </a>
-        <a
+        </a> -->
+        <!-- <a
           href="#"
           class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
         >
@@ -200,7 +226,7 @@
             />
           </svg>
           <span class="sr-only">Dribbble account</span>
-        </a>
+        </a> -->
       </div>
     </div>
   </div>

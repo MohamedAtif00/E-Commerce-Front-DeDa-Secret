@@ -1,0 +1,65 @@
+<div class="glide p-10" *ngIf="reviews">
+  <div class="text-6xl m-5 ms-40"></div>
+  <div class="glide__track rounded-lg h-fit" data-glide-el="track">
+    <carousel
+      [infinite]="true"
+      [slideToShow]="5"
+      [counter]="false"
+      [slideToScroll]="1"
+    >
+      <div class="carousel-slide" *ngFor="let review of reviews">
+        <div class="card flex flex-row h-fit justify-content-center mt-10">
+          <div class="flex justify-center relative top-1/3">
+            <!-- This is an example component -->
+            <div
+              class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg"
+            >
+              <div class="relative flex gap-4">
+                <div class="flex w-full">
+                  <svg
+                    class="w-12 h-12 text-yellow-200"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    *ngFor="let item of getRating(review)"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
+                  </svg>
+
+                  <svg
+                    class="w-12 h-12 text-gray-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    *ngFor="let rating of getUnRating(review)"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <p class="-mt-4 text-gray-500">
+                {{ review.comment }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </carousel>
+  </div>
+  <!-- 
+  <div class="glide__arrows" data-glide-el="controls">
+    <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+      <i class="pi pi-arrow-left text-black" style="font-size: 2rem"></i>
+    </button>
+    <button
+      class="glide__arrow glide__arrow--right text-black"
+      data-glide-dir=">"
+    >
+      <i class="pi pi-arrow-right text-black" style="font-size: 2rem"></i>
+    </button>
+  </div> -->
+</div>

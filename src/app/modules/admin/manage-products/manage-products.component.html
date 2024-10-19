@@ -62,7 +62,7 @@
   class="relative overflow-x-auto p-10 flex-col gap-10 justify-between justify-items-start shadow-md bg-white border rounded-2xl m-5 border-white"
 >
   <div
-    class="flex-col justify-center align-middle bg-white 2xl:flex-row 2xl:justify-between 2xl:align-middle 2xl:items-center"
+    class="flex-col justify-center w-full align-middle bg-white 2xl:flex-row 2xl:justify-between 2xl:align-middle 2xl:items-center"
   >
     <form class="w-[20rem] h-fit inline-block">
       <label
@@ -100,105 +100,8 @@
         />
       </div>
     </form>
-    <div class="flex justify-end gap-10 h-fit pe-10 w-2/3 float-end">
-      <button
-        id="sortButtonId"
-        data-dropdown-toggle="sort"
-        class="text-gray-400 bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex justify-between gap-10 items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-      >
-        {{ sortColumn }}
-        <svg
-          class="w-2.5 h-2.5 ms-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </button>
-      <button
-        id="dropdownDefaultButton"
-        data-dropdown-toggle="dropdown"
-        class="text-gray-400 bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex justify-between gap-10 items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-      >
-        {{ Status }}
-        <svg
-          class="w-2.5 h-2.5 ms-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </button>
-
+    <div class="flex justify-end gap-10 h-fit pe-10 w-full float-end">
       <!-- Dropdown menu -->
-      <div
-        id="dropdown"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-      >
-        <ul
-          class="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownDefaultButton"
-        >
-          <li (click)="AllClicked()">
-            <a
-              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
-              >All</a
-            >
-          </li>
-          <li>
-            <a
-              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
-              >Settings</a
-            >
-          </li>
-          <li>
-            <a
-              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
-              >Earnings</a
-            >
-          </li>
-          <li>
-            <a
-              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
-              >Sign out</a
-            >
-          </li>
-        </ul>
-      </div>
-      <div
-        id="sort"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-      >
-        <ul
-          class="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="sortButtonId"
-        >
-          <li (click)="Sort(sort)" *ngFor="let sort of sorts">
-            <a
-              class="block px-4 py-2 cursor-pointer hover:bg-blue-200 hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white"
-              >{{ sort }}</a
-            >
-          </li>
-        </ul>
-      </div>
 
       <button
         id="mainActionButton"
@@ -477,9 +380,9 @@
             >
               <li>
                 <a
-                  (click)="AddSpecialProduct(product.id)"
+                  (click)="AddSpecialProduct(product)"
                   class="block text-yellow-300 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Add Special Product</a
+                  >Add To Carsoul</a
                 >
               </li>
               <li>
@@ -496,7 +399,7 @@
     </tbody>
   </table>
   <nav
-    class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+    class="flex items-center flex-column flex-wrap w-11/12 md:flex-row justify-between pt-4"
     aria-label="Table navigation"
   >
     <span
@@ -541,35 +444,7 @@
           >{{ pageNumber }}</a
         >
       </li>
-      <!-- <li>
-        <a
-          href="#"
-          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >2</a
-        >
-      </li>
-      <li>
-        <a  
-          href="#"
-          aria-current="page"
-          class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-          >3</a
-        >
-      </li>
-      <li>
-        <a
-          href="#"
-          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >4</a
-        >
-      </li>
-      <li>
-        <a
-          href="#"
-          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >5</a
-        >
-      </li> -->
+
       <li *ngIf="pagelist().hasNextPage">
         <a
           href="#"
@@ -658,4 +533,30 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-dialog
+    header="Choose Carousel"
+    [modal]="showModal"
+    [(visible)]="showModal"
+    [style]="{ width: '25rem' }"
+  >
+    <div class="flex flex-col">
+      <div
+        class="m-3 p-5 cursor-pointer hover:bg-gray-400"
+        *ngFor="let carsoul of carsouls"
+        (click)="AddProductToCarsoul(carsoul.id.value)"
+      >
+        {{ carsoul.groupName }}
+      </div>
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        (onClick)="showModal = false"
+      />
+    </div>
+  </p-dialog>
 </div>

@@ -3,28 +3,25 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  TemplateRef,
-  inject,
   signal,
 } from '@angular/core';
-import { Dropdown, initFlowbite } from 'flowbite';
-import {
-  DropdownOptions,
-  DropdownInterface,
-  InstanceOptions,
-  ModalInterface,
-  Modal,
-  ModalOptions,
-} from 'flowbite';
+import { Dropdown } from 'flowbite';
+import { DropdownOptions, DropdownInterface } from 'flowbite';
 
-import { GetAllProducts, Product } from '../../../shared/model/product.model';
+import {
+  GetAllProducts,
+  GetSingleProduct,
+} from '../../../shared/model/product.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { PageList } from '../../../core/model/general-response.model';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { ModalService } from '../../../shared/services/modal.service';
-import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
+import { Carousel } from '../../../shared/model/carsoul.model';
+import { FilterService } from '../../home/filter.service';
+import { take } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 interface Products extends GetAllProducts {
   checked: boolean;
@@ -71,17 +68,27 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
   sortSelect: string = 'default';
   pagelist = signal<PageList<any>>(this._pageList);
 
+  // Add to carsoul
+  addedProduct: GetAllProducts;
+  showModal: boolean;
+  carsouls: Carousel[];
+
   constructor(
     private productService: ProductService,
     private adminService: AdministrationService,
     private modalService: ModalService,
     public translation: TranslationService,
-    private router: Router
+    private router: Router,
+    private filter: FilterService,
+    private toastr: ToastrService
   ) {}
 
   async ngOnInit() {
     await this.GetProductPage(1);
     this.modalService.InitModal('#popup-modal');
+    this.adminService.GetAdministration().subscribe((data) => {
+      this.carsouls = data.value.groups;
+    });
   }
 
   ngAfterViewInit(): void {}
@@ -174,14 +181,28 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
 
   Search(e: Event) {
     this.search = (e.target as HTMLInputElement).value;
+    this.filter.filter.next({ searchTerm: this.search });
     this.GetProductPage(1);
   }
 
   Sort(e: string) {
     this.sortColumn = e;
     this.sortSelect = e === 'default' ? '' : e;
-    this.sortDropdown.hide();
-    this.GetProductPage(1);
+
+    // Ensure subscription is triggered only once using `take(1)`
+    this.filter.filter.pipe(take(1)).subscribe((data) => {
+      console.log(this.sortSelect);
+      let asend: boolean;
+      if (data.asend == null) asend = false;
+      else asend = !data.asend;
+
+      data.sortColumn = this.sortSelect;
+      data.asend = asend;
+      this.filter.filter.next(data);
+
+      this.GetProductPage(1);
+      this.sortDropdown.toggle();
+    });
   }
 
   OpenAction(e: Event): void {
@@ -264,7 +285,7 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
     //this.DropdownListConfiguration();
   }
 
-  CheckProduct(id: number) {
+  CheckProduct(id: string) {
     // Mark the product as checked
     this.Products.forEach((e) => {
       if (e.id === id) {
@@ -283,8 +304,24 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  AddSpecialProduct(id: string) {
-    this.adminService.AddSpecialProduct(id).subscribe((data) => {});
+  AddSpecialProduct(product: GetAllProducts) {
+    this.addedProduct = product;
+    this.showModal = true;
+  }
+
+  AddProductToCarsoul(id: string) {
+    console.log(id);
+    console.log(this.addedProduct.id);
+
+    this.productService
+      .AddProductToCarsoul(this.addedProduct.id, id)
+      .subscribe((data) => {
+        if (data.isSuccess) {
+          this.toastr.success('product Succesfully Added');
+        } else {
+          this.toastr.error(data.errors[0]);
+        }
+      });
   }
 
   product: Products;
@@ -298,5 +335,9 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
 
   CloseModal() {
     this.modalService.CloseModal();
+  }
+
+  getEmptyStars(totalReview: number): number {
+    return 5 - totalReview;
   }
 }

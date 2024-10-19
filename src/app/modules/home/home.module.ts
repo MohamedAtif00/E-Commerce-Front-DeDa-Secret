@@ -15,6 +15,11 @@ import { AdminLoginComponent } from '../admin/admin-login/admin-login.component'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PriceRangeComponent } from './filter-group/price-range/price-range.component';
+import { CarouselCardComponent } from './carousel-card/carousel-card.component';
+
+import { CarouselModule } from 'ngx-carousel-ease';
+import { HomeCarouselReviesComponent } from './home-carousel-revies/home-carousel-revies.component';
+import { GallaryComponent } from './gallary/gallary.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,9 @@ import { PriceRangeComponent } from './filter-group/price-range/price-range.comp
     PaginationComponent,
     AdminLoginComponent,
     PriceRangeComponent,
+    CarouselCardComponent,
+    HomeCarouselReviesComponent,
+    GallaryComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +43,7 @@ import { PriceRangeComponent } from './filter-group/price-range/price-range.comp
     ProductCarouselComponent,
     CardComponent,
     ReactiveFormsModule,
+    CarouselModule,
   ],
   exports: [PaginationComponent],
 })

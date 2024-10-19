@@ -25,11 +25,12 @@ class CreateProduct {
 }
 
 class GetAllProducts {
-  id: any;
+  id: string;
   _name: string;
   _description: string;
   _discount: number;
   categoryId: string;
+  _totalReviews: number;
   _price: { _discount: number; _price: number; _total: number };
   _stockQuantity: number;
   masterImage: any | null;

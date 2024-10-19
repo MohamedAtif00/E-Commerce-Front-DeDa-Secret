@@ -383,20 +383,38 @@ export class CategoriesComponent implements OnInit {
   }
 
   removeItem(nodeId: string) {
+    // Get the parent node ID of the current node
     const parentNodeId = this.getParentNodeId(nodeId, this.nodes, 'main');
-    const parentArray =
-      parentNodeId === 'main'
-        ? this.nodes
-        : this.nodeLookup[parentNodeId].childsCategories;
 
+    // Determine whether the node is a main node or a child node
+    const isMainNode = parentNodeId === 'main';
+
+    // If it's a main node, the parent array is the root 'nodes', otherwise it's a child
+    const parentArray = isMainNode
+      ? this.nodes
+      : this.nodeLookup[parentNodeId].childsCategories;
+
+    // Find the index of the node to remove in the parent array
     const index = parentArray.findIndex((node) => node.id === nodeId);
+
     if (index > -1) {
-      parentArray.splice(index, 1); // Remove node from array
+      parentArray.splice(index, 1); // Remove the node from the array
     }
 
-    // Remove from node lookup and drag/drop targets
+    // Remove the node from the node lookup and drag/drop targets
     delete this.nodeLookup[nodeId];
     this.dropTargetIds = this.dropTargetIds.filter((id) => id !== nodeId);
+
+    // Log or return whether the node was a main node or a child node (optional)
+    if (isMainNode) {
+      this.categoryService.DeleteCategory(nodeId).subscribe((data) => {
+        if (data.isSuccess) {
+          this.toastrService.success('category deleted');
+        } else {
+          this.toastrService.error(data.errors[0]);
+        }
+      });
+    }
   }
 
   addChildCategory(parentId: string) {

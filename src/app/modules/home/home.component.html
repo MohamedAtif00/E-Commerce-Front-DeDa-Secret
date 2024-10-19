@@ -11,10 +11,29 @@
 </marquee> -->
 <app-hero></app-hero>
 <!-- <app-about></app-about> -->
-<div class="flex flex-col lg:flex-row xl:flex-row h-fit">
-  <app-filter-group
+<div
+  class="flex flex-col w-full h-full justify-center items-center align-middle"
+>
+  <app-carousel-home
+    class="w-full"
+    *ngFor="let carousel of carousels"
+    [carsoul]="carousel"
+  ></app-carousel-home>
+  <!-- <app-filter-group
     class="w-full lg:w-1/4 xl:w-1/4 inline-block ms-5 h-fit xl:block"
-  ></app-filter-group>
+  ></app-filter-group> -->
+  <div class="mx-10"></div>
+  <app-home-carousel-revies
+    data-aos-duration="2000"
+    data-aos="fade-up"
+    data-aos-once="true"
+  ></app-home-carousel-revies>
 
-  <app-products-group class="w-3/4 h-fit"></app-products-group>
+  <app-gallary
+    class="w-full"
+    data-aos="fade-up"
+    data-aos-duration="2000"
+    data-aos-once="true"
+  ></app-gallary>
+  <!-- <app-products-group class="w-3/4 h-fit"></app-products-group> -->
 </div>

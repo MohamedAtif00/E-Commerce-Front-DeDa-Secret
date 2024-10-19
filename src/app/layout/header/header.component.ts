@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, signal } from '@angular/core';
+import { Component, Input, OnInit, Signal, signal } from '@angular/core';
 import { BasketService } from '../../shared/services/basket.service';
 import { AdministrationService } from '../../core/services/administration.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { style } from '@angular/animations';
 import { data } from 'jquery';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ import { data } from 'jquery';
 export class HeaderComponent implements OnInit {
   lines: string = '';
 
-  websiteColor = signal<string>('');
+  @Input() websiteColor = '';
 
   items: MenuItem[] | undefined = [];
 
@@ -28,15 +29,20 @@ export class HeaderComponent implements OnInit {
     public basketService: BasketService,
     public adminService: AdministrationService,
     public translate: TranslationService,
-    private categoryService: CategoryService
-  ) {}
-
-  ngOnInit(): void {
-    this.websiteColor.set(this.adminService.websiteColor);
-    this.GetAllCategories();
+    private categoryService: CategoryService,
+    private route: ActivatedRoute
+  ) {
+    this.websiteColor = this.adminService.websiteColor;
     this.adminService.GetAdministration().subscribe((data) => {
       this.lines = data.value.marquee_Eng;
     });
+  }
+
+  ngOnInit(): void {
+    this.GetAllCategories();
+    // this.adminService.GetAdministration().subscribe((data) => {
+    //   this.lines = data.value.marquee_Eng;
+    // });
   }
 
   megashow() {
@@ -80,13 +86,13 @@ export class HeaderComponent implements OnInit {
   // wensite administration
 
   GetWebsiteColor(): string {
-    const color = this.websiteColor() || '#FBD5D5';
+    const color = this.websiteColor || '#FBD5D5';
 
     return `from-[${color}]`;
   }
 
   GetCustomColor(): { [key: string]: string } {
-    const color = this.websiteColor() || '#FBD5D5';
+    const color = this.websiteColor || '#FBD5D5';
     return {
       'background-image': `linear-gradient(to bottom, ${color}, white)`,
     };

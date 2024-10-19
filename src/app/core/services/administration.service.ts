@@ -10,7 +10,8 @@ import {
   GetDescription,
 } from '../model/administration.model';
 import { GeneralResponse } from '../model/general-response.model';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Carousel } from '../../shared/model/carsoul.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,9 @@ export class AdministrationService {
   heroImage: File;
   welcomeMessage: WelcomeMessage;
   websiteColor: string;
+
+  private carousels: Carousel[] = [];
+  private carouselsSubject = new BehaviorSubject<Carousel[]>(this.carousels);
 
   private _getAdministration =
     development.localhosts.administration.getAdministration;
@@ -43,20 +47,27 @@ export class AdministrationService {
   private _changeHero = development.localhosts.administration.changeHeroImage;
   private _addSpecialProduct =
     development.localhosts.administration.addSpecialProduct;
+  private _addCarsoul = development.localhosts.administration.addCarsoul;
   private _deleteProduct = development.localhosts.administration.deleteProduct;
+  private _deleteCarousel =
+    development.localhosts.administration.deleteCarousel;
 
   constructor(private _http: HttpClient) {
-    this.GetAdministration().subscribe((data) => {
-      this.websiteColor = data.value.websiteColor;
-    });
+    // this.GetAdministration().subscribe((data) => {
+    //   this.websiteColor = data.value.websiteColor;
+    // });
   }
 
   // Query
 
   GetAdministration() {
-    return this._http.get<GeneralResponse<GetAdministration>>(
-      this._getAdministration
-    );
+    return this._http
+      .get<GeneralResponse<GetAdministration>>(this._getAdministration)
+      .pipe(
+        tap((e) => {
+          this.websiteColor = e.value.websiteColor;
+        })
+      );
   }
 
   GetDailyEarningProfits() {
@@ -85,6 +96,10 @@ export class AdministrationService {
     return this._http.get<GeneralResponse<SpecialProduct[]>>(
       this._getSpecialProducts
     );
+  }
+
+  getCarousels() {
+    return this.carouselsSubject.asObservable();
   }
 
   // Commands
@@ -117,9 +132,32 @@ export class AdministrationService {
     return this._http.get(this._addSpecialProduct + id);
   }
 
+  addCarousel(carousel: string) {
+    // this.carouselsSubject.next(this.carousels);
+    // this.carousels.push(carousel);
+    return this._http.post<GeneralResponse<any>>(this._addCarsoul, {
+      name: carousel,
+    });
+  }
+
+  // AddProductToCarsoul() {
+  //   return this._http.post();
+  // }
+
   // DeleteProduct method
   DeleteProduct(id: string): Observable<void> {
     return this._http.delete<void>(`${this._deleteProduct}${id}`);
+  }
+
+  deleteCarousel(id: number) {
+    //this.carousels = this.carousels.filter((c) => c.id !== id);
+    this.carouselsSubject.next(this.carousels);
+  }
+
+  DeleteCarousel(id: string) {
+    console.log(id);
+
+    return this._http.delete<GeneralResponse<any>>(this._deleteCarousel + id);
   }
 }
 

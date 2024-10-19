@@ -21,6 +21,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productService.files.next([]);
+    this.productService.file.set(null);
   }
 
   Create() {

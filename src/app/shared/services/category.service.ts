@@ -15,6 +15,7 @@ export class CategoryService {
   private _getSingleCategory =
     development.localhosts.category.getSingleCategory;
   private _postMoveCategory = development.localhosts.category.moveCategory;
+  private _deleteCategory = development.localhosts.category.deleteCategory;
 
   constructor(private _http: GenericCRUDService) {}
 
@@ -48,6 +49,13 @@ export class CategoryService {
     return this._http.genericPostAPIData<GeneralResponse<any>>(
       this._postMoveCategory,
       request
+    );
+  }
+
+  // Delete
+  DeleteCategory(id: string) {
+    return this._http.genericDeleteAPIData<GeneralResponse<any>>(
+      this._deleteCategory + id
     );
   }
 }

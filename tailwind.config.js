@@ -36,7 +36,8 @@ module.exports = {
         'primary':'Lustria',
         'secondry':'Alex Brush',
         'inter': 'inter',
-        'Merienda':'Merienda'
+        'Merienda': 'Merienda',
+        'PlayFair':'Playfair'
       }
     },
   },

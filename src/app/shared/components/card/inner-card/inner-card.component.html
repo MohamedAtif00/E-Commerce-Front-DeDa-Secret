@@ -1,11 +1,10 @@
-<div class="card h-[400px] w-[250px] flex flex-col gap-10" (click)="clicked()">
+<div class="card h-[400px] w-full flex flex-col gap-10" (click)="clicked()">
   <div
     [routerLink]="['/product-detials', productId]"
     [ngStyle]="{ 'background-image': 'url(' + productImage + ')' }"
-    class="z-10 w-full bg-[url(https://cdn.shopify.com/s/files/1/0684/4923/9327/files/Body-Cravings-Lip-_-Cheek-Tint-Strawberry-2-Source-Beauty-Egypt_large.png?v=1718112601)] bg-center bg-cover"
-  >
-    <img [src]="" alt="" />
-  </div>
+    class="z-10 w-full h-64 p-2 bg-center bg-cover"
+    style="background-position: center; background-size: contain"
+  ></div>
 </div>
 
 <div class="text-xl font-inter mt-5 mb-5">{{ productName }}</div>

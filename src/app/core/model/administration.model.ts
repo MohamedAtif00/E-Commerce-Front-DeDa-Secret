@@ -1,3 +1,5 @@
+import { Carousel } from '../../shared/model/carsoul.model';
+
 export interface WelcomeMessage {
   title_Eng: string;
   title_Arb: string;
@@ -41,4 +43,5 @@ export interface GetAdministration {
   marquee_Eng: string;
   marquee_Arb: string;
   websiteColor: string;
+  groups: Carousel[];
 }

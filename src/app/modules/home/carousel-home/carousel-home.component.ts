@@ -1,94 +1,41 @@
-import { Component } from '@angular/core';
-import { CarouselItem, CarouselOptions, InstanceOptions, CarouselInterface, Carousel } from 'flowbite';
-
+import {
+  Component,
+  Input,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
+  ViewEncapsulation,
+} from '@angular/core';
+import Glide from '@glidejs/glide';
+import { Carousel } from '../../../shared/model/carsoul.model';
+import { ProductService } from '../../../shared/services/product.service';
+import { GetAllProducts } from '../../../shared/model/product.model';
+import { NgxGlideComponent } from 'ngx-glide';
+import AOS from 'aos';
 @Component({
   selector: 'app-carousel-home',
   templateUrl: './carousel-home.component.html',
-  styleUrl: './carousel-home.component.scss'
+  styleUrls: ['./carousel-home.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class CarouselHomeComponent {
+export class CarouselHomeComponent implements OnInit {
+  @Input() carsoul: Carousel;
+  products: GetAllProducts[] = []; // Initialize as an empty array
 
-//   ngOnInit(): void {
-//     const carouselElement: HTMLElement = document.getElementById('indicators-carousel');
+  @ViewChild(NgxGlideComponent, { static: false }) ngxGlide: NgxGlideComponent;
 
-//       const items: CarouselItem[] = [
-//           {
-//               position: 0,
-//               el: document.getElementById('carousel-item-1'),
-//           },
-//           {
-//               position: 1,
-//               el: document.getElementById('carousel-item-2'),
-//           },
-//           {
-//               position: 2,
-//               el: document.getElementById('carousel-item-3'),
-//           },
-//           {
-//               position: 3,
-//               el: document.getElementById('carousel-item-4'),
-//           },
-//       ];
+  constructor(private productService: ProductService) {}
 
-//       const options: CarouselOptions = {
-//           defaultPosition: 1,
-//           interval: 3000,
-//           indicators: {
-//               activeClasses: 'bg-blue-600',
-//               inactiveClasses: 'bg-blue-300',
-//               items: [
-//                   {
-//                       position: 0,
-//                       el: document.getElementById('carousel-indicator-1'),
-//                   },
-//                   {
-//                       position: 1,
-//                       el: document.getElementById('carousel-indicator-2'),
-//                   },
-//                   {
-//                       position: 2,
-//                       el: document.getElementById('carousel-indicator-3'),
-//                   },
-//                   {
-//                       position: 3,
-//                       el: document.getElementById('carousel-indicator-4'),
-//                   },
-//               ],
-//           },
-//           onNext: () => {
-//               console.log('next slider item is shown');
-//           },
-//           onPrev: () => {
-//               console.log('previous slider item is shown');
-//           },
-//           onChange: () => {
-//               console.log('new slider item has been shown');
-//           },
-//       };
-
-//       const instanceOptions: InstanceOptions = {
-//         id: 'carousel-example',
-//         override: true
-//       };
-
-//       const carousel: CarouselInterface = new Carousel(carouselElement, items, options, instanceOptions);
-
-//       carousel.cycle();
-
-//       const $prevButton = document.getElementById('data-carousel-prev');
-//       const $nextButton = document.getElementById('data-carousel-next');
-
-//       $prevButton.addEventListener('click', () => {
-//           carousel.prev();
-//       });
-
-//       $nextButton.addEventListener('click', () => {
-//           carousel.next();
-//       });
-
-
-
-// }
-
-
+  ngOnInit(): void {
+    AOS.init();
+    this.productService.GetSpecialProducts(this.carsoul.id.value).subscribe({
+      next: (data) => {
+        this.products = data.value; // Set the products array
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      },
+    });
+  }
 }
