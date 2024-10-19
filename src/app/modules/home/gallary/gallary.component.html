@@ -1,4 +1,4 @@
-<section class="bg-white h-[50rem]">
+<!-- <section class="bg-white h-[50rem]">
   <div class="py-4 px-2 h-full mx-auto max-w-screen-xl sm:py-4 lg:px-6">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 h-full">
       <div
@@ -107,4 +107,85 @@
       </div>
     </div>
   </div>
+</section> -->
+<section class="w-full grid grid-cols-12 gap-3">
+  <!-- Left Section with one large image and two smaller images -->
+  <div class="col-span-8 flex flex-col lg:col-span-5">
+    <!-- Large Image with limited height -->
+    <img
+      class="block w-full h-full object-cover rounded-lg shadow-lg"
+      src="../../../../assets/img/gallary/1.jpg"
+      alt="Large Image"
+    />
+
+    <!-- Container for Two Smaller Images -->
+    <div class="flex flex-row h-1/5 lg:h-1/2">
+      <img
+        class="w-1/2 object-cover rounded-lg shadow-lg"
+        src="../../../../assets/img/gallary/2.jpg"
+        alt="Small Image 1"
+      />
+      <img
+        class="w-1/2 object-cover rounded-lg shadow-lg"
+        src="../../../../assets/img/gallary/3.jpg"
+        alt="Small Image 2"
+      />
+    </div>
+    <img
+      class="block w-full h-full object-cover rounded-lg shadow-lg lg:hidden"
+      src="../../../../assets/img/gallary/7.jpg"
+      alt="Large Image"
+    />
+  </div>
+  <div class="col-span-4 flex flex-col lg:flex-row lg:col-span-7">
+    <div class="flex flex-col h-full lg:w-1/3">
+      <img
+        class="w-full h-1/5 object-cover rounded-lg shadow-lg lg:h-1/3"
+        src="../../../../assets/img/gallary/6.jpg"
+        alt="Small Image 2"
+      />
+      <img
+        class="w-full h-1/5 object-cover rounded-lg shadow-lg lg:h-1/3"
+        src="../../../../assets/img/gallary/7.jpg"
+        alt="Small Image 2"
+      />
+      <img
+        class="w-full h-1/5 object-cover rounded-lg shadow-lg lg:h-1/3"
+        src="../../../../assets/img/gallary/3.jpg"
+        alt="Small Image 2"
+      />
+      <img
+        class="w-full h-1/5 object-cover rounded-lg shadow-lg lg:hidden"
+        src="../../../../assets/img/gallary/3.jpg"
+        alt="Small Image 2"
+      />
+      <img
+        class="w-full h-1/5 object-cover rounded-lg shadow-lg lg:hidden"
+        src="../../../../assets/img/gallary/3.jpg"
+        alt="Small Image 2"
+      />
+    </div>
+    <div class="hidden w-2/3 lg:flex lg:flex-col ps-2">
+      <div class="flex flex-row">
+        <img
+          class="w-1/2 object-cover rounded-lg shadow-lg"
+          src="../../../../assets/img/gallary/3.jpg"
+          alt="Small Image 2"
+        />
+        <img
+          class="w-1/2 object-cover rounded-lg shadow-lg"
+          src="../../../../assets/img/gallary/3.jpg"
+          alt="Small Image 2"
+        />
+      </div>
+      <img
+        class="w-full h-full object-cover ms-2 rounded-lg shadow-lg"
+        src="../../../../assets/img/gallary/3.jpg"
+        alt="Small Image 2"
+      />
+    </div>
+  </div>
+
+  <!-- Right Section (Empty for now) -->
+  <div class="col-span-3"></div>
 </section>

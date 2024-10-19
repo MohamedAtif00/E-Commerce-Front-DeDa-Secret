@@ -57,6 +57,7 @@
         <input
           type="text"
           maxlength="5"
+          (change)="onMinPriceChange($event)"
           x-on:input="mintrigger(); $dispatch('price-change', { min: minprice, max: maxprice })"
           x-model="minprice"
           class="px-3 py-2 border border-gray-200 rounded w-24 text-center"
@@ -66,6 +67,7 @@
         <input
           type="text"
           maxlength="5"
+          (change)="onMaxPriceChange($event)"
           x-on:input="maxtrigger(); $dispatch('price-change', { min: minprice, max: maxprice })"
           x-model="maxprice"
           class="px-3 py-2 border border-gray-200 rounded w-24 text-center"

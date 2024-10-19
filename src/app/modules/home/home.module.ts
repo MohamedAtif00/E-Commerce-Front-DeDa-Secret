@@ -45,6 +45,6 @@ import { GallaryComponent } from './gallary/gallary.component';
     ReactiveFormsModule,
     CarouselModule,
   ],
-  exports: [PaginationComponent],
+  exports: [PaginationComponent, FilterGroupComponent],
 })
 export class HomeModule {}

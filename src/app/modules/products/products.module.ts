@@ -14,6 +14,8 @@ import { PageModule } from '../../page/page.module';
 import { PaginationComponent } from '@coreui/angular';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { AppModule } from '../../app.module';
+import { FilterGroupComponent } from '../home/filter-group/filter-group.component';
+import { HomeModule } from '../home/home.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AppModule } from '../../app.module';
     RatingModule,
     PaginationComponent,
     CardComponent,
+    HomeModule,
   ],
 })
 export class ProductsModule {}

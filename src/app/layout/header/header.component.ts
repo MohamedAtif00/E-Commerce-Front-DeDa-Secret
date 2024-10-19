@@ -10,6 +10,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { style } from '@angular/animations';
 import { data } from 'jquery';
 import { ActivatedRoute } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-header',
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    initFlowbite();
     this.GetAllCategories();
     // this.adminService.GetAdministration().subscribe((data) => {
     //   this.lines = data.value.marquee_Eng;

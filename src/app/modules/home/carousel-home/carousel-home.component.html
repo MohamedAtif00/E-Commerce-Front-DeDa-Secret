@@ -1,11 +1,14 @@
-<div class="glide p-10" *ngIf="products.length > 0">
-  <div class="text-6xl m-5 ms-40">{{ carsoul.groupName }}</div>
+<div class="glide p-5 md:p-10" *ngIf="products.length > 0">
+  <div class="text-2xl md:text-4xl lg:text-6xl m-5 ms-20 md:ms-40">
+    {{ carsoul.groupName }}
+  </div>
   <div class="glide__track rounded-lg h-fit" data-glide-el="track">
     <carousel
       [infinite]="true"
       [slideToShow]="5"
       [counter]="false"
       [slideToScroll]="1"
+      [slideWidth]="200"
     >
       <div
         class="carousel-slide"
@@ -20,16 +23,5 @@
       </div>
     </carousel>
   </div>
-  <!-- 
-  <div class="glide__arrows" data-glide-el="controls">
-    <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
-      <i class="pi pi-arrow-left text-black" style="font-size: 2rem"></i>
-    </button>
-    <button
-      class="glide__arrow glide__arrow--right text-black"
-      data-glide-dir=">"
-    >
-      <i class="pi pi-arrow-right text-black" style="font-size: 2rem"></i>
-    </button>
-  </div> -->
+  <!-- Arrows can be re-added here if needed -->
 </div>

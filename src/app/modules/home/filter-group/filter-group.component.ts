@@ -43,7 +43,6 @@ export class FilterGroupComponent implements OnInit {
   onCheckboxChange(event: any) {
     if (event.target.checked) {
       // Add the category to the selected categories if checked
-      console.log(event.target.value);
 
       this.selectedCategory.push(event.target.value);
       this.applyFilter();
@@ -58,7 +57,6 @@ export class FilterGroupComponent implements OnInit {
 
   // Method to apply filter based on selected categories
   applyFilter() {
-    console.log('Selected Categories:', this.selectedCategory);
     // Implement your logic to filter products based on selected categories
     let newFilter = this.filterService.filter.value;
     newFilter.categoryIds = this.selectedCategory;

@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { AdministrationService } from '../../../core/services/administration.service';
 import { catchError, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { development } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-hero',
@@ -15,7 +16,7 @@ export class HeroComponent implements OnInit {
   desc_arb: string;
 
   HeroImageUrl = signal('');
-
+  myHero = development.localhosts.administration.getHero;
   constructor(
     private adminService: AdministrationService,
     public translateService: TranslateService

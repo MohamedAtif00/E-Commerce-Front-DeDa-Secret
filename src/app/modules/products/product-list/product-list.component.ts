@@ -38,6 +38,11 @@ export class ProductListComponent implements OnInit {
       this.applyFilter([id]);
       this.GetAllProducts(1);
     });
+
+    this.filterService.filter.subscribe((data) => {
+      console.log(data);
+      this.GetAllProducts(1);
+    });
   }
 
   GetAllProducts(page: number) {

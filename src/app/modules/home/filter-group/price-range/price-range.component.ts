@@ -49,18 +49,16 @@ export class PriceRangeComponent {
   // }
 
   onMinPriceChange(event: any) {
-    const customEvent = event as CustomEvent;
-    console.log(customEvent.detail);
-
-    const min = customEvent.detail.min;
+    const customEvent = event as InputEvent;
+    const min = (customEvent.target as HTMLInputElement).value;
     const updatedMax = this.maxPrice;
-    this.debouncedHandlePriceChange(min, updatedMax);
+    this.debouncedHandlePriceChange(parseInt(min), updatedMax);
   }
 
   onMaxPriceChange(event: any) {
-    const customEvent = event as CustomEvent;
-    const max = customEvent.detail.max;
+    const customEvent = event as InputEvent;
+    const max = (customEvent.target as HTMLInputElement).value;
     const updatedMin = this.minPrice;
-    this.debouncedHandlePriceChange(updatedMin, max);
+    this.debouncedHandlePriceChange(updatedMin, parseInt(max));
   }
 }
