@@ -7,12 +7,9 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { GeneralInfoComponent } from './add-product/general-info/general-info.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { ProductDetailComponent } from '../products/product-detail/product-detail.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AdministrationComponent } from './administration/administration.component';
-import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ManageContactComponent } from './manage-contact/manage-contact.component';
-import { BostaGuard } from './shipment/guard/bosta-guard.guard';
 import { CategoryResolver } from './service/category-resolver.resolver';
 import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
 

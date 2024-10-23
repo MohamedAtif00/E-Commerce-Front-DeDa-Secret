@@ -52,7 +52,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.files.next([]);
-    this.productService.file.set(null);
+    this.productService.file?.set(null);
     this.productImages.set([]);
     this.route.params.subscribe((params) => {
       const id = params['id'];

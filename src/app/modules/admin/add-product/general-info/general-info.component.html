@@ -1,6 +1,6 @@
 <div
   [dir]="translate.currentLang() == 'ar' ? 'rtl' : ''"
-  class="w-[70rem] h-fit bg-white p-5 py-10 rounded-xl"
+  class="w-full h-fit bg-white p-5 py-10 rounded-xl"
 >
   <p class="text-2xl font-bold mb-5">{{ "ADDPRODUCT.GENERAL" | translate }}</p>
   <div class="w-full">
@@ -112,12 +112,13 @@
 </div>
 
 <app-add-images
+  class="w-full"
   [dir]="translate.currentLang() == 'ar' ? 'rtl' : ''"
 ></app-add-images>
 
 <div
   [dir]="translate.currentLang() == 'ar' ? 'rtl' : ''"
-  class="w-[70rem] h-fit bg-white p-5 py-10 mt-6 rounded-xl"
+  class="w-full h-fit bg-white p-5 py-10 mt-6 rounded-xl"
 >
   <p class="text-2xl font-bold mb-5">{{ "ADDPRODUCT.PRICE" | translate }}</p>
   <div class="w-full">
@@ -233,7 +234,7 @@
         </div> -->
         <div
           class="flex flex-col my-5 items-center"
-          *ngIf="selectOption == 'per' || percentigeSignal() != null"
+          *ngIf="selectOption == 'per' || percentigeSignal() != 0"
         >
           <p class="self-start mb-4">Set Discount Percentage</p>
           <label

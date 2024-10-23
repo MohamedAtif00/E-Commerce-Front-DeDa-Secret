@@ -20,7 +20,17 @@ import { CreateReview, Review } from '../model/review.model';
   providedIn: 'root',
 })
 export class ProductService {
-  Product: CreateProduct = new CreateProduct();
+  Product: CreateProduct = {
+    name: '',
+    nameArab: '',
+    description: '',
+    descriptionArab: '',
+    discount: 0,
+    categoryId: '',
+    price: 0,
+    hasPercentage: false,
+    stockQuantity: 0,
+  };
   file = signal<File>(null);
   files: BehaviorSubject<UploadedFile[]> = new BehaviorSubject<UploadedFile[]>(
     []

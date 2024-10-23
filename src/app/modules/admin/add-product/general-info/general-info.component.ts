@@ -35,6 +35,8 @@ export class GeneralInfoComponent implements OnInit {
       this.selectOption = 'pre';
     }
   }
+
+  @Input() Mode = 'Create';
   @Input() quantity: number;
   @Input() files = signal<UploadedFile[]>([]); // Receive files from parent
 

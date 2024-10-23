@@ -17,7 +17,7 @@ class CreateProduct {
   nameArab: string;
   description: string;
   descriptionArab: string;
-  discount: number;
+  discount?: number;
   categoryId: string;
   price: number;
   hasPercentage: boolean | null;

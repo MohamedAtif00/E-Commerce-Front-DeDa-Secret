@@ -303,6 +303,7 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
   DeleteProduct() {
     this.adminService.DeleteProduct(this.product.id).subscribe((data) => {
       this.modalService.hide;
+      this.CloseModal();
       this.GetProductPage(this._pageList.page);
     });
   }
@@ -342,5 +343,13 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
 
   getEmptyStars(totalReview: number): number {
     return 5 - totalReview;
+  }
+
+  GetYellow(total: number) {
+    return new Array(total);
+  }
+
+  GetDark(total: number) {
+    return new Array(5 - (total ? total : 0));
   }
 }
