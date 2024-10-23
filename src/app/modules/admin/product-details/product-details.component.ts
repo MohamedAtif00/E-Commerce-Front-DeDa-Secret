@@ -17,6 +17,7 @@ import {
   tap,
 } from 'rxjs';
 import { TranslationService } from '../../../core/services/translation.service';
+import { ToastrService } from 'ngx-toastr';
 
 interface UploadedFile {
   file: File;
@@ -35,7 +36,8 @@ export class ProductDetailsComponent implements OnInit {
   product: GetSingleProduct;
   createdProduct: CreateProduct;
   masterImage: string;
-  category: Category;
+  category = signal<any>(null);
+  percentage = 0;
   productImages = signal<UploadedFile[]>([]); // To hold product images as UploadedFile[]
   private subscriptions: Subscription = new Subscription();
 
@@ -44,7 +46,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
-    public translate: TranslationService
+    public translate: TranslationService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +84,9 @@ export class ProductDetailsComponent implements OnInit {
             hasPercentage: false,
           };
 
+          this.percentage = this.product._price._discount;
+          console.log('the percentage ', this.product);
+
           // Create observables for master image, category, and other images
           const masterImage$ = this.productService
             .GetProductMasterImage(this.product.id)
@@ -92,7 +98,7 @@ export class ProductDetailsComponent implements OnInit {
             );
 
           const category$ = this.categoryService
-            .GetSingleCategory(this.product.categoryId)
+            .GetSingleChildCategory(this.product.categoryId)
             .pipe(
               catchError((error) => {
                 console.error('Error fetching category:', error);
@@ -136,7 +142,6 @@ export class ProductDetailsComponent implements OnInit {
                 url: this.createObjectURL(file),
               };
             });
-
           return {
             masterImageUrl,
             category: categoryData?.value ?? {},
@@ -161,11 +166,15 @@ export class ProductDetailsComponent implements OnInit {
               this.masterImage = ''; // Fallback to default value if there's an error
             }
           }
-
+          if (category == null) {
+            this.toastr.error('This Category is not exist');
+          }
           // Update component state
-          this.category = category;
+          this.category.set(category);
           this.productImages.set(uploadedFiles);
           this.productService.files.next(this.productImages());
+          console.log('Get Category', this.category());
+
           // console.log('Length', this.productImages().length);
           // console.log(this.product);
           // console.log(this.category);

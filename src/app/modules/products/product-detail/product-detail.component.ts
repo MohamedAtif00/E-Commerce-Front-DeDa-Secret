@@ -73,6 +73,8 @@ export class ProductDetailComponent implements OnInit {
   rating: number;
   comment: string;
 
+  reviewIcon = `<i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>`;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -103,6 +105,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0); // Scroll to top
     initFlowbite();
     this.GetAllCities();
     this.InitModal();

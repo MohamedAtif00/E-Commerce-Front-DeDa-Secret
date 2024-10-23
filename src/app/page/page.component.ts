@@ -19,7 +19,6 @@ export class PageComponent implements AfterViewInit {
     this.loaded = true;
     this.route.data.subscribe((data) => {
       this.websiteColor = data['pageData'].value.websiteColor;
-      console.log(this.websiteColor);
     });
   }
 }

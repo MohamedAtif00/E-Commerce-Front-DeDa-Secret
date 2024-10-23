@@ -20,6 +20,7 @@ import { CarouselCardComponent } from './carousel-card/carousel-card.component';
 import { CarouselModule } from 'ngx-carousel-ease';
 import { HomeCarouselReviesComponent } from './home-carousel-revies/home-carousel-revies.component';
 import { GallaryComponent } from './gallary/gallary.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { GallaryComponent } from './gallary/gallary.component';
     CardComponent,
     ReactiveFormsModule,
     CarouselModule,
+    ProgressSpinnerModule,
   ],
   exports: [PaginationComponent, FilterGroupComponent],
 })

@@ -7,8 +7,6 @@
 
     <label
       for="file"
-      (dragover)="handleDragOver($event)"
-      (drop)="handleDrop($event)"
       class="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500"
     >
       <i class="ph ph-upload text-2xl text-gray-500"></i>
@@ -25,7 +23,11 @@
       type="file"
       name="file"
       multiple
-      (change)="onFilesSelected($event)"
+      (change)="
+        onFilesSelected($event);
+        $event.preventDefault();
+        $event.stopPropagation()
+      "
       class="hidden"
     />
 

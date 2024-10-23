@@ -20,7 +20,6 @@ export class SelectImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    initFlowbite();
     this.file = signal<File>(null);
   }
 

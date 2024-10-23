@@ -89,11 +89,12 @@
             <th scope="col" class="px-6 py-3">Is Active</th>
             <th scope="col" class="px-6 py-3">Usage Limit</th>
             <th scope="col" class="px-6 py-3">Usage Count</th>
+            <th scope="col" class="px-6 py-3">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let coupon of coupons"
+            *ngFor="let coupon of coupons; let i = index"
             class="bg-white border-b hover:bg-gray-50"
           >
             <td class="px-6 py-4">{{ coupon.code }}</td>
@@ -112,6 +113,14 @@
             </td>
             <td class="px-6 py-4">{{ coupon.usageLimit }}</td>
             <td class="px-6 py-4">{{ coupon.usageCount }}</td>
+            <td class="px-6 py-4">
+              <button
+                class="text-red-600 hover:text-red-800"
+                (click)="deleteCoupon(coupon.id.value, i)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

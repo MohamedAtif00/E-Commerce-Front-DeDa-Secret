@@ -9,8 +9,9 @@ import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { style } from '@angular/animations';
 import { data } from 'jquery';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
+import { development } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -26,12 +27,14 @@ export class HeaderComponent implements OnInit {
 
   categories: Category[];
 
+  logo = development.localhosts.administration.getLogo;
   constructor(
     public basketService: BasketService,
     public adminService: AdministrationService,
     public translate: TranslationService,
     private categoryService: CategoryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.websiteColor = this.adminService.websiteColor;
     this.adminService.GetAdministration().subscribe((data) => {
@@ -45,6 +48,19 @@ export class HeaderComponent implements OnInit {
     // this.adminService.GetAdministration().subscribe((data) => {
     //   this.lines = data.value.marquee_Eng;
     // });
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.closeDrawer(); // Close the drawer on route change
+      }
+    });
+  }
+
+  closeDrawer(): void {
+    const drawer = document.getElementById('drawer-navigation');
+    if (drawer) {
+      drawer.classList.add('-translate-x-full'); // Apply the CSS class to close
+    }
   }
 
   megashow() {
@@ -107,7 +123,6 @@ export class HeaderComponent implements OnInit {
   // Categories
   GetAllCategories() {
     this.categoryService.GetAllCategories().subscribe((data) => {
-      console.log('Categories in headers', data);
       this.categories = data.value;
 
       this.categories.forEach((category) => {
@@ -118,7 +133,6 @@ export class HeaderComponent implements OnInit {
           items: [],
         };
         this.items.push(this.mapCategoryToItem(category, categoryItem));
-        console.log('my categories', this.categories);
       });
     });
   }
@@ -136,4 +150,18 @@ export class HeaderComponent implements OnInit {
     }
     return parentItem;
   }
+
+  // toggleDrawer(): void {
+  //  const drawer = document.getElementById('drawer-navigation');
+  //  if (drawer) {
+  //    if (drawer.style.transform === 'translateX(0)') {
+  //      // If the drawer is open, close it
+  //      drawer.style.transform = 'translateX(-100%)'; // Move the drawer out of view
+  //    } else {
+  //      // If the drawer is closed, open it
+  //      drawer.style.transform = 'translateX(0)'; // Move the drawer into view
+  //    }
+  //  }
+
+  // }
 }

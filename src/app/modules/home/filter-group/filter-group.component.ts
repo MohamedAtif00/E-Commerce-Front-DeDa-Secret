@@ -62,4 +62,8 @@ export class FilterGroupComponent implements OnInit {
     newFilter.categoryIds = this.selectedCategory;
     this.filterService.filter.next(newFilter);
   }
+
+  ApplyStars(stars: number) {
+    this.filterService.filter.next({ totalReviews: stars });
+  }
 }

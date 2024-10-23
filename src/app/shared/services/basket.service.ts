@@ -64,6 +64,24 @@ export class BasketService {
     }
   }
 
+  setItemQuantity(productId: string, quantity: number): void {
+    const basket = this.getInitialBasket();
+    const index = basket.BasketItems.findIndex(
+      (item) => item.ProductId === productId
+    );
+    if (index !== -1 && quantity > 0) {
+      basket.BasketItems[index].Quantity = quantity;
+      basket.BasketItems[index].Total =
+        basket.BasketItems[index].Quantity *
+        basket.BasketItems[index].UnitPrice;
+      basket.totalAmount = this.calculateTotalAmount(basket.BasketItems);
+      this.updateLocalStorage(basket);
+    } else if (quantity <= 0) {
+      // If quantity is set to 0 or less, remove the item
+      this.removeItem(productId);
+    }
+  }
+
   removeItem(productId: string): void {
     const basket = this.getInitialBasket();
     const index = basket.BasketItems.findIndex(

@@ -101,7 +101,8 @@ export class ProductService {
     searchTerm?: string,
     sortColumn?: string,
     startPrice?: number,
-    endPrice?: number
+    endPrice?: number,
+    totalReview?: number
   ) {
     console.log(sortColumn);
 
@@ -119,6 +120,7 @@ export class ProductService {
       (filter.startPrice ? `&startPrice=${filter.startPrice}` : '') +
       (filter.endPrice ? `&endPrice=${filter.endPrice}` : '') +
       (filter.asend ? `&asend=${filter.asend}` : '') +
+      (filter.totalReviews ? `&totalReviews=${filter.totalReviews}` : '') +
       (filter.categoryIds && filter.categoryIds.length != 0
         ? categoriesFilter
         : '');

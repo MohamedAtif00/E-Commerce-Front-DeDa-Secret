@@ -93,12 +93,13 @@
   <div class="flex flex-col items-start gap-5 ms-7 w-full">
     <app-navigation></app-navigation>
     <app-general-info
-      *ngIf="product._name"
+      *ngIf="product"
       [productName]="product._name"
+      [productNameArab]="product._name_arab"
       [ProductDescription]="product._description"
+      [productDescriptionArab]="product._description_arab"
       [price]="product._price._price"
-      [fixedPrice]="product._price._discount"
-      [percentige]="product._price._discount"
+      [percentige]="percentage"
       [quantity]="product._stockQuantity"
       [files]="productImages"
       class="w-full"

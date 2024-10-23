@@ -1,6 +1,6 @@
 // coupon.model.ts
 export interface Coupon {
-  id?: string;
+  id?: { value: string };
   code: string;
   discount: number;
   expirationDate: Date;

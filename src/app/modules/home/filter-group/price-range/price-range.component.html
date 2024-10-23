@@ -1,78 +1,47 @@
-<div class="h-fit flex justify-center items-center">
-  <div
-    x-data="range()"
-    x-init="mintrigger(); maxtrigger()"
-    class="relative max-w-xl w-full"
-    (min-price-change)="onMinPriceChange($event)"
-    (max-price-change)="onMaxPriceChange($event)"
-  >
-    <div>
-      <!-- Slider for Min Price -->
+<!-- Prices -->
+<div class="space-y-2">
+  <h6 class="text-base font-medium text-black dark:text-white">Prices</h6>
+  <div class="flex items-center justify-between col-span-2 space-x-3">
+    <div class="w-full">
+      <label
+        for="min-experience-input"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >
+        From
+      </label>
+
       <input
-        type="range"
-        step="100"
-        x-bind:min="min"
-        x-bind:max="max"
-        x-on:input="mintrigger(); $dispatch('min-price-change', { min: minprice })"
-        x-model="minprice"
-        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+        type="number"
+        id="price-from"
+        value="300"
+        min="1"
+        max="10000"
+        (change)="onMinPriceChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder=""
+        required
       />
-
-      <!-- Slider for Max Price -->
-      <input
-        type="range"
-        step="100"
-        x-bind:min="min"
-        x-bind:max="max"
-        x-on:input="maxtrigger(); $dispatch('max-price-change', { max: maxprice })"
-        x-model="maxprice"
-        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
-      />
-
-      <!-- Track and Thumb -->
-      <div class="relative z-10 h-2">
-        <div
-          class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"
-        ></div>
-
-        <div
-          class="absolute z-20 top-0 bottom-0 rounded-md bg-green-300"
-          x-bind:style="'right:' + (100 - maxthumb) + '%; left:' + minthumb + '%'"
-        ></div>
-
-        <div
-          class="absolute z-30 w-6 h-6 top-0 left-0 bg-green-300 rounded-full -mt-2 -ml-1"
-          x-bind:style="'left: ' + minthumb + '%'"
-        ></div>
-
-        <div
-          class="absolute z-30 w-6 h-6 top-0 right-0 bg-green-300 rounded-full -mt-2 -mr-3"
-          x-bind:style="'right: ' + (100 - maxthumb) + '%'"
-        ></div>
-      </div>
     </div>
 
-    <div class="flex justify-between items-center py-5">
-      <div>
-        <input
-          type="text"
-          maxlength="5"
-          (change)="onMinPriceChange($event)"
-          x-on:input="mintrigger(); $dispatch('price-change', { min: minprice, max: maxprice })"
-          x-model="minprice"
-          class="px-3 py-2 border border-gray-200 rounded w-24 text-center"
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          maxlength="5"
-          (change)="onMaxPriceChange($event)"
-          x-on:input="maxtrigger(); $dispatch('price-change', { min: minprice, max: maxprice })"
-          x-model="maxprice"
-          class="px-3 py-2 border border-gray-200 rounded w-24 text-center"
-        />
-      </div>
+    <div class="w-full">
+      <label
+        for="price-to"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >
+        To
+      </label>
+
+      <input
+        type="number"
+        id="max-experience-input"
+        value="3500"
+        min="1"
+        max="10000"
+        (change)="onMaxPriceChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder=""
+        required
+      />
     </div>
   </div>
 </div>

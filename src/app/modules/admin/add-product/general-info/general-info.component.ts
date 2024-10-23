@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import { ImageFile } from '../image-uploader-directive.directive';
 import { ProductService } from '../../../../shared/services/product.service';
 import { UploadedFile } from './add-images/add-images.component';
@@ -11,19 +18,27 @@ import { EditorInitEvent, EditorTextChangeEvent } from 'primeng/editor';
   styleUrl: './general-info.component.scss',
 })
 export class GeneralInfoComponent implements OnInit {
-  range: number = 10;
-  @Input() selectOption: string = 'no';
+  range: number;
 
   @Input() productName: string;
   @Input() productNameArab: string;
   @Input() ProductDescription: string;
   @Input() productDescriptionArab: string;
   @Input() price: number;
-  @Input() fixedPrice: number;
-  @Input() percentige: number;
+  // @Input() fixedPrice: number;
+  percentigeSignal = signal<number>(0);
+
+  @Input() set percentige(value: number) {
+    // Update the signal value when input changes
+    this.percentigeSignal.set(value);
+    if (value > 0 && value) {
+      this.selectOption = 'pre';
+    }
+  }
   @Input() quantity: number;
   @Input() files = signal<UploadedFile[]>([]); // Receive files from parent
 
+  @Input() selectOption: string = this.percentige > 0 ? 'pre' : 'no';
   // name
   nameLang = 'en';
 
@@ -38,6 +53,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('my percentage', this.percentigeSignal());
     document.addEventListener('DOMNodeInserted', function (event) {
       console.log('A node was inserted!');
     });
@@ -45,16 +61,27 @@ export class GeneralInfoComponent implements OnInit {
 
   GetRange(e: Event) {
     const value = this.GetValue(e);
-    this.range = parseInt(value);
-    this.productService.Product.discount = parseInt(value);
+    this.percentigeSignal.set(parseInt(value));
+    this.productService.Product.discount = this.percentigeSignal();
 
     this.productService.Product.hasPercentage = true;
   }
 
   GetFixed(e: Event) {
     const value = this.GetValue(e);
-    this.productService.Product.discount = parseInt(value);
+    this.productService.Product.discount = this.percentige;
     this.productService.Product.hasPercentage = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    let checkPer = changes['percentige'];
+    console.log(changes);
+
+    if (changes['percentige']) {
+      console.log('Percentige changed:', changes['percentige'].currentValue);
+    }
   }
 
   SetName(e: Event) {
@@ -88,8 +115,6 @@ export class GeneralInfoComponent implements OnInit {
   setDiscount() {
     this.selectOption == 'no'
       ? (this.productService.Product.hasPercentage = null)
-      : this.selectOption == 'fixd'
-      ? (this.productService.Product.hasPercentage = false)
       : (this.productService.Product.hasPercentage = true);
   }
 

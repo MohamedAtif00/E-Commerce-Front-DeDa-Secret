@@ -1,5 +1,5 @@
 <nav
-  class="dark:bg-gray-900 fixed w-full z-30 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
+  class="dark:bg-gray-900 fixed w-full z-30 top-0 start-0 border-b font-sans border-gray-200 dark:border-gray-600"
   [ngStyle]="GetCustomColor()"
 >
   <marquee
@@ -17,11 +17,7 @@
     class="max-w-screen-xl flex flex-wrap items-center justify-between gap-0 mx-auto p-4"
   >
     <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img
-        src="../../../assets/img/Main-Logo-removebg-preview.png"
-        class="h-[70px] w-[242px]"
-        alt="Flowbite Logo"
-      />
+      <img [src]="logo" class="h-[70px] w-[242px]" alt="Flowbite Logo" />
       <!-- <span class="self-center text-2xl text-red-300  font-semibold whitespace-nowrap dark:text-white">DeDa Secret</span> -->
     </a>
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -102,9 +98,7 @@
             <button
               class="outline-none focus:outline-none px-3 py-1 bg-transparent rounded-sm flex items-center min-w-32"
             >
-              <span class="pr-1 font-semibold flex-1 font-Merienda">{{
-                category.name
-              }}</span>
+              <span class="pr-1 font-semibold flex-1">{{ category.name }}</span>
               <span>
                 <svg
                   class="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out"
@@ -154,9 +148,7 @@
                 [routerLink]="['category-products', category.id]"
                 class="w-full text-left flex items-center outline-none focus:outline-none px-3 py-1 hover:bg-gray-100"
               >
-                <span class="pr-1 flex-1 font-Merienda">{{
-                  category.name
-                }}</span>
+                <span class="pr-1 flex-1">{{ category.name }}</span>
                 <span *ngIf="category.childsCategories?.length">
                   <svg
                     class="fill-current h-4 w-4 transition duration-150 ease-in-out"
@@ -373,14 +365,14 @@
               <li>
                 <a
                   (click)="SetLnaguage('en')"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="block px-4 cursor-pointer py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >English</a
                 >
               </li>
               <li>
                 <a
                   (click)="SetLnaguage('ar')"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="block px-4 cursor-pointer py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >عربي
                 </a>
               </li>
@@ -432,17 +424,32 @@
   <!--  Modile ---------------------------------------- -->
   <div class="py-4 overflow-y-auto">
     <ul
-      *ngFor="let category of categories"
       class="flex flex-col p-4 md:p-0 mt-4 font-medium border text-white border-gray-100 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
     >
-      <li *ngFor="let childCategory of category.childsCategories">
+      <li>
         <a
-          [routerLink]="['category-products', childCategory.id]"
+          [routerLink]="['category-products']"
           class="block py-2 px-3 rounded hover:bg-gray-100 hover:text-black md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
           aria-current="page"
-          >{{ childCategory.name }}</a
+          data-drawer-target="drawer-navigation"
+          data-drawer-hide="drawer-navigation"
+          aria-controls="drawer-navigation"
+          >Home</a
         >
       </li>
+      <div *ngFor="let category of categories">
+        <li *ngFor="let childCategory of category.childsCategories">
+          <a
+            [routerLink]="['category-products', childCategory.id]"
+            class="block py-2 px-3 rounded hover:bg-gray-100 hover:text-black md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+            aria-current="page"
+            data-drawer-target="drawer-navigation"
+            data-drawer-hide="drawer-navigation"
+            aria-controls="drawer-navigation"
+            >{{ childCategory.name }}</a
+          >
+        </li>
+      </div>
       <!-- <li>
         <a
           href="#"

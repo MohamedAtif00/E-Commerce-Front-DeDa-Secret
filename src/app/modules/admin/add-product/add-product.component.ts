@@ -68,7 +68,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data) => {
-          this.router.navigate(['admin', 'products']);
+          //this.router.navigate(['admin', 'products']);
         },
         error: (err) => {
           console.error('Error occurred while processing', err);

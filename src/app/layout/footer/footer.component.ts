@@ -14,6 +14,7 @@ export class FooterComponent implements OnInit {
   middleColor2 = '#fff';
   endColor = this.adminService.websiteColor; // Default end color
   websiteColor = signal<string>('');
+  websiteColorString = this.websiteColor();
 
   categories: Category[];
 

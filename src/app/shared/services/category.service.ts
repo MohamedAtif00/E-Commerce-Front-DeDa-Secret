@@ -14,8 +14,12 @@ export class CategoryService {
     development.localhosts.category.getallChildsCategories;
   private _getSingleCategory =
     development.localhosts.category.getSingleCategory;
+  private _getSingleChildCategory =
+    development.localhosts.category.getSingleChildCategory;
   private _postMoveCategory = development.localhosts.category.moveCategory;
   private _deleteCategory = development.localhosts.category.deleteCategory;
+  private _deleteChildCategory =
+    development.localhosts.category.deleteChildCategory;
 
   constructor(private _http: GenericCRUDService) {}
 
@@ -44,6 +48,12 @@ export class CategoryService {
     );
   }
 
+  GetSingleChildCategory(id: string) {
+    return this._http.genericGetAPIData<GeneralResponse<Category>>(
+      this._getSingleChildCategory + id
+    );
+  }
+
   //
   MoveCategory(request: MoveCategoryRequest) {
     return this._http.genericPostAPIData<GeneralResponse<any>>(
@@ -56,6 +66,12 @@ export class CategoryService {
   DeleteCategory(id: string) {
     return this._http.genericDeleteAPIData<GeneralResponse<any>>(
       this._deleteCategory + id
+    );
+  }
+
+  DeleteChildCategory(id: string) {
+    return this._http.genericDeleteAPIData<GeneralResponse<any>>(
+      this._deleteChildCategory + id
     );
   }
 }

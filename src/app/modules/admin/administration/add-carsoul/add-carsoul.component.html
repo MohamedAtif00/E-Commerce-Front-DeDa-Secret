@@ -27,7 +27,7 @@
         <tr>
           <th class="px-4 py-2">ID</th>
           <th class="px-4 py-2">Name</th>
-          <th class="px-4 py-2">Products</th>
+
           <th class="px-4 py-2">Actions</th>
         </tr>
       </thead>
@@ -35,14 +35,14 @@
         <tr *ngFor="let carousel of carousels">
           <td class="border px-4 py-2">{{ carousel.id.value }}</td>
           <td class="border px-4 py-2">{{ carousel.groupName }}</td>
-          <td class="border px-4 py-2">
-            <ul>
-              <li *ngFor="let product of carousel.products">
-                {{ product.name }}
-              </li>
-            </ul>
-          </td>
-          <td class="border px-4 py-2">
+
+          <td class="border flex gap-20 px-4 py-2">
+            <button
+              (click)="UpdateCarousel(carousel.id.value)"
+              class="bg-green-500 text-white p-1 rounded"
+            >
+              Update
+            </button>
             <button
               (click)="deleteCarousel(carousel.id.value)"
               class="bg-red-500 text-white p-1 rounded"
@@ -54,4 +54,44 @@
       </tbody>
     </table>
   </div>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-button (onClick)="showDialog()" label="Show" />
+  <p-dialog
+    header="Update Carousel"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '30rem' }"
+  >
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="username" class="font-semibold w-6rem"
+        >New Carousel Name :</label
+      >
+      <input
+        [(ngModel)]="newCarouselName"
+        pInputText
+        id="carousel"
+        class="flex-auto"
+        autocomplete="off"
+      />
+    </div>
+    <div class="flex justify-between gap-2">
+      <button
+        type="button"
+        (click)="visible = false"
+        class="focus:outline-none text-white bg-red-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        Close
+      </button>
+
+      <button
+        type="button"
+        (click)="AcceptUpdate()"
+        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        Update
+      </button>
+    </div>
+  </p-dialog>
 </div>

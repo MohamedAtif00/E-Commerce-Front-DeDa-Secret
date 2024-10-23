@@ -5,12 +5,14 @@ import {
   OnInit,
   Output,
   output,
+  signal,
 } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { Category } from '../../../../shared/model/category.model';
 import { Subject } from 'rxjs';
 import { ProductService } from '../../../../shared/services/product.service';
 import { TranslationService } from '../../../../core/services/translation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-select-category',
@@ -19,7 +21,7 @@ import { TranslationService } from '../../../../core/services/translation.servic
 })
 export class SelectCategoryComponent implements OnInit {
   categories: Category[];
-  @Input() selectedCategory: Category;
+  @Input() selectedCategory = signal<any>(null);
   constructor(
     private categoryService: CategoryService,
     public productService: ProductService,
@@ -27,8 +29,10 @@ export class SelectCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('category name ', this.selectedCategory?.name);
     this.categoryService.GetAllChidlsCategories().subscribe((data) => {
       this.categories = data.value;
+      console.log('all categeory', this.categories);
     });
 
     let selector = document.getElementById('category');

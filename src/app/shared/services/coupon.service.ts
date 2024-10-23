@@ -13,25 +13,32 @@ export class CouponService {
   private _addCoupon = development.localhosts.coupon.addCoupon;
   private _getAllCoupons = development.localhosts.coupon.getAllCoupons;
   private _getCoupon = development.localhosts.coupon.getCouponByCode;
+  private _deleteCoupon = development.localhosts.coupon.deleteCoupon;
 
-  constructor(private http: GenericCRUDService) {}
+  constructor(private _http: GenericCRUDService) {}
 
   getCoupons(): Observable<GeneralResponse<Coupon[]>> {
-    return this.http.genericGetAPIData<GeneralResponse<Coupon[]>>(
+    return this._http.genericGetAPIData<GeneralResponse<Coupon[]>>(
       this._getAllCoupons
     );
   }
 
   GetCouponByCode(code: string) {
-    return this.http.genericGetAPIData<GeneralResponse<Coupon>>(
+    return this._http.genericGetAPIData<GeneralResponse<Coupon>>(
       this._getCoupon + code
     );
   }
 
   addCoupon(coupon: Coupon): Observable<GeneralResponse<Coupon>> {
-    return this.http.genericPostAPIData<GeneralResponse<Coupon>>(
+    return this._http.genericPostAPIData<GeneralResponse<Coupon>>(
       this._addCoupon,
       coupon
+    );
+  }
+
+  deleteCoupon(couponId: string) {
+    return this._http.genericDeleteAPIData<GeneralResponse<any>>(
+      `${this._deleteCoupon}${couponId}`
     );
   }
 }

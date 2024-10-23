@@ -19,6 +19,7 @@ export class InnerCardComponent {
   @Input() productImage: string;
   @Input() productId: string;
   @Input() productPriceBefore?: number;
+  @Input() productTotalReviews?: number;
 
   constructor(
     private basketService: BasketService,
@@ -48,5 +49,15 @@ export class InnerCardComponent {
 
       this.basketService.cart$.subscribe((data) => {});
     } catch (e) {}
+  }
+
+  GetYellow() {
+    return new Array(this.productTotalReviews);
+  }
+
+  GetDark() {
+    return new Array(
+      5 - (this.productTotalReviews ? this.productTotalReviews : 0)
+    );
   }
 }

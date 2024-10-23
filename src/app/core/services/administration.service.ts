@@ -48,6 +48,8 @@ export class AdministrationService {
   private _addSpecialProduct =
     development.localhosts.administration.addSpecialProduct;
   private _addCarsoul = development.localhosts.administration.addCarsoul;
+  private _updateCarousel =
+    development.localhosts.administration.updateCarousel;
   private _deleteProduct = development.localhosts.administration.deleteProduct;
   private _deleteCarousel =
     development.localhosts.administration.deleteCarousel;
@@ -109,7 +111,8 @@ export class AdministrationService {
   }
 
   SetWebsiteLogo(file: File) {
-    let formdata = new FormData().append('logo', file);
+    let formdata = new FormData();
+    formdata.append('logo', file);
     return this._http.post<any>(this._changeWebsiteLogo, formdata);
   }
 
@@ -137,6 +140,12 @@ export class AdministrationService {
     // this.carousels.push(carousel);
     return this._http.post<GeneralResponse<any>>(this._addCarsoul, {
       name: carousel,
+    });
+  }
+
+  UpdateCarousel(id: string, name: string) {
+    return this._http.post<GeneralResponse<any>>(this._updateCarousel + id, {
+      name: name,
     });
   }
 

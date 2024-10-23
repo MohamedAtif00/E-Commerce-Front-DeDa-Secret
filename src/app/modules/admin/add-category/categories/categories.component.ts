@@ -414,6 +414,14 @@ export class CategoriesComponent implements OnInit {
           this.toastrService.error(data.errors[0]);
         }
       });
+    } else {
+      this.categoryService.DeleteChildCategory(nodeId).subscribe((data) => {
+        if (data.isSuccess) {
+          this.toastrService.success('category deleted');
+        } else {
+          this.toastrService.error(data.errors[0]);
+        }
+      });
     }
   }
 

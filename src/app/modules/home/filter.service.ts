@@ -7,6 +7,7 @@ export interface Filter {
   startPrice?: number;
   endPrice?: number;
   asend?: boolean;
+  totalReviews?: number;
   categoryIds?: string[];
 }
 
@@ -19,6 +20,7 @@ export class FilterService {
     searchTerm: null,
     startPrice: null,
     endPrice: null,
+    totalReviews: null,
     asend: null,
     categoryIds: null,
   });

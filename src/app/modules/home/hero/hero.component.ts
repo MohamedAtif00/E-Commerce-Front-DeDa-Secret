@@ -17,15 +17,16 @@ export class HeroComponent implements OnInit {
 
   HeroImageUrl = signal('');
   myHero = development.localhosts.administration.getHero;
+  heroLoading: boolean;
   constructor(
     private adminService: AdministrationService,
     public translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.heroLoading = true;
     // AOS.init();
     this.adminService.GetAdministration().subscribe((data) => {
-      console.log('current lang', this.translateService.defaultLang);
       this.title_eng = data.value.title_Eng;
       this.title_arb = data.value.title_Arb;
       this.desc_eng = data.value.desc_Eng;
@@ -50,6 +51,10 @@ export class HeroComponent implements OnInit {
             this.HeroImageUrl.set('url(/assets/default-image.jpg)'); // Fallback image
           });
       });
+  }
+
+  onImageLoad() {
+    this.heroLoading = false;
   }
 
   private createImageFromBlob(image: Blob): Promise<string> {

@@ -1,24 +1,21 @@
-<br />
-<br />
 <div
-  class="w-full grid grid-cols-12 justify-end justify-items-end content-start align-end items-start"
+  class="w-full flex flex-col justify-end justify-items-end content-start align-end items-start"
 >
-  <app-filter-group
-    class="col-span-10 w-full ms-5 p-3 lg:col-span-3"
-  ></app-filter-group>
+  <app-filter-group class="mt-10"></app-filter-group>
+  <hr />
   <div
-    class="h-fit pb-28 pt-10 ps-10 flex flex-col justify-content-end align-content-end align-items-end col-span-11 lg:col-span-9"
+    class="h-fit flex flex-row w-full justify-center align-middle items-center pb-28 justify-content-end align-content-end align-items-end"
   >
-    <h1 *ngIf="category" class="text-2xl underline mt-2">
+    <h1 *ngIf="category" class="text-2xl underline">
       {{ category.name }} products
     </h1>
     <div
-      class="h-fit w-fit ps-10 flex flex-col justify-center align-content-center align-middle items-center gap-10 md:flex-row lg:flex-row xl:flex-row xl:gap-5 xl:justify-start xl:items-start xl:align-top xl:pt-0 xl:flex-wrap"
+      class="h-fit w-full flex flex-row flex-wrap justify-center content-center align-content-center align-middle items-center gap-5"
     >
       <app-card
         [product]="product"
         *ngFor="let product of Products"
-        class="h-[37rem] w-fit block"
+        class="h-[530px] md:h-[600px] block"
       ></app-card>
     </div>
     <!-- <div class="h-fit w-fit">

@@ -27,18 +27,17 @@ export class HomeComponent implements OnInit {
       { name: 'author', content: 'buttercms' },
       { name: 'keywords', content: 'Cosmatics, Beauty,DedaSecret,dedasecret ' },
     ]);
-    this.setTitle('Home Page');
+    this.setTitle('Deda Secret');
   }
 
   ngOnInit(): void {
     AOS.init();
-    this.adminService.GetAdministration().subscribe((data) => {
-      this.carousels = data.value.groups;
+    this.route.data.subscribe((data) => {
+      this.carousels = data['homeData'].value.groups;
     });
     this.basketService.cart$.subscribe((data) => {});
     this.route.data.subscribe((data) => {
       this.homeData = data['homeData'].value.websiteColor;
-      console.log('home data', this.homeData);
     });
   }
 

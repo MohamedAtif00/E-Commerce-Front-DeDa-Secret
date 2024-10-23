@@ -21,6 +21,10 @@ const routes: Routes = [
         component: ProductListComponent,
       },
       {
+        path: 'category-products',
+        component: ProductListComponent,
+      },
+      {
         path: 'cart',
         loadChildren: () =>
           import('./../modules/cart/cart.module').then((x) => x.CartModule),

@@ -87,20 +87,17 @@ export class AdministrationComponent implements OnInit {
 
   saveLogo(): void {
     if (this.logoFile) {
-      const formData = new FormData();
-      formData.append('logo', this.logoFile);
-
       // Replace 'your-api-endpoint' with your actual endpoint
-      // this.adminService.uploadLogo(formData).subscribe({
-      //   next: (response) => {
-      //     console.log('Logo saved successfully', response);
-      //     this.toastrService.success('Logo uploaded successfully');
-      //   },
-      //   error: (err) => {
-      //     console.error('Failed to save logo', err);
-      //     this.toastrService.error('Failed to upload logo');
-      //   }
-      // });
+      this.adminService.SetWebsiteLogo(this.logoFile).subscribe({
+        next: (response) => {
+          console.log('Logo saved successfully', response);
+          this.toastrService.success('Logo uploaded successfully');
+        },
+        error: (err) => {
+          console.error('Failed to save logo', err);
+          this.toastrService.error('Failed to upload logo');
+        },
+      });
     } else {
       console.warn('No logo file selected');
       this.toastrService.warning('No logo file selected');
@@ -200,16 +197,21 @@ export class AdministrationComponent implements OnInit {
       reader.readAsDataURL(this.heroFile); // Read the file as data URL
     }
   }
-
   saveHero(): void {
     if (this.heroFile) {
       const formData = new FormData();
       formData.append('file', this.heroFile);
 
-      this.adminService.ChangeHero(formData).subscribe((data) => {});
+      this.adminService.ChangeHero(formData).subscribe(
+        (data) => {
+          this.toastrService.success('Hero image uploaded successfully');
+        },
+        (err) => {
+          this.toastrService.error('Failed to upload hero image');
+        }
+      );
     } else {
-      console.warn('No Hero file selected');
-      this.toastrService.warning('No Hero file selected');
+      this.toastrService.warning('No hero file selected');
     }
   }
 }

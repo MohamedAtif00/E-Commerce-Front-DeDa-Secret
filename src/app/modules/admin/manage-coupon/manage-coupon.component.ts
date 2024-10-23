@@ -40,6 +40,9 @@ export class ManageCouponComponent {
     this.couponService.getCoupons().subscribe((data) => {
       if (data.isSuccess) {
         this.coupons = data.value;
+        console.log(data.value);
+
+        console.log(this.coupons);
       } else {
         this.toastr.error('Something Error');
       }
@@ -65,6 +68,20 @@ export class ManageCouponComponent {
         this.toastr.success('Coupon has been Added Successfully');
       } else {
         this.toastr.error(data.errors[0]);
+      }
+    });
+  }
+
+  // Delete a coupon
+  deleteCoupon(couponId: string, index: number) {
+    console.log(couponId);
+
+    this.couponService.deleteCoupon(couponId).subscribe((data) => {
+      if (data.isSuccess) {
+        this.coupons.splice(index, 1); // Remove the coupon from the list
+        this.toastr.success('Coupon deleted successfully');
+      } else {
+        this.toastr.error('Failed to delete coupon');
       }
     });
   }

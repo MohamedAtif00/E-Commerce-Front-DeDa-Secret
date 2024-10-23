@@ -8,9 +8,16 @@ import { AppModule } from '../app.module';
 import { AdminHeaderComponent } from '../layout/admin-header/admin-header.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenubarModule } from 'primeng/menubar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [PageComponent, HeaderComponent, FooterComponent],
-  imports: [CommonModule, PageRoutingModule, TranslateModule, MenubarModule],
+  imports: [
+    CommonModule,
+    PageRoutingModule,
+    TranslateModule,
+    MenubarModule,
+    ProgressSpinnerModule,
+  ],
 })
 export class PageModule {}

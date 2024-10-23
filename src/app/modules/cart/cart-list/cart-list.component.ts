@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import { BasketService } from '../../../shared/services/basket.service';
 import { Subscription, forkJoin, map, of } from 'rxjs';
 import { ProductService } from '../../../shared/services/product.service';
@@ -33,7 +33,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     private basketService: BasketService,
     private productService: ProductService,
     public translate: TranslateService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private couponService: CouponService,
     private toastr: ToastrService
   ) {}
@@ -242,20 +242,36 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
   //
 
-  getTruncatedDescription(description: string, maxLength: number): SafeHtml {
-    // Strip HTML tags to ensure accurate length calculation
-    const strippedDescription = description.replace(/<[^>]+>/g, '');
-
-    // Check if description exceeds maxLength and truncate
-    if (strippedDescription.length > maxLength) {
-      const truncated = strippedDescription.slice(0, maxLength) + '...';
-
-      // Return safe HTML
-      return this.sanitizer.bypassSecurityTrustHtml(truncated);
+  getSafeTruncatedDescription(
+    description: string,
+    maxLength: number
+  ): SafeHtml {
+    if (!description) {
+      return ''; // Return an empty string if description is null/undefined
     }
 
-    // Return full description if it's within the length limit
-    return this.sanitizer.bypassSecurityTrustHtml(strippedDescription);
+    // Strip HTML tags for length calculation
+    const strippedDescription = description.replace(/<[^>]+>/g, '');
+
+    // If the stripped description is shorter than maxLength, return full description
+    if (strippedDescription.length <= maxLength) {
+      return this.sanitizer.sanitize(SecurityContext.HTML, description);
+    }
+
+    // Find the last space within the maxLength to avoid cutting words
+    const truncatedText = strippedDescription.slice(0, maxLength).trim();
+    const lastSpaceIndex = truncatedText.lastIndexOf(' ');
+
+    // If a space was found, truncate at that space, otherwise truncate at maxLength
+    const finalTruncatedText =
+      lastSpaceIndex === -1
+        ? truncatedText
+        : truncatedText.slice(0, lastSpaceIndex);
+
+    // Append ellipsis and return the truncated description with safe HTML
+    const truncated = `${finalTruncatedText}...`;
+
+    return this.sanitizer.sanitize(SecurityContext.HTML, description);
   }
 
   getSaving(product: GetSingleProduct): number {

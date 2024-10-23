@@ -6,6 +6,7 @@ import { ProductService } from '../../../shared/services/product.service';
 import { FilterService } from '../../home/filter.service';
 import { Category } from '../../../shared/model/category.model';
 import { CategoryService } from '../../../shared/services/category.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-product-list',
@@ -26,16 +27,20 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+    initFlowbite();
     this.route.params.subscribe((data) => {
       console.log('Category id', data['id']);
       let id = data['id'];
+      if (id) {
+        this.categoryService.GetSingleCategory(id).subscribe((data) => {
+          console.log('category', data);
 
-      this.categoryService.GetSingleCategory(id).subscribe((data) => {
-        console.log('category', data);
+          this.category = data.value;
+        });
 
-        this.category = data.value;
-      });
-      this.applyFilter([id]);
+        this.applyFilter([id]);
+      }
       this.GetAllProducts(1);
     });
 

@@ -125,7 +125,7 @@
             <img
               [src]="logoUrl"
               alt="Logo Preview"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-contain"
             />
           </div>
           <!-- Save Button -->
@@ -155,11 +155,11 @@
             class="border border-gray-300 rounded-md p-2"
           />
           <div
-            *ngIf="logoUrl"
+            *ngIf="heroUrl"
             class="w-24 h-24 border rounded-lg overflow-hidden"
           >
             <img
-              [src]="logoUrl"
+              [src]="heroUrl"
               alt="Hero Preview"
               class="w-full h-full object-cover"
             />

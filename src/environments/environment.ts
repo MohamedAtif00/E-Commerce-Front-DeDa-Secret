@@ -1,5 +1,5 @@
-// let mainhost = 'https://localhost:7113/api/';
-let mainhost = 'https://www.dedasecret.shop/api/';
+let mainhost = 'https://localhost:7113/api/';
+// let mainhost = 'https://www.dedasecret.shop/api/';
 let bosta = 'http://app.bosta.co/api/v2/';
 // let mainhost = 'api/'
 export const development = {
@@ -8,9 +8,11 @@ export const development = {
       addCategory: `${mainhost}Category/AddCategory`,
       getAllCategories: `${mainhost}Category`,
       getSingleCategory: `${mainhost}Category/`,
+      getSingleChildCategory: `${mainhost}Category/GetSingleChildCategory/`,
       moveCategory: `${mainhost}Category/MoveCategory`,
       getallChildsCategories: `${mainhost}Category/GetAllChildsCategories`,
       deleteCategory: `${mainhost}Category/`,
+      deleteChildCategory: `${mainhost}Category/DeleteChildCategory/`,
     },
     product: {
       getAllProducts: `${mainhost}Product`,
@@ -42,6 +44,7 @@ export const development = {
       dailyEarningProfits: `${mainhost}Administration/GetDailyEarning`,
       getAdministration: `${mainhost}Administration/GetAdministration`,
       getHero: `${mainhost}Administration/GetHero`,
+      getLogo: `${mainhost}Administration/GetWebsiteLogo`,
       getRecentOrder: `${mainhost}Administration/GetProductssProfitsForCategories/`,
       getDescription: `${mainhost}Administration/GetDescription`,
       getSpecialProducts: `${mainhost}Administration/GetSpecialProducts`,
@@ -52,6 +55,7 @@ export const development = {
       changeDescription: `${mainhost}Administration/ChangeDescription`,
       addSpecialProduct: `${mainhost}Administration/AddSpecialProduct/`,
       addCarsoul: `${mainhost}Administration/AddCarsoul`,
+      updateCarousel: `${mainhost}Administration/UpdateCarousel/`,
       deleteProduct: `${mainhost}Administration/`,
       deleteCarousel: `${mainhost}Administration/DeleteCarousel/`,
     },
@@ -75,6 +79,7 @@ export const development = {
       addCoupon: `${mainhost}Order/AddCoupon`,
       getCouponByCode: `${mainhost}Order/GetCoupon?code=`,
       getAllCoupons: `${mainhost}Order/GetAllCoupons`,
+      deleteCoupon: `${mainhost}Order/DeleteCoupon/`,
     },
   },
 };

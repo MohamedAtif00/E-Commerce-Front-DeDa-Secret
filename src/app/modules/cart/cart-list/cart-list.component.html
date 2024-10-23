@@ -25,7 +25,10 @@
               <div
                 class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0"
               >
-                <a href="#" class="shrink-0 md:order-1">
+                <a
+                  [routerLink]="['/product-detials', product.id]"
+                  class="shrink-0 md:order-1"
+                >
                   <!-- <img
                   class="h-20 w-20 dark:hidden"
                   src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
@@ -82,7 +85,7 @@
                       class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                       placeholder=""
                       [value]="getQuantity(product.id)"
-                      required
+                      readonly
                     />
                     <button
                       type="button"
@@ -122,9 +125,12 @@
                 >
                   <a
                     [innerHTML]="
-                      getTruncatedDescription(product._description, 200)
+                      this.getSafeTruncatedDescription(
+                        product._description,
+                        200
+                      )
                     "
-                    class="text-base font-medium text-gray-900 hover:underline dark:text-white"
+                    class="text-base font-medium text-gray-900 dark:text-white"
                   ></a>
 
                   <div class="flex items-center gap-4">

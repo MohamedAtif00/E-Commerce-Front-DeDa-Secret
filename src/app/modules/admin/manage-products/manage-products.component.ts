@@ -22,6 +22,7 @@ import { Carousel } from '../../../shared/model/carsoul.model';
 import { FilterService } from '../../home/filter.service';
 import { take } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { development } from '../../../../environments/environment';
 
 interface Products extends GetAllProducts {
   checked: boolean;
@@ -73,6 +74,7 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
   showModal: boolean;
   carsouls: Carousel[];
 
+  getProductMasterImage = development.localhosts.product.getProductMasterImage;
   constructor(
     private productService: ProductService,
     private adminService: AdministrationService,
@@ -300,6 +302,7 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
 
   DeleteProduct() {
     this.adminService.DeleteProduct(this.product.id).subscribe((data) => {
+      this.modalService.hide;
       this.GetProductPage(this._pageList.page);
     });
   }
