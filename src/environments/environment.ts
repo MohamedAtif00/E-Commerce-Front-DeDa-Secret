@@ -1,6 +1,6 @@
-let mainhost = 'https://localhost:7113/api/';
-// let mainhost = 'https://www.dedasecret.shop/api/';
-let bosta = 'http://app.bosta.co/api/v2/';
+// let mainhost = 'https://localhost:7113/api/';
+let mainhost = 'https://www.dedasecret.shop/api/';
+let bosta = 'https://app.bosta.co/api/v2/';
 // let mainhost = 'api/'
 export const development = {
   localhosts: {

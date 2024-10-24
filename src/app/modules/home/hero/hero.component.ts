@@ -26,12 +26,6 @@ export class HeroComponent implements OnInit {
   ngOnInit(): void {
     this.heroLoading = true;
     // AOS.init();
-    this.adminService.GetAdministration().subscribe((data) => {
-      this.title_eng = data.value.title_Eng;
-      this.title_arb = data.value.title_Arb;
-      this.desc_eng = data.value.desc_Eng;
-      this.desc_arb = data.value.desc_Arb;
-    });
 
     this.adminService
       .GetHero()

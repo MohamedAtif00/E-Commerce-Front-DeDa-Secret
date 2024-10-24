@@ -28,17 +28,12 @@ export class CarouselHomeComponent implements OnInit {
   slideToShow: number = 5; // Default value
   @ViewChild(NgxGlideComponent, { static: false }) ngxGlide: NgxGlideComponent;
 
-  constructor(
-    private productService: ProductService,
-    private adminService: AdministrationService
-  ) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     AOS.init();
     this.updateSlidesToShow(window.innerWidth); // Set initial number of slides based on screen size
-    this.adminService.GetAdministration().subscribe((data) => {
-      this.buttonColor = data.value.websiteColor;
-    });
+
     this.productService.GetSpecialProducts(this.carsoul.id.value).subscribe({
       next: (data) => {
         this.products = data.value; // Set the products array

@@ -19,7 +19,7 @@ import { development } from '../../../environments/environment';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  lines: string = '';
+  @Input() lines: string = '';
 
   @Input() websiteColor = '';
 
@@ -37,9 +37,6 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) {
     this.websiteColor = this.adminService.websiteColor;
-    this.adminService.GetAdministration().subscribe((data) => {
-      this.lines = data.value.marquee_Eng;
-    });
   }
 
   ngOnInit(): void {

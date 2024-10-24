@@ -59,10 +59,7 @@ export class ProductService {
   private _getAllReviews = development.localhosts.product.getAllReviews;
 
   // constructor(private genericService: GenericCRUDService) { }
-  constructor(
-    private _http: HttpClient,
-    private filterService: FilterService
-  ) {}
+  constructor(public _http: HttpClient, private filterService: FilterService) {}
 
   CreateNewProduct() {
     const headers = new HttpHeaders({

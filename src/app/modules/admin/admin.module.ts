@@ -37,6 +37,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
 import { AddCarsoulComponent } from './administration/add-carsoul/add-carsoul.component';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     ManageProductsComponent,
@@ -80,6 +81,7 @@ import { DialogModule } from 'primeng/dialog';
     EditorModule,
     DragDropModule,
     DialogModule,
+    DropdownModule,
   ],
   providers: [DatePipe, ShipmentService, BostaAuthentication],
   exports: [],

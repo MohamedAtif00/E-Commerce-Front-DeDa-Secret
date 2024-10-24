@@ -20,9 +20,10 @@ import { Router } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
 import { Carousel } from '../../../shared/model/carsoul.model';
 import { FilterService } from '../../home/filter.service';
-import { take } from 'rxjs';
+import { take, catchError, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { development } from '../../../../environments/environment';
+import { DropdownChangeEvent } from 'primeng/dropdown';
 
 interface Products extends GetAllProducts {
   checked: boolean;
@@ -75,6 +76,13 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
   carsouls: Carousel[];
 
   getProductMasterImage = development.localhosts.product.getProductMasterImage;
+
+  dropdownOpen: boolean[] = [];
+
+  optionss = [
+    { name: 'Add to Carousel', class: '' },
+    { name: 'Delete', class: 'bg-red-400 w-full' },
+  ]; // Replace with your actual order states
   constructor(
     private productService: ProductService,
     private adminService: AdministrationService,
@@ -225,29 +233,6 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
       this.pagelist.set(data.value);
 
       // Fetching and processing master images for each product
-      for (let e of this.Products) {
-        try {
-          const blob = await this.productService
-            .GetProductMasterImage(e.id)
-            .toPromise(); // Use toPromise or firstValueFrom
-          const imageData = await this.createImageFromBlob(blob); // Await the promise from createImageFromBlob
-          e.masterImage = imageData;
-          // Check if obsMasterImage is defined before calling update
-          if (e.obsMasterImage) {
-            e.obsMasterImage.update((i) => imageData);
-          } else {
-            //console.warn(`obsMasterImage is not defined for product ${e.id}`);
-          }
-
-          this.DropdownListConfiguration();
-        } catch (err) {
-          // Log the error and continue with the next product
-          console.error(
-            `Error fetching or converting master image for product ${e.id}:`,
-            err
-          );
-        }
-      }
     } catch (err) {
       console.error('Error fetching products:', err);
     }
@@ -351,5 +336,26 @@ export class ManageProductsComponent implements OnInit, AfterViewInit {
 
   GetDark(total: number) {
     return new Array(5 - (total ? total : 0));
+  }
+
+  GetMasterImageLink(id: string) {
+    return `${this.getProductMasterImage}${id}`;
+  }
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = ''; // Set your fallback image path here
+  }
+
+  onOrderStateChange(event: any, product: GetAllProducts) {
+    const selectedAction = event.value; // The selected value
+    console.log('Selected Action:', selectedAction);
+    // Implement your logic here based on the selected action
+
+    if (selectedAction.name == 'Delete') {
+      this.ShowModal(product.id);
+    } else {
+      this.AddSpecialProduct(product);
+    }
   }
 }

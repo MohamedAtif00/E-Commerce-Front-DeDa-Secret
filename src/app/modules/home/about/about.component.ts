@@ -21,9 +21,5 @@ export class AboutComponent implements OnInit {
     public translate: TranslateService
   ) {}
 
-  ngOnInit(): void {
-    this.adminService.GetDescription().subscribe((data) => {
-      this.description = data.value;
-    });
-  }
+  ngOnInit(): void {}
 }
